@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
     private JumpComponent jump;
     private GravityComponent gravity;
 
+    Vector3 finalMove;
+
     void Awake() {
         controller = GetComponent<CharacterController>();
         velocity = GetComponent<VelocityComponent>();
@@ -29,14 +31,15 @@ public class Player : MonoBehaviour {
             jump.Jump(velocity);
         }
 
-        movement.Move(velocity, movementInput.action.ReadValue<Vector2>());
-
         if (!controller.isGrounded) {
             gravity.ApplyGravity(velocity);
         }
 
-        controller.Move(velocity.Velocity * Time.deltaTime);
-        // controller.Move(finalMovementDirection);
+        finalMove = velocity.Velocity;
+
+        finalMove += movement.GetMovementDirection(transform, movementInput.action.ReadValue<Vector2>());
+
+        controller.Move(finalMove * Time.deltaTime);
     }
 }
 
