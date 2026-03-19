@@ -21,8 +21,8 @@ public abstract class SpellBehaviour : ScriptableObject {
     public float HeavyAttackFirerate = 0.25f;
     public int HeavyAttackAmmoCost = 1;
 
-    public float LightAttackInSeconds() => 1f / LightAttackFirerate;
-    public float HeavyAttackInSeconds() => 1f / HeavyAttackFirerate;
+    public float GetLightAttackCooldown() => 1f / LightAttackFirerate;
+    public float GetHeavyAttackCooldown() => 1f / HeavyAttackFirerate;
 
 #endregion
 

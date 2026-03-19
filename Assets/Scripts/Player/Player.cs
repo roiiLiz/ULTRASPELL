@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
     private GravityComponent gravity;
     private CameraController camComponent;
     private HurtboxComponent hurtbox;
+    private SpellController spellController;
+
     private Camera cam;
 
     Vector3 finalMove;
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour {
         gravity = GetComponent<GravityComponent>();
         camComponent = GetComponent<CameraController>();
         hurtbox = GetComponent<HurtboxComponent>();
+        spellController = GetComponent<SpellController>();
 
         cam = Camera.main;
     }
@@ -84,14 +87,17 @@ public class Player : MonoBehaviour {
     }
 
     private void UpdateWeapon() {
-        if (lightAttackInput.action.ReadValue<float>() > 0f) {
-            Debug.Log("Light attack");
-        } else if (heavyAttackInput.action.ReadValue<float>() > 0f) {
-            Debug.Log("Heavy attack");
+        if (lightAttackInput.action.ReadValue<float>() > 0f && spellController.CanLightAttack()) {
+            // Debug.Log("Light attack");
+            spellController.LightAttack();
+        } else if (heavyAttackInput.action.ReadValue<float>() > 0f && spellController.CanHeavyAttack()) {
+            // Debug.Log("Heavy attack");
+            spellController.HeavyAttack();
         }
 
-        if (weaponSwapInput.action.WasPressedThisFrame()) {
-            Debug.Log("Swap weapon");
+        if (weaponSwapInput.action.WasPressedThisFrame() && spellController.CanSwap()) {
+            // Debug.Log("Swap weapon");
+            spellController.SwapSpells();
         }
     }
 
