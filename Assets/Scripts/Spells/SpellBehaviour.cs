@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class SpellBehaviour : ScriptableObject {
@@ -7,6 +9,7 @@ public abstract class SpellBehaviour : ScriptableObject {
     public string Name;
     [TextArea(4, 10)] public string Description;
     public Sprite Icon;
+    public int AmmoCount = 20;
 
     [Header("Light Attack Settings")]
     public string LightAttackName;
@@ -23,6 +26,9 @@ public abstract class SpellBehaviour : ScriptableObject {
 
     public float GetLightAttackCooldown() => 1f / LightAttackFirerate;
     public float GetHeavyAttackCooldown() => 1f / HeavyAttackFirerate;
+    public int Ammo { get; private set; }
+
+    public event Action onAmmoDepleted;
 
 #endregion
 
@@ -36,6 +42,19 @@ public abstract class SpellBehaviour : ScriptableObject {
     public abstract void OnHit(GameObject target, GameObject owner);
     public abstract void OnLightAttack(GameObject owner);
     public abstract void OnHeavyAttack(GameObject owner);
+
+    public void SubtractAmmo(int amount) {
+        Ammo -= amount;
+
+        Debug.Log($"Ammo amount: {Ammo}");
+
+        if (Ammo <= 0) {
+            onAmmoDepleted?.Invoke();
+        }
+    }
+
+    public void SetAmmo(int amount) => Ammo = amount;
+    public void ReplenishAmmo() => Ammo = AmmoCount;
 
 #endregion
 }

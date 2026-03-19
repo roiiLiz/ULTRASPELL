@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpellController : MonoBehaviour {
+#region Variables
+
     [SerializeField] private List<SpellBehaviour> spells = new List<SpellBehaviour>();
     [SerializeField] private float spellSwapCooldown = 0.25f;
     [SerializeField] private float globalAttackCooldown = 0.1f;
@@ -14,24 +17,48 @@ public class SpellController : MonoBehaviour {
     private float swapCooldown = 0f;
     private float _globalAttackCooldown = 0f;
 
+    public static event Action<SpellBehaviour, int> currentSpellInfo;
+
+#endregion
+
+#region MonoBehaviour Functions
+
     void Start() {
         if (spells != null && spells.Count > 1) {
             mainhandSpell = spells[0];
             offhandSpell = spells[1];
 
-            mainhandSpell.EquipToMainhand(gameObject);
-            offhandSpell.EquipToOffhand(gameObject);
+            mainhandSpell.ReplenishAmmo();
+            offhandSpell.ReplenishAmmo();
 
-            lightCooldown = mainhandSpell.GetLightAttackCooldown();
-            heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
+            // mainhandSpell.EquipToMainhand(gameObject);
+            // offhandSpell.EquipToOffhand(gameObject);
+
+            // lightCooldown = mainhandSpell.GetLightAttackCooldown();
+            // heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
+            EquipSpell(true, mainhandSpell);
+            EquipSpell(false, offhandSpell);
+
             swapCooldown = spellSwapCooldown;
             _globalAttackCooldown = globalAttackCooldown;
+
+            currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         }
     }
 
     void Update() {
         UpdateCooldowns();
     }
+
+    void OnDestroy() {
+        if (mainhandSpell != null) {
+            mainhandSpell.onAmmoDepleted -= OnMainhandAmmoDepleted;
+        }
+    }
+
+    #endregion
+
+    #region Functions
 
     public bool CanLightAttack() => lightCooldown >= mainhandSpell.GetLightAttackCooldown() && _globalAttackCooldown >= globalAttackCooldown;
     public bool CanHeavyAttack() => heavyCooldown >= mainhandSpell.GetHeavyAttackCooldown() && _globalAttackCooldown >= globalAttackCooldown;
@@ -47,16 +74,22 @@ public class SpellController : MonoBehaviour {
     public void SwapSpells() {
         Debug.Log("SpellController: Swapping Spells");
 
-        mainhandSpell.UnequipFromMainhand(gameObject);
-        offhandSpell.UnequipFromOffhand(gameObject);
+        // mainhandSpell.UnequipFromMainhand(gameObject);
+        // offhandSpell.UnequipFromOffhand(gameObject);
 
-        (mainhandSpell, offhandSpell) = (offhandSpell, mainhandSpell);
+        // (mainhandSpell, offhandSpell) = (offhandSpell, mainhandSpell);
 
-        mainhandSpell.EquipToMainhand(gameObject);
-        offhandSpell.EquipToOffhand(gameObject);
+        // mainhandSpell.EquipToMainhand(gameObject);
+        // offhandSpell.EquipToOffhand(gameObject);
 
-        lightCooldown = mainhandSpell.GetLightAttackCooldown();
-        heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
+        // lightCooldown = mainhandSpell.GetLightAttackCooldown();
+        // heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
+
+        SpellBehaviour temp = offhandSpell;
+
+        EquipSpell(false, mainhandSpell);
+        EquipSpell(true, temp);
+
         swapCooldown = 0f;
         _globalAttackCooldown = globalAttackCooldown;
     }
@@ -66,6 +99,8 @@ public class SpellController : MonoBehaviour {
         mainhandSpell.OnLightAttack(gameObject);
         lightCooldown = 0f;
         _globalAttackCooldown = 0f;
+
+        currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
     }
 
     public void HeavyAttack() {
@@ -73,5 +108,36 @@ public class SpellController : MonoBehaviour {
         mainhandSpell.OnHeavyAttack(gameObject);
         heavyCooldown = 0f;
         _globalAttackCooldown = 0f;
+
+        currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
     }
+
+    private void OnMainhandAmmoDepleted() {
+        Debug.Log("SpellController: Mainhand Ammo Depleted");
+        mainhandSpell.ReplenishAmmo();
+        SwapSpells();
+    }
+
+    private void EquipSpell(bool isMainhand, SpellBehaviour spell) {
+        if (isMainhand) {
+            mainhandSpell.UnequipFromMainhand(gameObject);
+            mainhandSpell.onAmmoDepleted -= OnMainhandAmmoDepleted;
+
+            mainhandSpell = spell;
+
+            mainhandSpell.EquipToMainhand(gameObject);
+            mainhandSpell.onAmmoDepleted += OnMainhandAmmoDepleted;
+
+            lightCooldown = mainhandSpell.GetLightAttackCooldown();
+            heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
+
+            currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
+        } else {
+            offhandSpell.UnequipFromOffhand(gameObject);
+            offhandSpell = spell;
+            offhandSpell.EquipToOffhand(gameObject);
+        }
+    }
+
+#endregion
 }

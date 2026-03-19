@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41790250e3a29b7499695fa9af126f6e, type: 3}
-  m_Name: New Time Spell
+  m_Name: Time Spell
   m_EditorClassIdentifier: Assembly-CSharp::TimeSpell
   Name: Time Magic
   Description: 

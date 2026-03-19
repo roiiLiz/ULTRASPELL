@@ -30,6 +30,7 @@ public class BloodSpell : SpellBehaviour {
     }
 
     public override void OnHeavyAttack(GameObject owner) {
+        SubtractAmmo(HeavyAttackAmmoCost);
         return;
     }
 
@@ -38,6 +39,7 @@ public class BloodSpell : SpellBehaviour {
     }
 
     public override void OnLightAttack(GameObject owner) {
+        SubtractAmmo(LightAttackAmmoCost);
         return;
     }
 

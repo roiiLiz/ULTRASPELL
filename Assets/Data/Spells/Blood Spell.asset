@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e80acf99e18dd894db010580ce2c6463, type: 3}
-  m_Name: New Blood Spell
+  m_Name: Blood Spell
   m_EditorClassIdentifier: Assembly-CSharp::BloodSpell
   Name: Blood Magic
   Description: 
