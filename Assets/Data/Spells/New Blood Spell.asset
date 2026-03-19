@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e80acf99e18dd894db010580ce2c6463, type: 3}
+  m_Name: New Blood Spell
+  m_EditorClassIdentifier: Assembly-CSharp::BloodSpell
+  Name: Blood Magic
+  Description: 
+  Icon: {fileID: 0}
+  LightAttackName: Bloodshard Barrage
+  LightAttackDescription: 
+  LightAttackFirerate: 1
+  LightAttackAmmoCost: 1
+  HeavyAttackName: Love
+  HeavyAttackDescription: 
+  HeavyAttackFirerate: 0.25
+  HeavyAttackAmmoCost: 10
+  baseSpellHealthCost: 10
+  lightPrefab: {fileID: 0}
+  bulletCount: 10
+  bulletSpread: {x: 0.1, y: 0.1, z: 0.1}
+  healingPercent: 0.25
+  minimumHealAmount: 5
+  heavyPrefab: {fileID: 0}
+  infectRange: 10
+  chainCount: 2
