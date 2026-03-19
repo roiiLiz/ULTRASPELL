@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour {
+
+#region Variables
+
     [Header("Input Actions")]
     [SerializeField] private InputActionReference movementInput;
     [SerializeField] private InputActionReference jumpInput;
@@ -17,10 +20,14 @@ public class Player : MonoBehaviour {
     private JumpComponent jump;
     private GravityComponent gravity;
     private CameraController camComponent;
+    private HurtboxComponent hurtbox;
     private Camera cam;
 
     Vector3 finalMove;
 
+#endregion
+
+#region MonoBehaviour Methods
     void Awake() {
         controller = GetComponent<CharacterController>();
         velocity = GetComponent<VelocityComponent>();
@@ -28,12 +35,26 @@ public class Player : MonoBehaviour {
         jump = GetComponent<JumpComponent>();
         gravity = GetComponent<GravityComponent>();
         camComponent = GetComponent<CameraController>();
+        hurtbox = GetComponent<HurtboxComponent>();
 
         cam = Camera.main;
     }
 
     void Start() {
         camComponent.CaptureMouse();
+
+        hurtbox.onHit += OnHit;
+    }
+
+    void OnDestroy() {
+        hurtbox.onHit -= OnHit;
+    }
+
+    void OnDrawGizmos() {
+        if (cam != null) {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(cam.transform.position, cam.transform.forward * 10f);
+        }
     }
 
     void Update() {
@@ -41,6 +62,10 @@ public class Player : MonoBehaviour {
         UpdateCamera();
         UpdateWeapon();
     }
+
+#endregion
+
+#region Functions
 
     private void UpdateMovement() {
         if (controller.isGrounded && jumpInput.action.WasPressedThisFrame()) {
@@ -74,11 +99,10 @@ public class Player : MonoBehaviour {
         camComponent.RotateCamera(transform, cam, lookInput.action.ReadValue<Vector2>());
     }
 
-    void OnDrawGizmos() {
-        if (cam != null) {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(cam.transform.position, cam.transform.forward * 10f);
-        }
+
+    private void OnHit() {
+        Debug.Log("I got hit :(");
     }
+#endregion
 }
 
