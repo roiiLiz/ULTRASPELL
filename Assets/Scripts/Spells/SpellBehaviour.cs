@@ -5,22 +5,16 @@ using UnityEngine;
 public abstract class SpellBehaviour : ScriptableObject {
 #region Variables
 
-    [Header("Spell Display Settings")]
-    public string Name;
-    [TextArea(4, 10)] public string Description;
-    public Sprite Icon;
-    public int AmmoCount = 20;
+    [Header("Display Data")]
+    public SpellDisplayData DisplayData;
 
-    [Header("Light Attack Settings")]
-    public string LightAttackName;
-    [TextArea(4, 10)] public string LightAttackDescription;
+    [Space(4)]
+
+    [Header("Weapon Settings")]
+    public int AmmoCount = 20;
     public float LightAttackFirerate = 1f;
     public int LightAttackAmmoCost = 1;
 
-
-    [Header("Heavy Attack Settings")]
-    public string HeavyAttackName;
-    [TextArea(4, 10)] public string HeavyAttackDescription;
     public float HeavyAttackFirerate = 0.25f;
     public int HeavyAttackAmmoCost = 10;
 
@@ -61,4 +55,24 @@ public abstract class SpellBehaviour : ScriptableObject {
     public void ReplenishAmmo() => Ammo = AmmoCount;
 
 #endregion
+}
+
+[Serializable]
+public struct SpellDisplayData {
+    [Header("Spell Display Settings")]
+    public string Name;
+    [TextArea(4, 10)] public string Description;
+    public Sprite Icon;
+
+    [Space(4)]
+
+    [Header("Light Attack Settings")]
+    public string LightAttackName;
+    [TextArea(4, 10)] public string LightAttackDescription;
+
+    [Space(4)]
+
+    [Header("Heavy Attack Settings")]
+    public string HeavyAttackName;
+    [TextArea(4, 10)] public string HeavyAttackDescription;
 }

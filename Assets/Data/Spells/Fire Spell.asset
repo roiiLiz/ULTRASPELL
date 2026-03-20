@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbb3df6a4c12674e9fbad6300d1397e, type: 3}
   m_Name: Fire Spell
   m_EditorClassIdentifier: Assembly-CSharp::FireSpell
-  Name: Fire Magic
-  Description: 
-  Icon: {fileID: 0}
+  DisplayData:
+    Name: Fire Magic
+    Description: 
+    Icon: {fileID: 0}
+    LightAttackName: 
+    LightAttackDescription: 
+    HeavyAttackName: 
+    HeavyAttackDescription: 
   AmmoCount: 20
-  LightAttackName: 
-  LightAttackDescription: 
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
-  HeavyAttackName: 
-  HeavyAttackDescription: 
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10

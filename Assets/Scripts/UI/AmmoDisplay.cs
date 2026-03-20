@@ -8,6 +8,6 @@ public class AmmoDisplay : MonoBehaviour {
     void OnDisable() => SpellController.CurrentSpellInfo -= DisplayAmmo;
 
     private void DisplayAmmo(SpellBehaviour spell, int ammoCount) {
-        text.text = $"{spell.Name}:\n{ammoCount} / {spell.AmmoCount}";
+        text.text = $"{spell.DisplayData.Name}:\n{ammoCount} / {spell.AmmoCount}";
     }
 }

@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a7ab2bb61ad7e74a99d1f47a6cb13ba, type: 3}
   m_Name: Water Spell
   m_EditorClassIdentifier: Assembly-CSharp::WaterSpell
-  Name: Water Magic
-  Description: 
-  Icon: {fileID: 0}
+  DisplayData:
+    Name: Water Magic
+    Description: 
+    Icon: {fileID: 0}
+    LightAttackName: 
+    LightAttackDescription: 
+    HeavyAttackName: 
+    HeavyAttackDescription: 
   AmmoCount: 20
-  LightAttackName: 
-  LightAttackDescription: 
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
-  HeavyAttackName: 
-  HeavyAttackDescription: 
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10

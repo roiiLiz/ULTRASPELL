@@ -117,7 +117,7 @@ public class SpellController : MonoBehaviour {
 
         // SwapSpells();
         foreach (SpellBehaviour spell in spells) {
-            Debug.Log("Spell: " + spell.Name);
+            Debug.Log("Spell: " + spell.DisplayData.Name);
             if (spell != mainhandSpell && spell != offhandSpell && !usedSpells.Contains(spell)) {
                 EquipSpell(true, spell);
                 break;

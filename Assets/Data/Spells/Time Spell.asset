@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41790250e3a29b7499695fa9af126f6e, type: 3}
   m_Name: Time Spell
   m_EditorClassIdentifier: Assembly-CSharp::TimeSpell
-  Name: Time Magic
-  Description: 
-  Icon: {fileID: 0}
+  DisplayData:
+    Name: Time Magic
+    Description: 
+    Icon: {fileID: 0}
+    LightAttackName: 
+    LightAttackDescription: 
+    HeavyAttackName: 
+    HeavyAttackDescription: 
   AmmoCount: 20
-  LightAttackName: Sands of a Second
-  LightAttackDescription: 
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
-  HeavyAttackName: Temporal Recursion
-  HeavyAttackDescription: 
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
   movespeedIncreasePercent: 0.1

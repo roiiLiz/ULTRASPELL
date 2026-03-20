@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80acf99e18dd894db010580ce2c6463, type: 3}
   m_Name: Blood Spell
   m_EditorClassIdentifier: Assembly-CSharp::BloodSpell
-  Name: Blood Magic
-  Description: 
-  Icon: {fileID: 0}
+  DisplayData:
+    Name: Blood Magic
+    Description: 
+    Icon: {fileID: 0}
+    LightAttackName: 
+    LightAttackDescription: 
+    HeavyAttackName: 
+    HeavyAttackDescription: 
   AmmoCount: 20
-  LightAttackName: Bloodshard Barrage
-  LightAttackDescription: 
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
-  HeavyAttackName: Love
-  HeavyAttackDescription: 
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
   baseSpellHealthCost: 10
