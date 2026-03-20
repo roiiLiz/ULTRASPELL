@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpellController : MonoBehaviour {
@@ -11,6 +12,7 @@ public class SpellController : MonoBehaviour {
 
     private SpellBehaviour mainhandSpell;
     private SpellBehaviour offhandSpell;
+    private SpellBehaviour nextSpell;
     private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
 
     private float lightCooldown = 0f;
@@ -18,7 +20,8 @@ public class SpellController : MonoBehaviour {
     private float swapCooldown = 0f;
     private float _globalAttackCooldown = 0f;
 
-    public static event Action<SpellBehaviour, int> currentSpellInfo;
+    public static event Action<SpellBehaviour, int> CurrentSpellInfo;
+    public static event Action<SpellBehaviour, SpellBehaviour, SpellBehaviour> HeldSpells;
 
 #endregion
 
@@ -28,6 +31,7 @@ public class SpellController : MonoBehaviour {
         if (spells != null && spells.Count > 1) {
             mainhandSpell = spells[0];
             offhandSpell = spells[1];
+            nextSpell = GetNextSpell();
 
             mainhandSpell.ReplenishAmmo();
             offhandSpell.ReplenishAmmo();
@@ -43,7 +47,7 @@ public class SpellController : MonoBehaviour {
             swapCooldown = spellSwapCooldown;
             _globalAttackCooldown = globalAttackCooldown;
 
-            currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
+            CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         }
     }
 
@@ -90,7 +94,7 @@ public class SpellController : MonoBehaviour {
         lightCooldown = 0f;
         _globalAttackCooldown = 0f;
 
-        currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
+        CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
     }
 
     public void HeavyAttack() {
@@ -99,7 +103,7 @@ public class SpellController : MonoBehaviour {
         heavyCooldown = 0f;
         _globalAttackCooldown = 0f;
 
-        currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
+        CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
     }
 
     private void OnMainhandAmmoDepleted() {
@@ -110,6 +114,7 @@ public class SpellController : MonoBehaviour {
             usedSpells.Clear();
         }
 
+
         // SwapSpells();
         foreach (SpellBehaviour spell in spells) {
             Debug.Log("Spell: " + spell.Name);
@@ -119,6 +124,9 @@ public class SpellController : MonoBehaviour {
             }
         }
 
+        nextSpell = GetNextSpell();
+
+        HeldSpells?.Invoke(mainhandSpell, offhandSpell, nextSpell);
     }
 
     private void EquipSpell(bool isMainhand, SpellBehaviour spell) {
@@ -136,12 +144,31 @@ public class SpellController : MonoBehaviour {
             lightCooldown = mainhandSpell.GetLightAttackCooldown();
             heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
 
-            currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
+            CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         } else {
             offhandSpell.UnequipFromOffhand(this);
             offhandSpell = spell;
             offhandSpell.EquipToOffhand(this);
         }
+
+        HeldSpells?.Invoke(mainhandSpell, offhandSpell, nextSpell);
+    }
+
+    private SpellBehaviour GetNextSpell() {
+        SpellBehaviour next = null;
+
+        if (usedSpells.Count >= spells.Count - 2) {
+            next = usedSpells[0];
+        } else {
+            foreach (SpellBehaviour spell in spells) {
+                if (spell != mainhandSpell && spell != offhandSpell && !usedSpells.Contains(spell)) {
+                    next = spell;
+                    break;
+                }
+            }
+        }
+
+        return next;
     }
 
 #endregion
