@@ -22,7 +22,7 @@ public abstract class SpellBehaviour : ScriptableObject {
     public string HeavyAttackName;
     [TextArea(4, 10)] public string HeavyAttackDescription;
     public float HeavyAttackFirerate = 0.25f;
-    public int HeavyAttackAmmoCost = 1;
+    public int HeavyAttackAmmoCost = 10;
 
     public float GetLightAttackCooldown() => 1f / LightAttackFirerate;
     public float GetHeavyAttackCooldown() => 1f / HeavyAttackFirerate;
@@ -34,14 +34,18 @@ public abstract class SpellBehaviour : ScriptableObject {
 
 #region Functions
 
-    public abstract void EquipToMainhand(GameObject owner);
-    public abstract void EquipToOffhand(GameObject owner);
-    public abstract void UnequipFromMainhand(GameObject owner);
-    public abstract void UnequipFromOffhand(GameObject owner);
+    public abstract void EquipToMainhand(SpellController controller);
+    public abstract void EquipToOffhand(SpellController controller);
+    public abstract void UnequipFromMainhand(SpellController controller);
+    public abstract void UnequipFromOffhand(SpellController controller);
 
     public abstract void OnHit(GameObject target, GameObject owner);
-    public abstract void OnLightAttack(GameObject owner);
-    public abstract void OnHeavyAttack(GameObject owner);
+    public virtual void OnLightAttack(GameObject owner) {
+        SubtractAmmo(LightAttackAmmoCost);
+    }
+    public virtual void OnHeavyAttack(GameObject owner) {
+        SubtractAmmo(HeavyAttackAmmoCost);
+    }
 
     public void SubtractAmmo(int amount) {
         Ammo -= amount;

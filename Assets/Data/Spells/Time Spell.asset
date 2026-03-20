@@ -15,13 +15,15 @@ MonoBehaviour:
   Name: Time Magic
   Description: 
   Icon: {fileID: 0}
+  AmmoCount: 20
   LightAttackName: Sands of a Second
   LightAttackDescription: 
-  LightAttackFirerate: 1
+  LightAttackFirerate: 2
   LightAttackAmmoCost: 1
   HeavyAttackName: Temporal Recursion
   HeavyAttackDescription: 
-  HeavyAttackFirerate: 0.25
+  HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
-  sandBlastPrefab: {fileID: 0}
-  looperPrefab: {fileID: 0}
+  movespeedIncreasePercent: 0.1
+  lightPrefab: {fileID: 0}
+  heavyPrefab: {fileID: 0}

@@ -21,33 +21,33 @@ public class BloodSpell : SpellBehaviour {
     public float infectRange = 10f;
     public int chainCount = 2;
 
-    public override void EquipToMainhand(GameObject owner) {
+    public override void EquipToMainhand(SpellController controller) {
         return;
     }
 
-    public override void EquipToOffhand(GameObject owner) {
+    public override void EquipToOffhand(SpellController controller) {
         return;
     }
 
-    public override void OnHeavyAttack(GameObject owner) {
-        SubtractAmmo(HeavyAttackAmmoCost);
-        return;
-    }
+    // public override void OnHeavyAttack(GameObject owner) {
+    //     SubtractAmmo(HeavyAttackAmmoCost);
+    //     return;
+    // }
 
     public override void OnHit(GameObject target, GameObject owner) {
         return;
     }
 
-    public override void OnLightAttack(GameObject owner) {
-        SubtractAmmo(LightAttackAmmoCost);
+    // public override void OnLightAttack(GameObject owner) {
+    //     SubtractAmmo(LightAttackAmmoCost);
+    //     return;
+    // }
+
+    public override void UnequipFromMainhand(SpellController controller) {
         return;
     }
 
-    public override void UnequipFromMainhand(GameObject owner) {
-        return;
-    }
-
-    public override void UnequipFromOffhand(GameObject owner) {
+    public override void UnequipFromOffhand(SpellController controller) {
         return;
     }
 }

@@ -11,6 +11,7 @@ public class SpellController : MonoBehaviour {
 
     private SpellBehaviour mainhandSpell;
     private SpellBehaviour offhandSpell;
+    private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
 
     private float lightCooldown = 0f;
     private float heavyCooldown = 0f;
@@ -74,17 +75,6 @@ public class SpellController : MonoBehaviour {
     public void SwapSpells() {
         Debug.Log("SpellController: Swapping Spells");
 
-        // mainhandSpell.UnequipFromMainhand(gameObject);
-        // offhandSpell.UnequipFromOffhand(gameObject);
-
-        // (mainhandSpell, offhandSpell) = (offhandSpell, mainhandSpell);
-
-        // mainhandSpell.EquipToMainhand(gameObject);
-        // offhandSpell.EquipToOffhand(gameObject);
-
-        // lightCooldown = mainhandSpell.GetLightAttackCooldown();
-        // heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
-
         SpellBehaviour temp = offhandSpell;
 
         EquipSpell(false, mainhandSpell);
@@ -115,17 +105,32 @@ public class SpellController : MonoBehaviour {
     private void OnMainhandAmmoDepleted() {
         Debug.Log("SpellController: Mainhand Ammo Depleted");
         mainhandSpell.ReplenishAmmo();
-        SwapSpells();
+        usedSpells.Add(mainhandSpell);
+        if (usedSpells.Count >= spells.Count - 1) {
+            usedSpells.Clear();
+        }
+
+        // SwapSpells();
+        foreach (SpellBehaviour spell in spells) {
+            Debug.Log("Spell: " + spell.Name);
+            if (spell != mainhandSpell && spell != offhandSpell && !usedSpells.Contains(spell)) {
+                EquipSpell(true, spell);
+                break;
+            }
+        }
+
     }
 
     private void EquipSpell(bool isMainhand, SpellBehaviour spell) {
         if (isMainhand) {
-            mainhandSpell.UnequipFromMainhand(gameObject);
+            mainhandSpell.UnequipFromMainhand(this);
             mainhandSpell.onAmmoDepleted -= OnMainhandAmmoDepleted;
 
             mainhandSpell = spell;
 
-            mainhandSpell.EquipToMainhand(gameObject);
+            mainhandSpell.EquipToMainhand(this);
+            mainhandSpell.ReplenishAmmo();
+
             mainhandSpell.onAmmoDepleted += OnMainhandAmmoDepleted;
 
             lightCooldown = mainhandSpell.GetLightAttackCooldown();
@@ -133,9 +138,9 @@ public class SpellController : MonoBehaviour {
 
             currentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         } else {
-            offhandSpell.UnequipFromOffhand(gameObject);
+            offhandSpell.UnequipFromOffhand(this);
             offhandSpell = spell;
-            offhandSpell.EquipToOffhand(gameObject);
+            offhandSpell.EquipToOffhand(this);
         }
     }
 
