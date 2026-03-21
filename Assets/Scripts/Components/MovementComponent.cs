@@ -6,6 +6,7 @@ public class MovementComponent : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] private float speed = 10f;
     [SerializeField] private float distanceThreshold = 0.1f;
+    [SerializeField] private float speedMultiplier = 1f;
 
     public void MoveInDirection(Transform transform, Vector2 direction) {
         transform.position += GetMovementDirection(transform, direction) * Time.deltaTime;
@@ -14,6 +15,7 @@ public class MovementComponent : MonoBehaviour {
     public Vector3 GetMovementDirection(Transform transform, Vector2 direction) {
         Vector3 dir = transform.right * direction.x + transform.forward * direction.y;
         dir *= speed;
+        dir *= speedMultiplier;
 
         return dir;
     }
@@ -35,4 +37,7 @@ public class MovementComponent : MonoBehaviour {
 
         velocity.AddVelocity(direction * Time.deltaTime);
     }
+
+    public void SetSpeedMultiplier(float value) => speedMultiplier = value;
+    public void ResetSpeedMultiplier() => speedMultiplier = 1f;
 }

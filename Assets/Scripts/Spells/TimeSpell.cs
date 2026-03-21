@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Spells / Create Time Spell")]
 public class TimeSpell : SpellBehaviour {
     [Header("Time Spell Settings")]
-    [Range(0f, 1f)] public float movespeedIncreasePercent = 0.1f;
+    [Range(1f, 10f), Tooltip("The value is a percentage (i.e a value of 1.1f is equal to a 110% movespeed increase).")] public float mainhandMovespeedIncrease = 1.1f;
 
     [Space(4)]
     
@@ -16,6 +16,7 @@ public class TimeSpell : SpellBehaviour {
     public GameObject heavyPrefab;
 
     public override void EquipToMainhand(SpellController controller) {
+        controller.GetComponent<MovementComponent>().SetSpeedMultiplier(mainhandMovespeedIncrease);
         return;
     }
 
@@ -38,6 +39,7 @@ public class TimeSpell : SpellBehaviour {
     // }
 
     public override void UnequipFromMainhand(SpellController controller) {
+        controller.GetComponent<MovementComponent>().ResetSpeedMultiplier();
         return;
     }
 

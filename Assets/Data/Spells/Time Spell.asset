@@ -25,6 +25,6 @@ MonoBehaviour:
   LightAttackAmmoCost: 1
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
-  movespeedIncreasePercent: 0.1
+  mainhandMovespeedIncrease: 1.5
   lightPrefab: {fileID: 0}
   heavyPrefab: {fileID: 0}
