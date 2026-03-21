@@ -105,10 +105,6 @@ public class Player : MonoBehaviour {
         camComponent.RotateCamera(transform, cam, lookInput.action.ReadValue<Vector2>());
     }
 
-
-    private void OnHit() {
-        Debug.Log("I got hit :(");
-    }
 #endregion
 }
 

@@ -9,7 +9,7 @@ public class MovementComponent : MonoBehaviour {
     [SerializeField] private float speedMultiplier = 1f;
 
     public void MoveInDirection(Transform transform, Vector2 direction) {
-        transform.position += GetMovementDirection(transform, direction) * Time.deltaTime;
+        transform.position += GetMovementDirection(transform, direction) * speed * speedMultiplier * Time.deltaTime;
     }
 
     public Vector3 GetMovementDirection(Transform transform, Vector2 direction) {

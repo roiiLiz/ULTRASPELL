@@ -10,6 +10,8 @@ public class HitboxComponent : MonoBehaviour {
     public GameObject Owner { get; private set; }
     public readonly List<HitEffect> OnHitEffects = new();
 
+    public event Action OnHitboxTriggered;
+
     public void AddEffect(HitEffect action) => OnHitEffects.Add(action);
     public void RemoveEffect(HitEffect action) {
         if (OnHitEffects == null || OnHitEffects.Count <= 0 || !OnHitEffects.Contains(action)) {
@@ -22,9 +24,11 @@ public class HitboxComponent : MonoBehaviour {
     public void SetOwner(GameObject owner) => Owner = owner;
 
     private void OnTriggerEnter(Collider other) {
+        Debug.Log("HitboxComponent: Hello");
         if (collisionLayers == (collisionLayers | (1 << other.transform.gameObject.layer))) {
             if (other.TryGetComponent<HurtboxComponent>(out HurtboxComponent hurtbox)) {
                 hurtbox.OnHurtboxHit(OnHitEffects, Owner);
+                OnHitboxTriggered?.Invoke();
             }
         }
     }
