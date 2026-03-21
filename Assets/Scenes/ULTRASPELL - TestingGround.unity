@@ -2147,6 +2147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestCollider
   OnHitEffects:
   - {fileID: 11400000, guid: a286d235a67baa04d961624c0ac92d8e, type: 2}
+  - {fileID: 11400000, guid: 0d7e6addb7d14804b8788fd6d0aa1e18, type: 2}
   removeThing: {fileID: 0}
 --- !u!1 &1333333135
 GameObject:

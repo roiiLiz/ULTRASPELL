@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class TestCollider : MonoBehaviour {
 
     void Awake() {
         hitbox = GetComponent<HitboxComponent>();
+
+        hitbox.SetOwner(GameObject.FindGameObjectWithTag("Player"));
 
         foreach (OnHitEffect effect in OnHitEffects) {
             hitbox.AddEffect(effect.Execute);
