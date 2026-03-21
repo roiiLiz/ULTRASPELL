@@ -7,6 +7,12 @@ public class Bloodclot : MonoBehaviour {
     [SerializeField] private bool drawDebug = true;
 
     private int remainingChains;
+    private HitboxComponent hitbox;
+
+    void Awake() {
+        hitbox = GetComponent<HitboxComponent>();
+        // hitbox.AddAction();
+    }
 
     public void Initialize(int chainCount) {
         remainingChains = chainCount;

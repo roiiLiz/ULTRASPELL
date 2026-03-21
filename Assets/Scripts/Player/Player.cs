@@ -46,11 +46,11 @@ public class Player : MonoBehaviour {
     void Start() {
         camComponent.CaptureMouse();
 
-        hurtbox.onHit += OnHit;
+        // hurtbox.onHit += OnHit;
     }
 
     void OnDestroy() {
-        hurtbox.onHit -= OnHit;
+        // hurtbox.onHit -= OnHit;
     }
 
     void OnDrawGizmos() {
