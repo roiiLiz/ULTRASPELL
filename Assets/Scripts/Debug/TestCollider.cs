@@ -10,12 +10,13 @@ public class TestCollider : MonoBehaviour {
 
     void Awake() {
         hitbox = GetComponent<HitboxComponent>();
-        // hitbox.AddEffect(OnHit);
 
         foreach (OnHitEffect effect in OnHitEffects) {
             hitbox.AddEffect(effect.Execute);
         }
 
-        hitbox.RemoveEffect(removeThing.Execute);
+        if (removeThing != null) {
+            hitbox.RemoveEffect(removeThing.Execute);
+        }
     }
 }

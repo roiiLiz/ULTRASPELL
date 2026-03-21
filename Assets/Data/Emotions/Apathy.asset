@@ -9,22 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41790250e3a29b7499695fa9af126f6e, type: 3}
-  m_Name: Time Spell
-  m_EditorClassIdentifier: Assembly-CSharp::TimeSpell
+  m_Script: {fileID: 11500000, guid: 2a7ab2bb61ad7e74a99d1f47a6cb13ba, type: 3}
+  m_Name: Apathy
+  m_EditorClassIdentifier: Assembly-CSharp::WaterSpell
   DisplayData:
-    Name: Time Magic
+    Name: Apathy
     Description: 
     Icon: {fileID: 0}
-    LightAttackName: 
+    LightAttackName: a thoughtless act
     LightAttackDescription: 
-    HeavyAttackName: 
+    HeavyAttackName: as simple as breathing
     HeavyAttackDescription: 
   AmmoCount: 20
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
-  mainhandMovespeedIncrease: 1.5
-  lightPrefab: {fileID: 0}
-  heavyPrefab: {fileID: 0}

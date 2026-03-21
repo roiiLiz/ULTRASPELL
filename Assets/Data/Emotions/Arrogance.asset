@@ -9,28 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e80acf99e18dd894db010580ce2c6463, type: 3}
-  m_Name: Blood Spell
-  m_EditorClassIdentifier: Assembly-CSharp::BloodSpell
+  m_Script: {fileID: 11500000, guid: 9dbb3df6a4c12674e9fbad6300d1397e, type: 3}
+  m_Name: Arrogance
+  m_EditorClassIdentifier: Assembly-CSharp::FireSpell
   DisplayData:
-    Name: Blood Magic
+    Name: Arrogance
     Description: 
     Icon: {fileID: 0}
-    LightAttackName: 
+    LightAttackName: Perfection
     LightAttackDescription: 
-    HeavyAttackName: 
+    HeavyAttackName: I Have No Equal
     HeavyAttackDescription: 
   AmmoCount: 20
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
-  baseSpellHealthCost: 10
-  lightPrefab: {fileID: 0}
-  bulletCount: 10
-  bulletSpread: {x: 0.1, y: 0.1, z: 0.1}
-  healingPercent: 0.25
-  minimumHealAmount: 5
-  heavyPrefab: {fileID: 0}
-  infectRange: 10
-  chainCount: 2
