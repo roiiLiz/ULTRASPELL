@@ -1017,6 +1017,7 @@ RectTransform:
   - {fileID: 876188277}
   - {fileID: 1902084199}
   - {fileID: 890792380}
+  - {fileID: 1123644560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1536,6 +1537,7 @@ GameObject:
   - component: {fileID: 678663038}
   - component: {fileID: 678663039}
   - component: {fileID: 678663040}
+  - component: {fileID: 678663041}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1633,6 +1635,8 @@ MonoBehaviour:
   lightAttackInput: {fileID: -7489408523479520600, guid: e9230692b55af324e9a5aa743cd5b76f, type: 3}
   heavyAttackInput: {fileID: -2396591853021894, guid: e9230692b55af324e9a5aa743cd5b76f, type: 3}
   weaponSwapInput: {fileID: -3483963399010617413, guid: e9230692b55af324e9a5aa743cd5b76f, type: 3}
+  slowTimeInput: {fileID: 7859855651223000737, guid: e9230692b55af324e9a5aa743cd5b76f, type: 3}
+  slowTimeScale: 0.25
 --- !u!114 &678663033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1736,6 +1740,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dcdcb624f22b7ec46bde1ae1310052a4, type: 2}
   spellSwapCooldown: 0.25
   globalAttackCooldown: 0.1
+  trailController: {fileID: 678663041}
 --- !u!114 &678663040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,6 +1754,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 100
+--- !u!114 &678663041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678663026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d662a0c20aa4842aa899cca450aa82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailController
 --- !u!1 &735329418
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,6 +2618,81 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!1 &1123644559
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1123644560}
+  - component: {fileID: 1123644562}
+  - component: {fileID: 1123644561}
+  m_Layer: 5
+  m_Name: Crosshair
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1123644560
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123644559}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 233706381}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1123644561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123644559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 79aba0b290c471c4ba3d3f818d4e9b15, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1123644562
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123644559}
+  m_CullTransparentMesh: 1
 --- !u!1 &1162013588
 GameObject:
   m_ObjectHideFlags: 0
@@ -3167,7 +3259,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5cd7861798abc6d48af68f2fa0d027a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

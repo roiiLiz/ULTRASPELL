@@ -20,6 +20,7 @@ MonoBehaviour:
     LightAttackDescription: 
     HeavyAttackName: Fear
     HeavyAttackDescription: 
+  TrailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   AmmoCount: 20
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1

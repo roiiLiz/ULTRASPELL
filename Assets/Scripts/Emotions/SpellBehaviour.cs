@@ -8,9 +8,11 @@ public abstract class SpellBehaviour : ScriptableObject {
     [Header("Display Data")]
     public SpellDisplayData DisplayData;
 
-    [Space(4)]
+    [Space(10)]
 
     [Header("Weapon Settings")]
+    public TrailConfig TrailConfig;
+
     public int AmmoCount = 20;
     public float LightAttackFirerate = 1f;
     public int LightAttackAmmoCost = 1;

@@ -18,6 +18,6 @@ public class TestProjectile : MonoBehaviour {
     }
 
     void Update() {
-        movement.MoveInDirection(transform, Vector2.right);
+        movement.MoveInDirection(transform, Vector3.right);
     }
 }

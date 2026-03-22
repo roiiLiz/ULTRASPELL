@@ -12,8 +12,8 @@ public class MovementComponent : MonoBehaviour {
         transform.position += GetMovementDirection(transform, direction) * speed * speedMultiplier * Time.deltaTime;
     }
 
-    public Vector3 GetMovementDirection(Transform transform, Vector2 direction) {
-        Vector3 dir = transform.right * direction.x + transform.forward * direction.y;
+    public Vector3 GetMovementDirection(Transform transform, Vector3 direction) {
+        Vector3 dir = transform.right * direction.x + transform.up * direction.y + transform.forward * direction.z;
         dir *= speed;
         dir *= speedMultiplier;
 

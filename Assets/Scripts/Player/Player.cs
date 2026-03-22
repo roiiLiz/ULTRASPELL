@@ -14,6 +14,12 @@ public class Player : MonoBehaviour {
     [SerializeField] private InputActionReference heavyAttackInput;
     [SerializeField] private InputActionReference weaponSwapInput;
 
+    [Space(10)]
+
+    [Header("Debug Settings")]
+    [SerializeField] private InputActionReference slowTimeInput;
+    [SerializeField, Range(0f, 1f)] private float slowTimeScale = 0.25f;
+
     private CharacterController controller;
     private VelocityComponent velocity;
     private MovementComponent movement;
@@ -64,6 +70,10 @@ public class Player : MonoBehaviour {
         UpdateMovement();
         UpdateCamera();
         UpdateWeapon();
+
+        if (slowTimeInput.action.WasPressedThisFrame()) {
+            Time.timeScale = Time.timeScale == slowTimeScale ? 1f : slowTimeScale;
+        }
     }
 
 #endregion
@@ -81,7 +91,9 @@ public class Player : MonoBehaviour {
 
         finalMove = velocity.Velocity;
 
-        finalMove += movement.GetMovementDirection(transform, movementInput.action.ReadValue<Vector2>());
+        Vector3 moveDir = new Vector3(movementInput.action.ReadValue<Vector2>().x, 0f, movementInput.action.ReadValue<Vector2>().y);
+
+        finalMove += movement.GetMovementDirection(transform, moveDir);
 
         controller.Move(finalMove * Time.deltaTime);
     }
@@ -89,10 +101,10 @@ public class Player : MonoBehaviour {
     private void UpdateWeapon() {
         if (lightAttackInput.action.ReadValue<float>() > 0f && spellController.CanLightAttack()) {
             // Debug.Log("Light attack");
-            spellController.LightAttack();
+            spellController.LightAttack(cam.transform);
         } else if (heavyAttackInput.action.ReadValue<float>() > 0f && spellController.CanHeavyAttack()) {
             // Debug.Log("Heavy attack");
-            spellController.HeavyAttack();
+            spellController.HeavyAttack(cam.transform);
         }
 
         if (weaponSwapInput.action.WasPressedThisFrame() && spellController.CanSwap()) {

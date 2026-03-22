@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class SpellController : MonoBehaviour {
 #region Variables
@@ -9,11 +11,13 @@ public class SpellController : MonoBehaviour {
     [SerializeField] private List<SpellBehaviour> spells = new List<SpellBehaviour>();
     [SerializeField] private float spellSwapCooldown = 0.25f;
     [SerializeField] private float globalAttackCooldown = 0.1f;
+    [SerializeField] private TrailController trailController;
 
     private SpellBehaviour mainhandSpell;
     private SpellBehaviour offhandSpell;
     private SpellBehaviour nextSpell;
     private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
+    private ObjectPool<TrailRenderer> trailPool;
 
     private float lightCooldown = 0f;
     private float heavyCooldown = 0f;
@@ -41,11 +45,14 @@ public class SpellController : MonoBehaviour {
 
             // lightCooldown = mainhandSpell.GetLightAttackCooldown();
             // heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
+
             EquipSpell(true, mainhandSpell);
             EquipSpell(false, offhandSpell);
 
             swapCooldown = spellSwapCooldown;
             _globalAttackCooldown = globalAttackCooldown;
+
+            trailPool = new ObjectPool<TrailRenderer>(CreateShotTrail);
 
             CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         }
@@ -88,22 +95,91 @@ public class SpellController : MonoBehaviour {
         _globalAttackCooldown = globalAttackCooldown;
     }
 
-    public void LightAttack() {
+    public void LightAttack(Transform firingPoint) {
         Debug.Log("SpellController: Light Attack");
         mainhandSpell.OnLightAttack(gameObject);
+        if (Physics.Raycast(
+            firingPoint.position,
+            firingPoint.forward,
+            out RaycastHit hit,
+            float.MaxValue
+        )) {
+            trailController.StartCoroutine(StartTrail(
+                firingPoint.position,
+                hit.transform.position
+                // hit
+            ));
+        } else {
+            trailController.StartCoroutine(StartTrail(
+                firingPoint.position,
+                firingPoint.position + (firingPoint.forward * mainhandSpell.TrailConfig.MissFadeDistance)
+                // new RaycastHit()
+            ));
+        }
+
         lightCooldown = 0f;
         _globalAttackCooldown = 0f;
 
         CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
     }
 
-    public void HeavyAttack() {
+    public void HeavyAttack(Transform firingPoint) {
         Debug.Log("SpellController: Heavy Attack");
         mainhandSpell.OnHeavyAttack(gameObject);
         heavyCooldown = 0f;
         _globalAttackCooldown = 0f;
 
         CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
+    }
+
+    private TrailRenderer CreateShotTrail() {
+        GameObject go = new GameObject("Shot Trail");
+        TrailRenderer trailRenderer = go.AddComponent<TrailRenderer>();
+        trailRenderer.colorGradient = mainhandSpell.TrailConfig.Color;
+        trailRenderer.material = mainhandSpell.TrailConfig.Material;
+        trailRenderer.widthCurve = mainhandSpell.TrailConfig.TrailWidth;
+        trailRenderer.time = mainhandSpell.TrailConfig.Duration;
+        trailRenderer.minVertexDistance = mainhandSpell.TrailConfig.MinVertexDistance;
+
+        trailRenderer.emitting = false;
+        trailRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+
+        return trailRenderer;
+    }
+
+    private IEnumerator StartTrail(Vector3 start, Vector3 end) {
+        Debug.DrawRay(start, end - start, Color.yellow, 10f);
+
+        TrailRenderer trail = trailPool.Get();
+        trail.gameObject.SetActive(true);
+        trail.transform.position = start;
+        yield return null;
+
+        trail.emitting = true;
+
+        float dist = Vector3.Distance(start, end);
+        float remaining = dist;
+
+        while (remaining > 0) {
+            trail.transform.position = Vector3.Lerp(
+                start,
+                end,
+                Mathf.Clamp01(1 - (remaining / dist))
+            );
+
+            remaining -= mainhandSpell.TrailConfig.TrailSpeed * Time.deltaTime;
+
+            yield return null;
+        }
+
+        trail.transform.position = end;
+
+        yield return new WaitForSeconds(mainhandSpell.TrailConfig.Duration);
+        yield return null;
+
+        trail.emitting = false;
+        trail.gameObject.SetActive(false);
+        trailPool.Release(trail);
     }
 
     private void OnMainhandAmmoDepleted() {
