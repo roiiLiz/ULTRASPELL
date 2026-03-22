@@ -21,6 +21,8 @@ public class HitboxComponent : MonoBehaviour {
         OnHitEffects.Remove(action);
     }
 
+    public void ResetEffects() => OnHitEffects.Clear();
+
     public void SetOwner(GameObject owner) => Owner = owner;
 
     private void OnTriggerEnter(Collider other) {

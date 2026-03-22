@@ -15,4 +15,4 @@ MonoBehaviour:
   Targeting: 0
   ChainCount: 2
   ChainRadius: 7.5
-  TimeBeforeChain: 2
+  TimeBeforeChain: 0.5

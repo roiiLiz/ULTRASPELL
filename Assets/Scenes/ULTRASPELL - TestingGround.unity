@@ -493,7 +493,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &130463399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1744,7 +1744,7 @@ MonoBehaviour:
   trailController: {fileID: 678663041}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
 --- !u!114 &678663040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2710,6 +2710,7 @@ GameObject:
   - component: {fileID: 1162013590}
   - component: {fileID: 1162013589}
   - component: {fileID: 1162013593}
+  - component: {fileID: 1162013594}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -2827,6 +2828,19 @@ MonoBehaviour:
   collisionLayers:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1162013594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162013588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc2961eee227c4fa52e3f0df305675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
+  maxHealth: 100
 --- !u!1 &1175500300
 GameObject:
   m_ObjectHideFlags: 0

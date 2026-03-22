@@ -22,5 +22,15 @@ public class HurtboxComponent : MonoBehaviour {
             effect?.Invoke(_collider, owner);
         }
     }
+
+    public void _OnHurtboxHit(List<OnHitEffect> effects, GameObject owner) {
+        if (effects == null || effects.Count <= 0) {
+            return;
+        }
+
+        foreach (OnHitEffect effect in effects) {
+            effect?.Execute(_collider, owner);
+        }
+    }
 }
 

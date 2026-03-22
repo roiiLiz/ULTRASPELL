@@ -17,9 +17,11 @@ public class SpellController : MonoBehaviour {
     private SpellBehaviour offhandSpell;
     private SpellBehaviour nextSpell;
     private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
+    private List<OnHitEffect> dynamicHitEffects = new List<OnHitEffect>();
 
     private ObjectPool<TrailRenderer> lightTrailPool;
     private ObjectPool<TrailRenderer> heavyTrailPool;
+    private ObjectPool<HitboxComponent> hitboxes;
 
     private float lightCooldown = 0f;
     private float heavyCooldown = 0f;
@@ -56,6 +58,7 @@ public class SpellController : MonoBehaviour {
 
             lightTrailPool = new ObjectPool<TrailRenderer>(() => CreateShotTrail(mainhandSpell.LightTrailConfig));
             heavyTrailPool = new ObjectPool<TrailRenderer>(() => CreateShotTrail(mainhandSpell.HeavyTrailConfig));
+            // hitboxes = new ObjectPool<HitboxComponent>((List<OnHitEffect> hitEffects) => CreateHitbox(hitEffects));
 
             CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         }
@@ -123,6 +126,26 @@ public class SpellController : MonoBehaviour {
                         mainhandSpell.LightTrailConfig,
                         true
                     ));
+
+                    foreach (Collider collider in Physics.OverlapSphere(hit.transform.position, 1f)) {
+                        if (collider.TryGetComponent<HurtboxComponent>(out HurtboxComponent hurtbox)) {
+                            hurtbox._OnHurtboxHit(mainhandSpell.LightAttackHitEffects, gameObject);
+                        }
+                    }
+                    // GameObject go = new GameObject("Hitbox");
+                    // go.transform.position = hit.transform.position;
+
+                    // SphereCollider collider = go.AddComponent<SphereCollider>();
+                    // collider.isTrigger = true;
+                    // collider.radius = 1f;
+
+                    // HitboxComponent hitbox = go.AddComponent<HitboxComponent>();
+                    // foreach (OnHitEffect effect in mainhandSpell.LightAttackHitEffects) {
+                    //     hitbox.AddEffect(effect.Execute);
+                    // }
+
+                    // hitbox.collisionLayers = layerMask;
+
                 } else {
                     trailController.StartCoroutine(StartTrail(
                         firingPoint.position,
@@ -303,5 +326,8 @@ public class SpellController : MonoBehaviour {
         return next;
     }
 
-#endregion
+    public void AddHitEffect(OnHitEffect hitEffect) => dynamicHitEffects.Add(hitEffect);
+    public bool RemoveHitEffect(OnHitEffect hitEffect) => dynamicHitEffects.Remove(hitEffect);
+
+    #endregion
 }

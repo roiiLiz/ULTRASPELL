@@ -26,6 +26,7 @@ public class SpellBehaviour : ScriptableObject {
     public int LightAttackShotCount = 1;
     public Vector3 LightAttackShotSpread = Vector3.zero;
     public TrailConfig LightTrailConfig;
+    public List<OnHitEffect> LightAttackHitEffects = new List<OnHitEffect>();
 
     [Space(5)]
 
@@ -36,6 +37,7 @@ public class SpellBehaviour : ScriptableObject {
     public int HeavyAttackShotCount = 1;
     public Vector3 HeavyAttackShotSpread = Vector3.zero;
     public TrailConfig HeavyTrailConfig;
+    public List<OnHitEffect> HeavyAttackHitEffects = new List<OnHitEffect>();
 
     public float GetLightAttackCooldown() => 1f / LightAttackFirerate;
     public float GetHeavyAttackCooldown() => 1f / HeavyAttackFirerate;
