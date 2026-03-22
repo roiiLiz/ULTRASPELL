@@ -20,9 +20,10 @@ MonoBehaviour:
     LightAttackDescription: 
     HeavyAttackName: I Have No Equal
     HeavyAttackDescription: 
-  TrailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   AmmoCount: 20
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
+  LightTrailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
+  HeavyTrailConfig: {fileID: 11400000, guid: 3485443a3b284af459d6830cfdcd55fd, type: 2}

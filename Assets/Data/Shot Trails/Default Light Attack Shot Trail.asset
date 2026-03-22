@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14cdb23ae8f771445ae609099a4d0787, type: 3}
-  m_Name: New Shot Trail Config
+  m_Name: Default Light Attack Shot Trail
   m_EditorClassIdentifier: Assembly-CSharp::TrailConfig
   Material: {fileID: 2100000, guid: 5cd7861798abc6d48af68f2fa0d027a3, type: 2}
   TrailWidth:
@@ -38,7 +38,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   Duration: 0.5
-  MinVertexDistance: 0.05
+  MinVertexDistance: 1
   Color:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -69,5 +69,5 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  MissFadeDistance: 100
+  MissFadeDistance: 150
   TrailSpeed: 500

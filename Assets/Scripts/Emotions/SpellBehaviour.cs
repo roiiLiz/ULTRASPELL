@@ -11,14 +11,16 @@ public abstract class SpellBehaviour : ScriptableObject {
     [Space(10)]
 
     [Header("Weapon Settings")]
-    public TrailConfig TrailConfig;
+    // public TrailConfig TrailConfig;
 
     public int AmmoCount = 20;
     public float LightAttackFirerate = 1f;
     public int LightAttackAmmoCost = 1;
+    public TrailConfig LightTrailConfig;
 
     public float HeavyAttackFirerate = 0.25f;
     public int HeavyAttackAmmoCost = 10;
+    public TrailConfig HeavyTrailConfig;
 
     public float GetLightAttackCooldown() => 1f / LightAttackFirerate;
     public float GetHeavyAttackCooldown() => 1f / HeavyAttackFirerate;
