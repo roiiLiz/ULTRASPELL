@@ -1738,9 +1738,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aef06da9fb41def4da45ecafc0fbe451, type: 2}
   - {fileID: 11400000, guid: 252696cd94dbc6244a11bc80bca5c574, type: 2}
   - {fileID: 11400000, guid: dcdcb624f22b7ec46bde1ae1310052a4, type: 2}
+  - {fileID: 11400000, guid: a251ea86fee0fbe418a132034031562d, type: 2}
   spellSwapCooldown: 0.25
   globalAttackCooldown: 0.1
   trailController: {fileID: 678663041}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &678663040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2985,7 +2989,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e563d7a42acddc94d8e8f471d41d171f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  spellData: {fileID: 11400000, guid: 135f3fcc4a7f51c4b96797d057aef323, type: 2}
   drawDebug: 1
 --- !u!135 &1196983491
 SphereCollider:

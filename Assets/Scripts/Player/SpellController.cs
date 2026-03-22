@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -12,12 +11,12 @@ public class SpellController : MonoBehaviour {
     [SerializeField] private float spellSwapCooldown = 0.25f;
     [SerializeField] private float globalAttackCooldown = 0.1f;
     [SerializeField] private TrailController trailController;
+    [SerializeField] private LayerMask layerMask;
 
     private SpellBehaviour mainhandSpell;
     private SpellBehaviour offhandSpell;
     private SpellBehaviour nextSpell;
     private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
-    private ObjectPool<TrailRenderer> trailPool;
 
     private ObjectPool<TrailRenderer> lightTrailPool;
     private ObjectPool<TrailRenderer> heavyTrailPool;
@@ -54,8 +53,6 @@ public class SpellController : MonoBehaviour {
 
             swapCooldown = spellSwapCooldown;
             _globalAttackCooldown = globalAttackCooldown;
-
-            trailPool = new ObjectPool<TrailRenderer>(() => CreateShotTrail(mainhandSpell.LightTrailConfig));
 
             lightTrailPool = new ObjectPool<TrailRenderer>(() => CreateShotTrail(mainhandSpell.LightTrailConfig));
             heavyTrailPool = new ObjectPool<TrailRenderer>(() => CreateShotTrail(mainhandSpell.HeavyTrailConfig));
@@ -104,26 +101,39 @@ public class SpellController : MonoBehaviour {
     public void LightAttack(Transform firingPoint) {
         Debug.Log("SpellController: Light Attack");
         mainhandSpell.OnLightAttack(gameObject);
-        if (Physics.Raycast(
-            firingPoint.position,
-            firingPoint.forward,
-            out RaycastHit hit,
-            float.MaxValue
-        )) {
-            trailController.StartCoroutine(StartTrail(
-                firingPoint.position,
-                hit.transform.position,
-                mainhandSpell.LightTrailConfig,
-                true
-            ));
-        } else {
-            trailController.StartCoroutine(StartTrail(
-                firingPoint.position,
-                firingPoint.position + (firingPoint.forward * mainhandSpell.LightTrailConfig.MissFadeDistance),
-                mainhandSpell.LightTrailConfig,
-                true
-            ));
+
+        if (mainhandSpell.LightAttackIsHitscan) {
+            for (int i = 0; i < mainhandSpell.LightAttackShotCount; i++) {
+                Vector3 dir = firingPoint.forward + new Vector3(
+                    UnityEngine.Random.Range(-mainhandSpell.LightAttackShotSpread.x, mainhandSpell.LightAttackShotSpread.x),
+                    UnityEngine.Random.Range(-mainhandSpell.LightAttackShotSpread.y, mainhandSpell.LightAttackShotSpread.y),
+                    UnityEngine.Random.Range(-mainhandSpell.LightAttackShotSpread.z, mainhandSpell.LightAttackShotSpread.z)
+                );
+
+                if (Physics.Raycast(
+                    firingPoint.position,
+                    dir,
+                    out RaycastHit hit,
+                    float.MaxValue,
+                    layerMask
+                )) {
+                    trailController.StartCoroutine(StartTrail(
+                        firingPoint.position,
+                        hit.transform.position,
+                        mainhandSpell.LightTrailConfig,
+                        true
+                    ));
+                } else {
+                    trailController.StartCoroutine(StartTrail(
+                        firingPoint.position,
+                        firingPoint.position + (dir * mainhandSpell.LightTrailConfig.MissFadeDistance),
+                        mainhandSpell.LightTrailConfig,
+                        true
+                    ));
+                }
+            }
         }
+
 
         lightCooldown = 0f;
         _globalAttackCooldown = 0f;
@@ -132,28 +142,39 @@ public class SpellController : MonoBehaviour {
     }
 
     public void HeavyAttack(Transform firingPoint) {
-        Debug.Log("SpellController: Heavy Attack");
+        // Debug.Log("SpellController: Heavy Attack");
         mainhandSpell.OnHeavyAttack(gameObject);
 
-        if (Physics.Raycast(
-            firingPoint.position,
-            firingPoint.forward,
-            out RaycastHit hit,
-            float.MaxValue
-        )) {
-            trailController.StartCoroutine(StartTrail(
-                firingPoint.position,
-                hit.transform.position,
-                mainhandSpell.HeavyTrailConfig,
-                false
-            ));
-        } else {
-            trailController.StartCoroutine(StartTrail(
-                firingPoint.position,
-                firingPoint.position + (firingPoint.forward * mainhandSpell.HeavyTrailConfig.MissFadeDistance),
-                mainhandSpell.HeavyTrailConfig,
-                false
-            ));
+        if (mainhandSpell.HeavyAttackIsHitscan) {
+            for (int i = 0; i < mainhandSpell.HeavyAttackShotCount; i++) {
+                Vector3 dir = firingPoint.forward + new Vector3(
+                    UnityEngine.Random.Range(-mainhandSpell.HeavyAttackShotSpread.x, mainhandSpell.HeavyAttackShotSpread.x),
+                    UnityEngine.Random.Range(-mainhandSpell.HeavyAttackShotSpread.y, mainhandSpell.HeavyAttackShotSpread.y),
+                    UnityEngine.Random.Range(-mainhandSpell.HeavyAttackShotSpread.z, mainhandSpell.HeavyAttackShotSpread.z)
+                );
+
+                if (Physics.Raycast(
+                    firingPoint.position,
+                    dir,
+                    out RaycastHit hit,
+                    float.MaxValue,
+                    layerMask
+                )) {
+                    trailController.StartCoroutine(StartTrail(
+                        firingPoint.position,
+                        hit.transform.position,
+                        mainhandSpell.HeavyTrailConfig,
+                        false
+                    ));
+                } else {
+                    trailController.StartCoroutine(StartTrail(
+                        firingPoint.position,
+                        firingPoint.position + (firingPoint.forward * mainhandSpell.HeavyTrailConfig.MissFadeDistance),
+                        mainhandSpell.HeavyTrailConfig,
+                        false
+                    ));
+                }
+            }
         }
 
         heavyCooldown = 0f;
@@ -248,7 +269,7 @@ public class SpellController : MonoBehaviour {
             mainhandSpell = spell;
 
             mainhandSpell.EquipToMainhand(this);
-            mainhandSpell.ReplenishAmmo();
+            // mainhandSpell.ReplenishAmmo();
 
             mainhandSpell.onAmmoDepleted += OnMainhandAmmoDepleted;
 

@@ -9,30 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e80acf99e18dd894db010580ce2c6463, type: 3}
+  m_Script: {fileID: 11500000, guid: 628dd251be4df73439b18efd046beb0f, type: 3}
   m_Name: Affection
   m_EditorClassIdentifier: Assembly-CSharp::BloodSpell
   DisplayData:
     Name: Affection
     Description: 
     Icon: {fileID: 0}
-    LightAttackName: Blood Ties
+    LightAttackName: Vampire Knives
     LightAttackDescription: 
-    HeavyAttackName: Love
+    HeavyAttackName: Contagious Love
     HeavyAttackDescription: 
   AmmoCount: 20
+  MainhandHeldEffects: []
+  OffhandHeldEffects: []
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
+  LightAttackIsHitscan: 1
+  LightAttackShotCount: 6
+  LightAttackShotSpread: {x: 0.1, y: 0.1, z: 0.1}
   LightTrailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
+  HeavyAttackIsHitscan: 1
+  HeavyAttackShotCount: 1
+  HeavyAttackShotSpread: {x: 0, y: 0, z: 0}
   HeavyTrailConfig: {fileID: 11400000, guid: 3485443a3b284af459d6830cfdcd55fd, type: 2}
-  baseSpellHealthCost: 10
-  lightPrefab: {fileID: 0}
-  bulletCount: 10
-  bulletSpread: {x: 0.1, y: 0.1, z: 0.1}
-  healingPercent: 0.25
-  minimumHealAmount: 5
-  heavyPrefab: {fileID: 0}
-  infectRange: 10
-  chainCount: 2

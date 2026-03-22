@@ -9,23 +9,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41790250e3a29b7499695fa9af126f6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 628dd251be4df73439b18efd046beb0f, type: 3}
   m_Name: Anxiety
   m_EditorClassIdentifier: Assembly-CSharp::TimeSpell
   DisplayData:
     Name: Anxiety
     Description: 
     Icon: {fileID: 0}
-    LightAttackName: Claustrophobia
+    LightAttackName: Doom
     LightAttackDescription: 
     HeavyAttackName: Fear
     HeavyAttackDescription: 
-  TrailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   AmmoCount: 20
+  MainhandHeldEffects:
+  - {fileID: 11400000, guid: c43e8726a8aadd046b386e7abba9031f, type: 2}
+  OffhandHeldEffects:
+  - {fileID: 11400000, guid: 047b5c9efaa32b24a8028eb648039da1, type: 2}
   LightAttackFirerate: 2
   LightAttackAmmoCost: 1
+  LightAttackIsHitscan: 1
+  LightAttackShotCount: 1
+  LightAttackShotSpread: {x: 0, y: 0, z: 0}
+  LightTrailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   HeavyAttackFirerate: 0.5
   HeavyAttackAmmoCost: 10
-  mainhandMovespeedIncrease: 1.5
-  lightPrefab: {fileID: 0}
-  heavyPrefab: {fileID: 0}
+  HeavyAttackIsHitscan: 1
+  HeavyAttackShotCount: 1
+  HeavyAttackShotSpread: {x: 0, y: 0, z: 0}
+  HeavyTrailConfig: {fileID: 11400000, guid: 3485443a3b284af459d6830cfdcd55fd, type: 2}

@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class SpellBehaviour : ScriptableObject {
+public class SpellBehaviour : ScriptableObject {
 #region Variables
 
     [Header("Display Data")]
@@ -12,14 +13,28 @@ public abstract class SpellBehaviour : ScriptableObject {
 
     [Header("Weapon Settings")]
     // public TrailConfig TrailConfig;
-
     public int AmmoCount = 20;
-    public float LightAttackFirerate = 1f;
+    public List<HeldEffect> MainhandHeldEffects = new List<HeldEffect>();
+    public List<HeldEffect> OffhandHeldEffects = new List<HeldEffect>();
+
+    [Space(5)]
+
+    [Header("Light Attack Settings")]
+    public float LightAttackFirerate = 2f;
     public int LightAttackAmmoCost = 1;
+    public bool LightAttackIsHitscan = true;
+    public int LightAttackShotCount = 1;
+    public Vector3 LightAttackShotSpread = Vector3.zero;
     public TrailConfig LightTrailConfig;
 
-    public float HeavyAttackFirerate = 0.25f;
+    [Space(5)]
+
+    [Header("Heavy Attack Settings")]
+    public float HeavyAttackFirerate = 0.5f;
     public int HeavyAttackAmmoCost = 10;
+    public bool HeavyAttackIsHitscan = true;
+    public int HeavyAttackShotCount = 1;
+    public Vector3 HeavyAttackShotSpread = Vector3.zero;
     public TrailConfig HeavyTrailConfig;
 
     public float GetLightAttackCooldown() => 1f / LightAttackFirerate;
@@ -32,16 +47,34 @@ public abstract class SpellBehaviour : ScriptableObject {
 
 #region Functions
 
-    public abstract void EquipToMainhand(SpellController controller);
-    public abstract void EquipToOffhand(SpellController controller);
-    public abstract void UnequipFromMainhand(SpellController controller);
-    public abstract void UnequipFromOffhand(SpellController controller);
+    public void EquipToMainhand(SpellController controller) {
+        foreach (HeldEffect effect in MainhandHeldEffects) {
+            effect.OnEquip(controller);
+        }
+    }
+    public void EquipToOffhand(SpellController controller) {
+        foreach (HeldEffect effect in OffhandHeldEffects) {
+            effect.OnEquip(controller);
+        }
+    }
+    public void UnequipFromMainhand(SpellController controller) {
+        foreach (HeldEffect effect in MainhandHeldEffects) {
+            effect.OnUnequip(controller);
+        }
+    }
+    public void UnequipFromOffhand(SpellController controller) {
+        foreach (HeldEffect effect in OffhandHeldEffects) {
+            effect.OnUnequip(controller);
+        }
+    }
 
-    public abstract void OnHit(GameObject target, GameObject owner);
-    public virtual void OnLightAttack(GameObject owner) {
+    public void OnHit(GameObject target, GameObject owner) {
+
+    }
+    public void OnLightAttack(GameObject owner) {
         SubtractAmmo(LightAttackAmmoCost);
     }
-    public virtual void OnHeavyAttack(GameObject owner) {
+    public void OnHeavyAttack(GameObject owner) {
         SubtractAmmo(HeavyAttackAmmoCost);
     }
 

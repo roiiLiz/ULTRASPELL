@@ -1,8 +1,6 @@
 using UnityEngine;
 
 public class Bloodclot : MonoBehaviour {
-    [SerializeField] private BloodSpell spellData;
-    
     [Header("Debug")]
     [SerializeField] private bool drawDebug = true;
 
@@ -18,17 +16,17 @@ public class Bloodclot : MonoBehaviour {
         remainingChains = chainCount;
     }
 
-    void OnDrawGizmos() {
-        if (spellData != null && drawDebug) {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, spellData.infectRange);
+    // void OnDrawGizmos() {
+    //     if (spellData != null && drawDebug) {
+    //         Gizmos.color = Color.green;
+    //         Gizmos.DrawWireSphere(transform.position, spellData.infectRange);
 
-            foreach(Collider collider in Physics.OverlapSphere(gameObject.transform.position, spellData.infectRange)) {
-                if (collider.gameObject.GetComponent<HurtboxComponent>()) {
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawLine(transform.position, collider.gameObject.transform.position);
-                }
-            }
-        }
-    }
+    //         foreach(Collider collider in Physics.OverlapSphere(gameObject.transform.position, spellData.infectRange)) {
+    //             if (collider.gameObject.GetComponent<HurtboxComponent>()) {
+    //                 Gizmos.color = Color.red;
+    //                 Gizmos.DrawLine(transform.position, collider.gameObject.transform.position);
+    //             }
+    //         }
+    //     }
+    // }
 }
