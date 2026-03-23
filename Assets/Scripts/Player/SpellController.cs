@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -18,6 +19,8 @@ public class SpellController : MonoBehaviour {
     private SpellBehaviour nextSpell;
     private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
     private List<OnHitEffect> dynamicHitEffects = new List<OnHitEffect>();
+
+    private Transform hitTransform;
 
     private float lightCooldown = 0f;
     private float heavyCooldown = 0f;
@@ -99,13 +102,16 @@ public class SpellController : MonoBehaviour {
                     UnityEngine.Random.Range(-mainhandSpell.LightAttackShotSpread.z, mainhandSpell.LightAttackShotSpread.z)
                 );
 
+                Debug.DrawLine(firingPoint.position, firingPoint.position + (dir * float.MaxValue), Color.red, 5f);
+
                 if (Physics.Raycast(
                     firingPoint.position,
-                    dir,
+                    firingPoint.position + dir,
                     out RaycastHit hit,
                     float.MaxValue,
                     layerMask
                 )) {
+                    hitTransform = hit.transform;
                     trailController.StartCoroutine(trailController.StartTrail(
                         firingPoint.position,
                         hit.transform.position,
@@ -164,7 +170,7 @@ public class SpellController : MonoBehaviour {
 
                 if (Physics.Raycast(
                     firingPoint.position,
-                    dir,
+                    firingPoint.position + dir,
                     out RaycastHit hit,
                     float.MaxValue,
                     layerMask
@@ -259,6 +265,13 @@ public class SpellController : MonoBehaviour {
 
     public void AddHitEffect(OnHitEffect hitEffect) => dynamicHitEffects.Add(hitEffect);
     public bool RemoveHitEffect(OnHitEffect hitEffect) => dynamicHitEffects.Remove(hitEffect);
+
+    void OnDrawGizmos() {
+        if (hitTransform != null) {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(hitTransform.position, 1f);
+        }
+    }
 
     #endregion
 }
