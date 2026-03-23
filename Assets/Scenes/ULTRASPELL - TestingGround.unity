@@ -1744,7 +1744,7 @@ MonoBehaviour:
   trailController: {fileID: 678663041}
   layerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 435
 --- !u!114 &678663040
 MonoBehaviour:
   m_ObjectHideFlags: 0
