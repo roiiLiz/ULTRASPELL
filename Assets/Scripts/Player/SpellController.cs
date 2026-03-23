@@ -19,10 +19,6 @@ public class SpellController : MonoBehaviour {
     private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
     private List<OnHitEffect> dynamicHitEffects = new List<OnHitEffect>();
 
-    private ObjectPool<TrailRenderer> lightTrailPool;
-    private ObjectPool<TrailRenderer> heavyTrailPool;
-    private ObjectPool<HitboxComponent> hitboxes;
-
     private float lightCooldown = 0f;
     private float heavyCooldown = 0f;
     private float swapCooldown = 0f;
@@ -44,21 +40,11 @@ public class SpellController : MonoBehaviour {
             mainhandSpell.ReplenishAmmo();
             offhandSpell.ReplenishAmmo();
 
-            // mainhandSpell.EquipToMainhand(gameObject);
-            // offhandSpell.EquipToOffhand(gameObject);
-
-            // lightCooldown = mainhandSpell.GetLightAttackCooldown();
-            // heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
-
             EquipSpell(true, mainhandSpell);
             EquipSpell(false, offhandSpell);
 
             swapCooldown = spellSwapCooldown;
             _globalAttackCooldown = globalAttackCooldown;
-
-            lightTrailPool = new ObjectPool<TrailRenderer>(() => CreateShotTrail(mainhandSpell.LightTrailConfig));
-            heavyTrailPool = new ObjectPool<TrailRenderer>(() => CreateShotTrail(mainhandSpell.HeavyTrailConfig));
-            // hitboxes = new ObjectPool<HitboxComponent>((List<OnHitEffect> hitEffects) => CreateHitbox(hitEffects));
 
             CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         }
@@ -120,7 +106,7 @@ public class SpellController : MonoBehaviour {
                     float.MaxValue,
                     layerMask
                 )) {
-                    trailController.StartCoroutine(StartTrail(
+                    trailController.StartCoroutine(trailController.StartTrail(
                         firingPoint.position,
                         hit.transform.position,
                         mainhandSpell.LightTrailConfig,
@@ -147,7 +133,7 @@ public class SpellController : MonoBehaviour {
                     // hitbox.collisionLayers = layerMask;
 
                 } else {
-                    trailController.StartCoroutine(StartTrail(
+                    trailController.StartCoroutine(trailController.StartTrail(
                         firingPoint.position,
                         firingPoint.position + (dir * mainhandSpell.LightTrailConfig.MissFadeDistance),
                         mainhandSpell.LightTrailConfig,
@@ -183,14 +169,14 @@ public class SpellController : MonoBehaviour {
                     float.MaxValue,
                     layerMask
                 )) {
-                    trailController.StartCoroutine(StartTrail(
+                    trailController.StartCoroutine(trailController.StartTrail(
                         firingPoint.position,
                         hit.transform.position,
                         mainhandSpell.HeavyTrailConfig,
                         false
                     ));
                 } else {
-                    trailController.StartCoroutine(StartTrail(
+                    trailController.StartCoroutine(trailController.StartTrail(
                         firingPoint.position,
                         firingPoint.position + (firingPoint.forward * mainhandSpell.HeavyTrailConfig.MissFadeDistance),
                         mainhandSpell.HeavyTrailConfig,
@@ -204,61 +190,6 @@ public class SpellController : MonoBehaviour {
         _globalAttackCooldown = 0f;
 
         CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
-    }
-
-    private TrailRenderer CreateShotTrail(TrailConfig config) {
-        GameObject go = new GameObject("Shot Trail");
-        TrailRenderer trailRenderer = go.AddComponent<TrailRenderer>();
-        trailRenderer.colorGradient = config.Color;
-        trailRenderer.material = config.Material;
-        trailRenderer.widthCurve = config.TrailWidth;
-        trailRenderer.time = config.Duration;
-        trailRenderer.minVertexDistance = config.MinVertexDistance;
-
-        trailRenderer.emitting = false;
-        trailRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-
-        return trailRenderer;
-    }
-
-    private IEnumerator StartTrail(Vector3 start, Vector3 end, TrailConfig config, bool isLightAttack) {
-        Debug.DrawRay(start, end - start, Color.yellow, 10f);
-
-        TrailRenderer trail = isLightAttack ? lightTrailPool.Get() : heavyTrailPool.Get();
-        trail.gameObject.SetActive(true);
-        trail.transform.position = start;
-        yield return null;
-
-        trail.emitting = true;
-
-        float dist = Vector3.Distance(start, end);
-        float remaining = dist;
-
-        while (remaining > 0) {
-            trail.transform.position = Vector3.Lerp(
-                start,
-                end,
-                Mathf.Clamp01(1 - (remaining / dist))
-            );
-
-            remaining -= config.TrailSpeed * Time.deltaTime;
-
-            yield return null;
-        }
-
-        trail.transform.position = end;
-
-        yield return new WaitForSeconds(config.Duration);
-        yield return null;
-
-        trail.emitting = false;
-        trail.gameObject.SetActive(false);
-        // trailPool.Release(trail);
-        if (isLightAttack) {
-            lightTrailPool.Release(trail);
-        } else {
-            heavyTrailPool.Release(trail);
-        }
     }
 
     private void OnMainhandAmmoDepleted() {
