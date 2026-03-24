@@ -47,9 +47,9 @@ Material:
     - _QueueOffset: 0
     m_Colors:
     - _DissolveSpeed: {r: -0.1, g: 0, b: 0, a: 0}
-    - _GradientEnd: {r: 0.3490566, g: 0.03148354, b: 0, a: 1}
-    - _GradientStart: {r: 1, g: 0, b: 0, a: 1}
-    - _TextureScrollSpeed: {r: -0.5, g: 0, b: 0, a: 0}
+    - _GradientEnd: {r: 1, g: 0.2783019, b: 0.97991574, a: 1}
+    - _GradientStart: {r: 0.4009434, g: 0.6573516, b: 1, a: 1}
+    - _TextureScrollSpeed: {r: -0.3, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6908316718349727097

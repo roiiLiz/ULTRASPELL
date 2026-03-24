@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Aspect", menuName = "Aspects / Create New Aspect", order = 0)]
 public class SpellBehaviour : ScriptableObject {
 #region Variables
 
@@ -71,6 +71,26 @@ public class SpellBehaviour : ScriptableObject {
     public void SetAmmo(int amount) => Ammo = amount;
     public void ReplenishAmmo() => Ammo = AmmoCount;
 
+    public void BindToUnlocks(GameObject owner) {
+        foreach (UnlockCondition condition in LightAttack.unlockConditions) {
+            condition.BindEvaluation(owner);
+        }
+        
+        foreach (UnlockCondition condition in HeavyAttack.unlockConditions) {
+            condition.BindEvaluation(owner);
+        }
+    }
+
+    public void UnbindToUnlocks(GameObject owner) {
+        foreach (UnlockCondition condition in LightAttack.unlockConditions) {
+            condition.UnbindEvaluation(owner);
+        }
+
+        foreach (UnlockCondition condition in HeavyAttack.unlockConditions) {
+            condition.UnbindEvaluation(owner);
+        }
+    }
+
 #endregion
 }
 
@@ -97,18 +117,40 @@ public struct SpellDisplayData {
 [Serializable]
 public class AttackInfo {
     public float firerate = 1f;
+    [Tooltip("Attack cooldown in seconds.")] public float cooldown = 1f;
     public int ammoCost = 1;
     public bool isHitscan = true;
     public int shotCount = 1;
     public Vector3 spread = Vector3.zero;
     public TrailConfig trailConfig;
-    public List<OnHitEffect> hitEffects = new();
     public AttackType attackType;
+    public List<OnCastEffect> castEffects = new();
+    public List<OnHitEffect> hitEffects = new();
+    public List<UnlockCondition> unlockConditions = new();
+
+
+    public bool Unlocked() {
+        if (unlockConditions == null || unlockConditions.Count <= 0) return true;
+
+        foreach (UnlockCondition condition in unlockConditions) {
+            if (condition.Evaluate()) continue;
+
+            return false;
+        }
+
+        return true;
+    }
 
     public float GetFirerate() => 1f / firerate;
 }
 
+public abstract class OnCastEffect : ScriptableObject {
+    public abstract void Execute(GameObject owner);
+}
+
+
 public enum AttackType {
     Light,
-    Heavy
+    Heavy,
+    Ultimate
 }

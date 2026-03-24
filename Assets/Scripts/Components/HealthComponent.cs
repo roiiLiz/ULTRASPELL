@@ -15,6 +15,9 @@ public class HealthComponent : MonoBehaviour, IDamageable {
     public int CurrentHealth { get; private set; }
     public float DamageMultiplier { get; private set; }
 
+    [SerializeField] float noHitNotificationInterval = 1f;
+    float timeNotHit = 0f;
+
     /// <summary>
     /// Emits the health component's current and max health values, respectively.
     /// </summary>
@@ -30,11 +33,18 @@ public class HealthComponent : MonoBehaviour, IDamageable {
     /// </summary>
     public event Action<int, int> OnHealed;
 
+    public event Action<float> NoHitDuration;
     public event Action OnDied;
 
     void Start() {
         CurrentHealth = maxHealth;
         ResetDamageMultiplier();
+    }
+
+    void Update() {
+        timeNotHit += Time.deltaTime;
+
+        NoHitDuration?.Invoke(timeNotHit);
     }
 
     public int CalculateDamage(int value) => Mathf.RoundToInt(value * DamageMultiplier);
@@ -45,6 +55,8 @@ public class HealthComponent : MonoBehaviour, IDamageable {
         if (value <= 0) {
             return; 
         }
+
+        timeNotHit = 0f;
 
         CurrentHealth = Mathf.Clamp(CurrentHealth - CalculateDamage(value), 0, maxHealth);
         OnDamaged?.Invoke(CurrentHealth, value);

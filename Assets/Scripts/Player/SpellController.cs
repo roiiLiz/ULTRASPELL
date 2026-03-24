@@ -53,6 +53,8 @@ public class SpellController : MonoBehaviour {
             swapCooldown = spellSwapCooldown;
             _globalAttackCooldown = globalAttackCooldown;
 
+            mainhandSpell.BindToUnlocks(gameObject);
+
             CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         }
     }
@@ -64,6 +66,7 @@ public class SpellController : MonoBehaviour {
     void OnDestroy() {
         if (mainhandSpell != null) {
             mainhandSpell.onAmmoDepleted -= OnMainhandAmmoDepleted;
+            mainhandSpell.UnbindToUnlocks(gameObject);
         }
     }
 
@@ -71,8 +74,18 @@ public class SpellController : MonoBehaviour {
 
     #region Functions
 
-    public bool CanLightAttack() => lightCooldown >= mainhandSpell.LightAttack.GetFirerate() && _globalAttackCooldown >= globalAttackCooldown;
-    public bool CanHeavyAttack() => heavyCooldown >= mainhandSpell.HeavyAttack.GetFirerate() && _globalAttackCooldown >= globalAttackCooldown;
+    public bool CanLightAttack() {
+        return lightCooldown >= mainhandSpell.LightAttack.GetFirerate()
+            && _globalAttackCooldown >= globalAttackCooldown
+            && mainhandSpell.LightAttack.Unlocked();
+    }
+
+    public bool CanHeavyAttack() {
+        return heavyCooldown >= mainhandSpell.HeavyAttack.GetFirerate()
+            && _globalAttackCooldown >= globalAttackCooldown
+            && mainhandSpell.HeavyAttack.Unlocked();
+    }
+
     public bool CanSwap() => swapCooldown >= spellSwapCooldown;
 
     private void UpdateCooldowns() {
