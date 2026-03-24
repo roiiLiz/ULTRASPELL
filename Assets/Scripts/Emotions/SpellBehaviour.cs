@@ -133,12 +133,22 @@ public class AttackInfo {
         if (unlockConditions == null || unlockConditions.Count <= 0) return true;
 
         foreach (UnlockCondition condition in unlockConditions) {
-            if (condition.Evaluate()) continue;
+            if (condition.Evaluate()) {
+                continue;
+            } 
 
             return false;
         }
 
         return true;
+    }
+
+    public void UpdateConditionals(GameObject owner) {
+        for (int i = unlockConditions.Count - 1; i >= 0; i--) {
+            if (unlockConditions[i].Evaluate()) {
+                unlockConditions[i].UnbindEvaluation(owner);
+            }
+        }
     }
 
     public float GetFirerate() => 1f / firerate;

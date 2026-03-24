@@ -61,6 +61,7 @@ public class SpellController : MonoBehaviour {
 
     void Update() {
         UpdateCooldowns();
+        UpdateConditionals();
     }
 
     void OnDestroy() {
@@ -93,6 +94,11 @@ public class SpellController : MonoBehaviour {
         heavyCooldown = Mathf.Clamp(heavyCooldown + Time.deltaTime, 0f, mainhandSpell.HeavyAttack.GetFirerate());
         swapCooldown = Mathf.Clamp(swapCooldown + Time.deltaTime, 0f, spellSwapCooldown);
         _globalAttackCooldown = Mathf.Clamp(_globalAttackCooldown + Time.deltaTime, 0f, globalAttackCooldown);
+    }
+
+    private void UpdateConditionals() {
+        mainhandSpell.LightAttack.UpdateConditionals(gameObject);
+        mainhandSpell.HeavyAttack.UpdateConditionals(gameObject);
     }
 
     public void SwapSpells() {

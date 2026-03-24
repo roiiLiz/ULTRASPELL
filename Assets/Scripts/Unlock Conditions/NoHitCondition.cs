@@ -7,13 +7,15 @@ public class NoHitCondition : UnlockCondition {
 
     private void SetTime(float time) => noHitTime = time;
     public override void BindEvaluation(GameObject evaluatedObject) {
-        HealthComponent health = evaluatedObject.GetComponent<HealthComponent>();
-        health.NoHitDuration += SetTime;
+        if (evaluatedObject.TryGetComponent<HealthComponent>(out var health)) {
+            health.NoHitDuration += SetTime;
+        }
     }
 
     public override void UnbindEvaluation(GameObject evaluatedObject) {
-        HealthComponent health = evaluatedObject.GetComponent<HealthComponent>();
-        health.NoHitDuration -= SetTime;
+        if (evaluatedObject.TryGetComponent<HealthComponent>(out var health)) {
+            health.NoHitDuration -= SetTime;
+        }
     }
 
     public override bool Evaluate() {
