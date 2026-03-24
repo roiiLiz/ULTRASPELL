@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628dd251be4df73439b18efd046beb0f, type: 3}
+  m_Name: Anxiety
+  m_EditorClassIdentifier: Assembly-CSharp::TimeSpell
+  DisplayData:
+    Name: Anxiety
+    Description: 
+    Icon: {fileID: 0}
+    LightAttackName: Doom
+    LightAttackDescription: 
+    HeavyAttackName: Fear
+    HeavyAttackDescription: 
+  AmmoCount: 20
+  MainhandHeldEffects:
+  - {fileID: 11400000, guid: c43e8726a8aadd046b386e7abba9031f, type: 2}
+  OffhandHeldEffects:
+  - {fileID: 11400000, guid: 047b5c9efaa32b24a8028eb648039da1, type: 2}
+  LightAttack:
+    firerate: 5
+    ammoCost: 1
+    isHitscan: 1
+    shotCount: 1
+    spread: {x: 0.025, y: 0.025, z: 0.025}
+    trailConfig: {fileID: 11400000, guid: a77181fd119427e48b54e34c885180b6, type: 2}
+    hitEffects: []
+    attackType: 0
+  HeavyAttack:
+    firerate: 0.5
+    ammoCost: 10
+    isHitscan: 1
+    shotCount: 1
+    spread: {x: 0, y: 0, z: 0}
+    trailConfig: {fileID: 11400000, guid: 3485443a3b284af459d6830cfdcd55fd, type: 2}
+    hitEffects: []
+    attackType: 1
