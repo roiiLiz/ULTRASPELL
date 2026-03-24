@@ -26,12 +26,12 @@ MonoBehaviour:
   OffhandHeldEffects:
   - {fileID: 11400000, guid: 047b5c9efaa32b24a8028eb648039da1, type: 2}
   LightAttack:
-    firerate: 2
+    firerate: 5
     ammoCost: 1
     isHitscan: 1
     shotCount: 1
-    spread: {x: 0, y: 0, z: 0}
-    trailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
+    spread: {x: 0.025, y: 0.025, z: 0.025}
+    trailConfig: {fileID: 11400000, guid: a77181fd119427e48b54e34c885180b6, type: 2}
     hitEffects: []
     attackType: 0
   HeavyAttack:
@@ -43,17 +43,3 @@ MonoBehaviour:
     trailConfig: {fileID: 11400000, guid: 3485443a3b284af459d6830cfdcd55fd, type: 2}
     hitEffects: []
     attackType: 1
-  LightAttackFirerate: 2
-  LightAttackAmmoCost: 1
-  LightAttackIsHitscan: 1
-  LightAttackShotCount: 1
-  LightAttackShotSpread: {x: 0, y: 0, z: 0}
-  LightTrailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
-  LightAttackHitEffects: []
-  HeavyAttackFirerate: 0.5
-  HeavyAttackAmmoCost: 10
-  HeavyAttackIsHitscan: 1
-  HeavyAttackShotCount: 1
-  HeavyAttackShotSpread: {x: 0, y: 0, z: 0}
-  HeavyTrailConfig: {fileID: 11400000, guid: 3485443a3b284af459d6830cfdcd55fd, type: 2}
-  HeavyAttackHitEffects: []

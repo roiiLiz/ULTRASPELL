@@ -8,24 +8,24 @@ using UnityEngine.Pool;
 public class SpellController : MonoBehaviour {
 #region Variables
 
-    [SerializeField] private List<SpellBehaviour> spells = new List<SpellBehaviour>();
-    [SerializeField] private float spellSwapCooldown = 0.25f;
-    [SerializeField] private float globalAttackCooldown = 0.1f;
-    [SerializeField] private TrailController trailController;
-    [SerializeField] private LayerMask layerMask;
+    [SerializeField] List<SpellBehaviour> spells = new List<SpellBehaviour>();
+    [SerializeField] float spellSwapCooldown = 0.25f;
+    [SerializeField] float globalAttackCooldown = 0.1f;
+    [SerializeField] TrailController trailController;
+    [SerializeField] LayerMask layerMask;
 
-    private SpellBehaviour mainhandSpell;
-    private SpellBehaviour offhandSpell;
-    private SpellBehaviour nextSpell;
-    private List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
-    private List<OnHitEffect> dynamicHitEffects = new List<OnHitEffect>();
+    SpellBehaviour mainhandSpell;
+    SpellBehaviour offhandSpell;
+    SpellBehaviour nextSpell;
+    List<SpellBehaviour> usedSpells = new List<SpellBehaviour>();
+    List<OnHitEffect> dynamicHitEffects = new List<OnHitEffect>();
 
-    private Transform hitTransform;
+    Vector3 hitPoint;
 
-    private float lightCooldown = 0f;
-    private float heavyCooldown = 0f;
-    private float swapCooldown = 0f;
-    private float _globalAttackCooldown = 0f;
+    float lightCooldown = 0f;
+    float heavyCooldown = 0f;
+    float swapCooldown = 0f;
+    float _globalAttackCooldown = 0f;
 
     public static event Action<SpellBehaviour, int> CurrentSpellInfo;
     public static event Action<SpellBehaviour, SpellBehaviour, SpellBehaviour> HeldSpells;
@@ -40,8 +40,12 @@ public class SpellController : MonoBehaviour {
             offhandSpell = spells[1];
             nextSpell = GetNextSpell();
 
-            mainhandSpell.ReplenishAmmo();
-            offhandSpell.ReplenishAmmo();
+            // mainhandSpell.ReplenishAmmo();
+            // offhandSpell.ReplenishAmmo();
+
+            foreach (SpellBehaviour spell in spells) {
+                spell.ReplenishAmmo();
+            }
 
             EquipSpell(true, mainhandSpell);
             EquipSpell(false, offhandSpell);
@@ -127,13 +131,15 @@ public class SpellController : MonoBehaviour {
             if (Physics.Raycast(firingPoint.position, shotDir, out RaycastHit hit, float.MaxValue)) {
                 // Debug.DrawRay(firingPoint.position, hit.transform.position, Color.blue, 5f);
                 trailController.StartCoroutine(trailController.StartTrail(
-                    firingPoint.position, hit.transform.position, info.trailConfig, info.attackType
+                    firingPoint.position, hit.point, info.trailConfig
                 ));
 
-                OnHitscanHit(hit.transform.position, info);
+                hitPoint = hit.point;
+
+                OnHitscanHit(hit.point, info);
             } else {
                 trailController.StartCoroutine(trailController.StartTrail(
-                    firingPoint.position, firingPoint.position + (shotDir * info.trailConfig.MissFadeDistance), info.trailConfig, info.attackType
+                    firingPoint.position, firingPoint.position + (shotDir * info.trailConfig.MissFadeDistance), info.trailConfig
                 ));
             }
         }
@@ -253,9 +259,9 @@ public class SpellController : MonoBehaviour {
     public bool RemoveHitEffect(OnHitEffect hitEffect) => dynamicHitEffects.Remove(hitEffect);
 
     void OnDrawGizmos() {
-        if (hitTransform != null) {
+        if (hitPoint != null) {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(hitTransform.position, 1f);
+            Gizmos.DrawWireSphere(hitPoint, 1f);
         }
     }
 

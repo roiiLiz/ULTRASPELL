@@ -10,34 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14cdb23ae8f771445ae609099a4d0787, type: 3}
-  m_Name: Default Light Attack Shot Trail
+  m_Name: Anxiety Light Trail Config
   m_EditorClassIdentifier: Assembly-CSharp::TrailConfig
-  Material: {fileID: 2100000, guid: 5cd7861798abc6d48af68f2fa0d027a3, type: 2}
+  Material: {fileID: 2100000, guid: fc630704b7a09994a8eec04e229377c3, type: 2}
   TrailWidth:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.25
-      inSlope: 0
-      outSlope: 0
+      value: 1
+      inSlope: -0.5231389
+      outSlope: -0.5231389
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 3
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.29583332
     - serializedVersion: 3
       time: 1
-      value: 0.1
-      inSlope: 0
-      outSlope: 0
+      value: 0
+      inSlope: -0.4302521
+      outSlope: -0.4302521
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
+      weightedMode: 3
+      inWeight: 0.3541667
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Duration: 0.15
+  Duration: 0.25
   MinVertexDistance: 0.1
   Color:
     serializedVersion: 2
@@ -69,5 +69,5 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  MissFadeDistance: 150
-  TrailSpeed: 500
+  MissFadeDistance: 100
+  TrailSpeed: 50

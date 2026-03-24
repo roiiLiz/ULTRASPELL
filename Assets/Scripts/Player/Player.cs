@@ -76,7 +76,7 @@ public class Player : MonoBehaviour {
     void OnDrawGizmos() {
         if (cam != null) {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(cam.transform.position, cam.transform.forward * 10f);
+            Gizmos.DrawLine(cam.transform.position, cam.transform.position + (cam.transform.forward * 10f));
         }
     }
 
