@@ -18,8 +18,8 @@ public class TrailController : MonoBehaviour {
 
     void Start() {
         if (currentSpell != null) {
-            lightTrailPool = new ObjectPool<TrailRenderer>(() => CreateTrail(currentSpell.LightTrailConfig));
-            heavyTrailPool = new ObjectPool<TrailRenderer>(() => CreateTrail(currentSpell.HeavyTrailConfig));
+            lightTrailPool = new ObjectPool<TrailRenderer>(() => CreateTrail(currentSpell.LightAttack.trailConfig));
+            heavyTrailPool = new ObjectPool<TrailRenderer>(() => CreateTrail(currentSpell.HeavyAttack.trailConfig));
         }
     }
 
@@ -38,10 +38,10 @@ public class TrailController : MonoBehaviour {
         return trailRenderer;
     }
 
-    public IEnumerator StartTrail(Vector3 start, Vector3 end, TrailConfig config, bool isLightAttack) {
+    public IEnumerator StartTrail(Vector3 start, Vector3 end, TrailConfig config, AttackType attackType) {
         Debug.DrawRay(start, end - start, Color.yellow, 10f);
 
-        TrailRenderer trail = isLightAttack ? lightTrailPool.Get() : heavyTrailPool.Get();
+        TrailRenderer trail = attackType == AttackType.Light ? lightTrailPool.Get() : heavyTrailPool.Get();
         trail.gameObject.SetActive(true);
         trail.transform.position = start;
         yield return null;
@@ -71,10 +71,16 @@ public class TrailController : MonoBehaviour {
         trail.emitting = false;
         trail.gameObject.SetActive(false);
 
-        if (isLightAttack) {
-            lightTrailPool.Release(trail);
-        } else {
-            heavyTrailPool.Release(trail);
+        switch (attackType)
+        {
+            case AttackType.Light:
+                lightTrailPool.Release(trail);
+                break;
+            case AttackType.Heavy:
+                heavyTrailPool.Release(trail);
+                break;
+            default:
+                break;
         }
     }
 }

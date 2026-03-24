@@ -7,7 +7,7 @@ public class ChainEffect : OnHitEffect {
     public float ChainRadius = 7.5f;
     public float TimeBeforeChain = 2f;
 
-    public override void Execute(Collider target, GameObject owner) {
+    public override void Execute(GameObject target) {
         if (target.GetComponent<ChainOrigin>() == null) {
             ChainOrigin chain = target.AddComponent<ChainOrigin>();
             chain.Initialize(

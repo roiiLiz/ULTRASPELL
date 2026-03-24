@@ -4,10 +4,9 @@ using UnityEngine;
 public class DamageEffect : OnHitEffect {
     public int Damage = 0;
 
-    public override void Execute(Collider target, GameObject owner) {
-        HealthComponent health = target.GetComponent<HealthComponent>();
-        if (health != null) {
-            health.Damage(Damage);
+    public override void Execute(GameObject target) {
+        if (target.TryGetComponent<IDamageable>(out var health)) {
+            health.TakeDamage(Damage);
             Debug.Log($"Dealing {Damage} damage to {target.name}");
         }
     }

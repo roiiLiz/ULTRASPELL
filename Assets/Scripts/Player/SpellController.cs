@@ -67,13 +67,13 @@ public class SpellController : MonoBehaviour {
 
     #region Functions
 
-    public bool CanLightAttack() => lightCooldown >= mainhandSpell.GetLightAttackCooldown() && _globalAttackCooldown >= globalAttackCooldown;
-    public bool CanHeavyAttack() => heavyCooldown >= mainhandSpell.GetHeavyAttackCooldown() && _globalAttackCooldown >= globalAttackCooldown;
+    public bool CanLightAttack() => lightCooldown >= mainhandSpell.LightAttack.GetFirerate() && _globalAttackCooldown >= globalAttackCooldown;
+    public bool CanHeavyAttack() => heavyCooldown >= mainhandSpell.HeavyAttack.GetFirerate() && _globalAttackCooldown >= globalAttackCooldown;
     public bool CanSwap() => swapCooldown >= spellSwapCooldown;
 
     private void UpdateCooldowns() {
-        lightCooldown = Mathf.Clamp(lightCooldown + Time.deltaTime, 0f, mainhandSpell.GetLightAttackCooldown());
-        heavyCooldown = Mathf.Clamp(heavyCooldown + Time.deltaTime, 0f, mainhandSpell.GetHeavyAttackCooldown());
+        lightCooldown = Mathf.Clamp(lightCooldown + Time.deltaTime, 0f, mainhandSpell.LightAttack.GetFirerate());
+        heavyCooldown = Mathf.Clamp(heavyCooldown + Time.deltaTime, 0f, mainhandSpell.HeavyAttack.GetFirerate());
         swapCooldown = Mathf.Clamp(swapCooldown + Time.deltaTime, 0f, spellSwapCooldown);
         _globalAttackCooldown = Mathf.Clamp(_globalAttackCooldown + Time.deltaTime, 0f, globalAttackCooldown);
     }
@@ -94,61 +94,9 @@ public class SpellController : MonoBehaviour {
         Debug.Log("SpellController: Light Attack");
         mainhandSpell.OnLightAttack(gameObject);
 
-        if (mainhandSpell.LightAttackIsHitscan) {
-            for (int i = 0; i < mainhandSpell.LightAttackShotCount; i++) {
-                Vector3 dir = firingPoint.forward + new Vector3(
-                    UnityEngine.Random.Range(-mainhandSpell.LightAttackShotSpread.x, mainhandSpell.LightAttackShotSpread.x),
-                    UnityEngine.Random.Range(-mainhandSpell.LightAttackShotSpread.y, mainhandSpell.LightAttackShotSpread.y),
-                    UnityEngine.Random.Range(-mainhandSpell.LightAttackShotSpread.z, mainhandSpell.LightAttackShotSpread.z)
-                );
-
-                Debug.DrawLine(firingPoint.position, firingPoint.position + (dir * float.MaxValue), Color.red, 5f);
-
-                if (Physics.Raycast(
-                    firingPoint.position,
-                    firingPoint.position + dir,
-                    out RaycastHit hit,
-                    float.MaxValue,
-                    layerMask
-                )) {
-                    hitTransform = hit.transform;
-                    trailController.StartCoroutine(trailController.StartTrail(
-                        firingPoint.position,
-                        hit.transform.position,
-                        mainhandSpell.LightTrailConfig,
-                        true
-                    ));
-
-                    foreach (Collider collider in Physics.OverlapSphere(hit.transform.position, 1f)) {
-                        if (collider.TryGetComponent<HurtboxComponent>(out HurtboxComponent hurtbox)) {
-                            hurtbox._OnHurtboxHit(mainhandSpell.LightAttackHitEffects, gameObject);
-                        }
-                    }
-                    // GameObject go = new GameObject("Hitbox");
-                    // go.transform.position = hit.transform.position;
-
-                    // SphereCollider collider = go.AddComponent<SphereCollider>();
-                    // collider.isTrigger = true;
-                    // collider.radius = 1f;
-
-                    // HitboxComponent hitbox = go.AddComponent<HitboxComponent>();
-                    // foreach (OnHitEffect effect in mainhandSpell.LightAttackHitEffects) {
-                    //     hitbox.AddEffect(effect.Execute);
-                    // }
-
-                    // hitbox.collisionLayers = layerMask;
-
-                } else {
-                    trailController.StartCoroutine(trailController.StartTrail(
-                        firingPoint.position,
-                        firingPoint.position + (dir * mainhandSpell.LightTrailConfig.MissFadeDistance),
-                        mainhandSpell.LightTrailConfig,
-                        true
-                    ));
-                }
-            }
+        if (mainhandSpell.LightAttack.isHitscan) {
+            HitscanAttack(firingPoint, mainhandSpell.LightAttack);
         }
-
 
         lightCooldown = 0f;
         _globalAttackCooldown = 0f;
@@ -160,42 +108,80 @@ public class SpellController : MonoBehaviour {
         // Debug.Log("SpellController: Heavy Attack");
         mainhandSpell.OnHeavyAttack(gameObject);
 
-        if (mainhandSpell.HeavyAttackIsHitscan) {
-            for (int i = 0; i < mainhandSpell.HeavyAttackShotCount; i++) {
-                Vector3 dir = firingPoint.forward + new Vector3(
-                    UnityEngine.Random.Range(-mainhandSpell.HeavyAttackShotSpread.x, mainhandSpell.HeavyAttackShotSpread.x),
-                    UnityEngine.Random.Range(-mainhandSpell.HeavyAttackShotSpread.y, mainhandSpell.HeavyAttackShotSpread.y),
-                    UnityEngine.Random.Range(-mainhandSpell.HeavyAttackShotSpread.z, mainhandSpell.HeavyAttackShotSpread.z)
-                );
-
-                if (Physics.Raycast(
-                    firingPoint.position,
-                    firingPoint.position + dir,
-                    out RaycastHit hit,
-                    float.MaxValue,
-                    layerMask
-                )) {
-                    trailController.StartCoroutine(trailController.StartTrail(
-                        firingPoint.position,
-                        hit.transform.position,
-                        mainhandSpell.HeavyTrailConfig,
-                        false
-                    ));
-                } else {
-                    trailController.StartCoroutine(trailController.StartTrail(
-                        firingPoint.position,
-                        firingPoint.position + (firingPoint.forward * mainhandSpell.HeavyTrailConfig.MissFadeDistance),
-                        mainhandSpell.HeavyTrailConfig,
-                        false
-                    ));
-                }
-            }
+        if (mainhandSpell.HeavyAttack.isHitscan) {
+            HitscanAttack(firingPoint, mainhandSpell.HeavyAttack);
         }
 
         heavyCooldown = 0f;
         _globalAttackCooldown = 0f;
 
         CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
+    }
+
+    void HitscanAttack(Transform firingPoint, AttackInfo info) {
+        for (int i = 0; i < info.shotCount; i++) {
+            Vector3 shotDir = GetSpread(firingPoint.forward, info.spread);
+
+            // Debug.DrawLine(firingPoint.position, firingPoint.position + (shotDir * 10f), Color.green, 5f);
+
+            if (Physics.Raycast(firingPoint.position, shotDir, out RaycastHit hit, float.MaxValue)) {
+                // Debug.DrawRay(firingPoint.position, hit.transform.position, Color.blue, 5f);
+                trailController.StartCoroutine(trailController.StartTrail(
+                    firingPoint.position, hit.transform.position, info.trailConfig, info.attackType
+                ));
+
+                OnHitscanHit(hit.transform.position, info);
+            } else {
+                trailController.StartCoroutine(trailController.StartTrail(
+                    firingPoint.position, firingPoint.position + (shotDir * info.trailConfig.MissFadeDistance), info.trailConfig, info.attackType
+                ));
+            }
+        }
+    }
+
+    void ProjectileAttack(Transform firingPoint, AttackInfo info) {
+
+    }
+
+    void OnHitscanHit(Vector3 hitPoint, AttackInfo info) {
+        Debug.Log("SpellController: OnHitscan Outer Scope");
+        Collider[] colliders = Physics.OverlapSphere(hitPoint, 1f);
+
+        foreach (Collider collider in colliders) {
+            IHittable hit = collider.GetComponent<IHittable>();
+
+            if (hit == null) continue;
+
+            Debug.Log("SpellController: OnHitscan Inner Loop");
+            hit.OnHit(GetHitEffects(info.attackType), gameObject);
+        }
+    }
+
+    Vector3 GetSpread(Vector3 initalDirection, Vector3 spread) {
+        return initalDirection + new Vector3(
+            UnityEngine.Random.Range(-spread.x, spread.x),
+            UnityEngine.Random.Range(-spread.y, spread.y),
+            UnityEngine.Random.Range(-spread.z, spread.z)
+        );
+    }
+
+    List<OnHitEffect> GetHitEffects(AttackType attackType) {
+        List<OnHitEffect> hitEffects = new();
+
+        switch (attackType) {
+            case AttackType.Light:
+                hitEffects.AddRange(mainhandSpell.LightAttack.hitEffects);
+                break;
+            case AttackType.Heavy:
+                hitEffects.AddRange(mainhandSpell.HeavyAttack.hitEffects);
+                break;
+            default:
+                break;
+        }   
+
+        hitEffects.AddRange(dynamicHitEffects);
+
+        return hitEffects;
     }
 
     private void OnMainhandAmmoDepleted() {
@@ -233,8 +219,8 @@ public class SpellController : MonoBehaviour {
 
             mainhandSpell.onAmmoDepleted += OnMainhandAmmoDepleted;
 
-            lightCooldown = mainhandSpell.GetLightAttackCooldown();
-            heavyCooldown = mainhandSpell.GetHeavyAttackCooldown();
+            lightCooldown = mainhandSpell.LightAttack.GetFirerate();
+            heavyCooldown = mainhandSpell.HeavyAttack.GetFirerate();
 
             CurrentSpellInfo?.Invoke(mainhandSpell, mainhandSpell.Ammo);
         } else {
@@ -274,4 +260,19 @@ public class SpellController : MonoBehaviour {
     }
 
     #endregion
+
+    // [Serializable]
+    // struct AttackInfo {
+    //     public AttackInfo(int shotCount, Vector3 spread, TrailConfig trailConfig, bool isLightAttack) {
+    //         this.shotCount = shotCount;
+    //         this.spread = spread;
+    //         this.trailConfig = trailConfig;
+    //         this.isLightAttack = isLightAttack;
+    //     }
+
+    //     public int shotCount;
+    //     public Vector3 spread;
+    //     public TrailConfig trailConfig;
+    //     public bool isLightAttack;
+    // }
 }

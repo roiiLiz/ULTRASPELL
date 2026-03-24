@@ -11,10 +11,10 @@ public class TestProjectile : MonoBehaviour {
         hitbox = GetComponent<HitboxComponent>();
         movement = GetComponent<MovementComponent>();
 
-        hitbox.AddEffect(chainEffect.Execute);
-        hitbox.SetOwner(GameObject.FindGameObjectWithTag("Player"));
+        // hitbox.AddEffect(chainEffect.Execute);
+        // hitbox.SetOwner(GameObject.FindGameObjectWithTag("Player"));
 
-        hitbox.OnHitboxTriggered += () => Destroy(gameObject);
+        // hitbox.OnHitboxTriggered += () => Destroy(gameObject);
     }
 
     void Update() {

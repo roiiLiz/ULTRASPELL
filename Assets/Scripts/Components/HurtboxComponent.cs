@@ -1,10 +1,12 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
+
+public interface IHittable {
+    public void OnHit(List<OnHitEffect> hitEffects, GameObject hitter);
+}
 
 [RequireComponent(typeof(Collider))]
-public class HurtboxComponent : MonoBehaviour {
+public class HurtboxComponent : MonoBehaviour, IHittable {
     [Header("Settings")]
     public LayerMask collisionLayers;
     private Collider _collider;
@@ -29,8 +31,19 @@ public class HurtboxComponent : MonoBehaviour {
         }
 
         foreach (OnHitEffect effect in effects) {
-            effect?.Execute(_collider, owner);
+            // effect?.Execute(_collider, owner);
+        }
+    }
+
+    public void OnHit(List<OnHitEffect> hitEffects, GameObject hitter) {
+        if (hitEffects == null || hitEffects.Count <= 0) return;
+        
+        foreach (OnHitEffect effect in hitEffects) {
+            if (effect == null) continue;
+
+            effect.Execute(effect.Targeting == Targeting.Target ? gameObject : hitter);
         }
     }
 }
+
 

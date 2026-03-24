@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,30 +6,35 @@ public class Player : MonoBehaviour {
 
 #region Variables
 
+    public static event Action<int, int> Damaged;
+    public static event Action Died;
+
+
     [Header("Input Actions")]
-    [SerializeField] private InputActionReference movementInput;
-    [SerializeField] private InputActionReference jumpInput;
-    [SerializeField] private InputActionReference lookInput;
-    [SerializeField] private InputActionReference lightAttackInput;
-    [SerializeField] private InputActionReference heavyAttackInput;
-    [SerializeField] private InputActionReference weaponSwapInput;
+    [SerializeField] InputActionReference movementInput;
+    [SerializeField] InputActionReference jumpInput;
+    [SerializeField] InputActionReference lookInput;
+    [SerializeField] InputActionReference lightAttackInput;
+    [SerializeField] InputActionReference heavyAttackInput;
+    [SerializeField] InputActionReference weaponSwapInput;
 
     [Space(10)]
 
     [Header("Debug Settings")]
-    [SerializeField] private InputActionReference slowTimeInput;
-    [SerializeField, Range(0f, 1f)] private float slowTimeScale = 0.25f;
+    [SerializeField] InputActionReference slowTimeInput;
+    [SerializeField, Range(0f, 1f)] float slowTimeScale = 0.25f;
 
-    private CharacterController controller;
-    private VelocityComponent velocity;
-    private MovementComponent movement;
-    private JumpComponent jump;
-    private GravityComponent gravity;
-    private CameraController camComponent;
-    private HurtboxComponent hurtbox;
-    private SpellController spellController;
+    CharacterController controller;
+    VelocityComponent velocity;
+    MovementComponent movement;
+    JumpComponent jump;
+    GravityComponent gravity;
+    CameraController camComponent;
+    HurtboxComponent hurtbox;
+    SpellController spellController;
+    HealthComponent health;
 
-    private Camera cam;
+    Camera cam;
 
     Vector3 finalMove;
 
@@ -45,6 +50,7 @@ public class Player : MonoBehaviour {
         camComponent = GetComponent<CameraController>();
         hurtbox = GetComponent<HurtboxComponent>();
         spellController = GetComponent<SpellController>();
+        health = GetComponent<HealthComponent>();
 
         cam = Camera.main;
     }
@@ -53,11 +59,19 @@ public class Player : MonoBehaviour {
         camComponent.CaptureMouse();
 
         // hurtbox.onHit += OnHit;
+        health.OnDamaged += OnDamaged;
+        health.OnDied += OnDied;
     }
 
     void OnDestroy() {
         // hurtbox.onHit -= OnHit;
+        health.OnDamaged -= OnDamaged;
+        health.OnDied -= OnDied;
     }
+
+    void OnDied() => Died?.Invoke();
+
+    void OnDamaged(int currentHealth, int damageValue) => Damaged?.Invoke(currentHealth, damageValue);
 
     void OnDrawGizmos() {
         if (cam != null) {

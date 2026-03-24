@@ -18,29 +18,9 @@ public class SpellBehaviour : ScriptableObject {
     public List<HeldEffect> OffhandHeldEffects = new List<HeldEffect>();
 
     [Space(5)]
+    public AttackInfo LightAttack;
+    public AttackInfo HeavyAttack;
 
-    [Header("Light Attack Settings")]
-    public float LightAttackFirerate = 2f;
-    public int LightAttackAmmoCost = 1;
-    public bool LightAttackIsHitscan = true;
-    public int LightAttackShotCount = 1;
-    public Vector3 LightAttackShotSpread = Vector3.zero;
-    public TrailConfig LightTrailConfig;
-    public List<OnHitEffect> LightAttackHitEffects = new List<OnHitEffect>();
-
-    [Space(5)]
-
-    [Header("Heavy Attack Settings")]
-    public float HeavyAttackFirerate = 0.5f;
-    public int HeavyAttackAmmoCost = 10;
-    public bool HeavyAttackIsHitscan = true;
-    public int HeavyAttackShotCount = 1;
-    public Vector3 HeavyAttackShotSpread = Vector3.zero;
-    public TrailConfig HeavyTrailConfig;
-    public List<OnHitEffect> HeavyAttackHitEffects = new List<OnHitEffect>();
-
-    public float GetLightAttackCooldown() => 1f / LightAttackFirerate;
-    public float GetHeavyAttackCooldown() => 1f / HeavyAttackFirerate;
     public int Ammo { get; private set; }
 
     public event Action onAmmoDepleted;
@@ -69,15 +49,13 @@ public class SpellBehaviour : ScriptableObject {
             effect.OnUnequip(controller);
         }
     }
-
-    public void OnHit(GameObject target, GameObject owner) {
-
-    }
     public void OnLightAttack(GameObject owner) {
-        SubtractAmmo(LightAttackAmmoCost);
+        // SubtractAmmo(LightAttackAmmoCost);
+        SubtractAmmo(LightAttack.ammoCost);
     }
     public void OnHeavyAttack(GameObject owner) {
-        SubtractAmmo(HeavyAttackAmmoCost);
+        // SubtractAmmo(HeavyAttackAmmoCost);
+        SubtractAmmo(HeavyAttack.ammoCost);
     }
 
     public void SubtractAmmo(int amount) {
@@ -114,4 +92,23 @@ public struct SpellDisplayData {
     [Header("Heavy Attack Settings")]
     public string HeavyAttackName;
     [TextArea(4, 10)] public string HeavyAttackDescription;
+}
+
+[Serializable]
+public class AttackInfo {
+    public float firerate = 1f;
+    public int ammoCost = 1;
+    public bool isHitscan = true;
+    public int shotCount = 1;
+    public Vector3 spread = Vector3.zero;
+    public TrailConfig trailConfig;
+    public List<OnHitEffect> hitEffects = new();
+    public AttackType attackType;
+
+    public float GetFirerate() => 1f / firerate;
+}
+
+public enum AttackType {
+    Light,
+    Heavy
 }

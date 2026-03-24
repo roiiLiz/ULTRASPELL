@@ -14,12 +14,16 @@ public class TestCollider : MonoBehaviour {
 
         hitbox.SetOwner(GameObject.FindGameObjectWithTag("Player"));
 
-        foreach (OnHitEffect effect in OnHitEffects) {
-            hitbox.AddEffect(effect.Execute);
-        }
+        // foreach (OnHitEffect effect in OnHitEffects) {
+        //     hitbox.AddEffect(effect.Execute);
+        // }
 
-        if (removeThing != null) {
-            hitbox.RemoveEffect(removeThing.Execute);
-        }
+        // if (removeThing != null) {
+        //     hitbox.RemoveEffect(removeThing.Execute);
+        // }
+
+        // foreach (OnHitEffect effect in OnHitEffects) {
+
+        // }
     }
 }

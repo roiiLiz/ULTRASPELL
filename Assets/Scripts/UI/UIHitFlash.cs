@@ -1,27 +1,14 @@
 using UnityEngine;
 
 public class HitFlash : MonoBehaviour {
-    [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private float hitFlashDuration = 0.2f;
-    [SerializeField, Range(0f, 1f)] private float hitFlashIntensity = 0.5f;
+    [SerializeField] CanvasGroup canvasGroup;
+    [SerializeField] float hitFlashDuration = 0.2f;
+    [SerializeField, Range(0f, 1f)] float hitFlashIntensity = 0.5f;
 
-    private GameObject player;
-    private float t = 0f;
+    float t = 0f;
 
-    void Start() {
-        player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null) {
-            player.GetComponent<HealthComponent>().OnDamaged += FlashHit;
-        }
-
-        canvasGroup.alpha = 0f;
-    }
-
-    void OnDestroy() {
-        if (player != null) {
-            player.GetComponent<HealthComponent>().OnDamaged -= FlashHit;
-        }
-    }
+    void OnEnable() => Player.Damaged += FlashHit;
+    void OnDisable() => Player.Damaged -= FlashHit;
 
     void Update() {
         t = Mathf.Clamp(t - Time.deltaTime, 0f, hitFlashDuration);
@@ -29,7 +16,6 @@ public class HitFlash : MonoBehaviour {
     }
 
     private void FlashHit(int currentHealth, int damageAmount) {
-        // Debug.Log("Hi");
         t = hitFlashDuration;
     }
 }

@@ -1,9 +1,19 @@
 using System;
 using UnityEngine;
 
-public class HealthComponent : MonoBehaviour {
+public interface IDamageable {
+    public void TakeDamage(int value);
+    public int CalculateDamage(int value);
+    public void HealDamage(int value);
+
+    public void SetDamageMultiplier(float value);
+    public void ResetDamageMultiplier();
+}
+
+public class HealthComponent : MonoBehaviour, IDamageable {
     [SerializeField] private int maxHealth = 100;
     public int CurrentHealth { get; private set; }
+    public float DamageMultiplier { get; private set; }
 
     /// <summary>
     /// Emits the health component's current and max health values, respectively.
@@ -24,14 +34,19 @@ public class HealthComponent : MonoBehaviour {
 
     void Start() {
         CurrentHealth = maxHealth;
+        ResetDamageMultiplier();
     }
 
-    public void Damage(int value) {
+    public int CalculateDamage(int value) => Mathf.RoundToInt(value * DamageMultiplier);
+    public void SetDamageMultiplier(float value) => DamageMultiplier = value;
+    public void ResetDamageMultiplier() => DamageMultiplier = 1f;
+
+    public void TakeDamage(int value) {
         if (value <= 0) {
             return; 
         }
 
-        CurrentHealth = Mathf.Clamp(CurrentHealth - value, 0, maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth - CalculateDamage(value), 0, maxHealth);
         OnDamaged?.Invoke(CurrentHealth, value);
 
         if (CurrentHealth <= 0) {
@@ -39,7 +54,7 @@ public class HealthComponent : MonoBehaviour {
         }
     }
 
-    public void Heal(int value) {
+    public void HealDamage(int value) {
         if (value <= 0) {
             return;
         }
@@ -48,3 +63,4 @@ public class HealthComponent : MonoBehaviour {
         OnHealed?.Invoke(CurrentHealth, value);
     }
 }
+
