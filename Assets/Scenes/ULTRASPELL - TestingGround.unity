@@ -1538,6 +1538,7 @@ GameObject:
   - component: {fileID: 678663039}
   - component: {fileID: 678663041}
   - component: {fileID: 678663042}
+  - component: {fileID: 678663043}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1729,7 +1730,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 678663026}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4644c0c7d040beb4283c0635ce60ab0a, type: 3}
   m_Name: 
@@ -1771,6 +1772,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthComponent
   maxHealth: 100
+  noHitNotificationInterval: 1
+--- !u!114 &678663043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678663026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 569de7ec46b73fd4890e4163118e16e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackController
+  weapons:
+  - {fileID: 11400000, guid: f4f43b1491adedc4e9d92bd69185dc42, type: 2}
+  - {fileID: 11400000, guid: 9d1dc2c4712c1cb438c96ce05a9c1676, type: 2}
 --- !u!1 &735329418
 GameObject:
   m_ObjectHideFlags: 0
@@ -2842,6 +2859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 100
+  noHitNotificationInterval: 1
 --- !u!1 &1175500300
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,15 +6,8 @@ using UnityEngine;
 public class SpellBehaviour : ScriptableObject {
 #region Variables
 
-    [Header("Display Data")]
-    public SpellDisplayData DisplayData;
-
-    [Space(10)]
-
     [Header("Weapon Settings")]
-    // public TrailConfig TrailConfig;
     public int AmmoCount = 20;
-    public List<HeldEffect> MainhandHeldEffects = new List<HeldEffect>();
     public List<HeldEffect> OffhandHeldEffects = new List<HeldEffect>();
 
     [Space(5)]
@@ -30,9 +23,9 @@ public class SpellBehaviour : ScriptableObject {
 #region Functions
 
     public void EquipToMainhand(SpellController controller) {
-        foreach (HeldEffect effect in MainhandHeldEffects) {
-            effect.OnEquip(controller);
-        }
+        // foreach (HeldEffect effect in MainhandHeldEffects) {
+        //     effect.OnEquip(controller);
+        // }
     }
     public void EquipToOffhand(SpellController controller) {
         foreach (HeldEffect effect in OffhandHeldEffects) {
@@ -40,9 +33,9 @@ public class SpellBehaviour : ScriptableObject {
         }
     }
     public void UnequipFromMainhand(SpellController controller) {
-        foreach (HeldEffect effect in MainhandHeldEffects) {
-            effect.OnUnequip(controller);
-        }
+        // foreach (HeldEffect effect in MainhandHeldEffects) {
+        //     effect.OnUnequip(controller);
+        // }
     }
     public void UnequipFromOffhand(SpellController controller) {
         foreach (HeldEffect effect in OffhandHeldEffects) {
@@ -112,18 +105,26 @@ public struct SpellDisplayData {
     [Header("Heavy Attack Settings")]
     public string HeavyAttackName;
     [TextArea(4, 10)] public string HeavyAttackDescription;
+
+    [Space(4)]
+
+    [Header("Ultimate Settings")]
+    public string UltimateName;
+    [TextArea(4, 10)] public string UltimateDescription;
 }
 
 [Serializable]
 public class AttackInfo {
+    public SpellDisplayData displayData;
+    public AttackType attackType;
+    // public ShotType shotType;
     public float firerate = 1f;
     [Tooltip("Attack cooldown in seconds.")] public float cooldown = 1f;
     public int ammoCost = 1;
-    public bool isHitscan = true;
+    // public bool isHitscan = true;
     public int shotCount = 1;
     public Vector3 spread = Vector3.zero;
     public TrailConfig trailConfig;
-    public AttackType attackType;
     public List<OnCastEffect> castEffects = new();
     public List<OnHitEffect> hitEffects = new();
     public List<UnlockCondition> unlockConditions = new();
@@ -154,13 +155,9 @@ public class AttackInfo {
     public float GetFirerate() => 1f / firerate;
 }
 
+
 public abstract class OnCastEffect : ScriptableObject {
     public abstract void Execute(GameObject owner);
 }
 
 
-public enum AttackType {
-    Light,
-    Heavy,
-    Ultimate
-}

@@ -117,9 +117,9 @@ public class SpellController : MonoBehaviour {
         Debug.Log("SpellController: Light Attack");
         mainhandSpell.OnLightAttack(gameObject);
 
-        if (mainhandSpell.LightAttack.isHitscan) {
-            HitscanAttack(firingPoint, mainhandSpell.LightAttack);
-        }
+        // if (mainhandSpell.LightAttack.isHitscan) {
+        //     HitscanAttack(firingPoint, mainhandSpell.LightAttack);
+        // }
 
         lightCooldown = 0f;
         _globalAttackCooldown = 0f;
@@ -131,9 +131,9 @@ public class SpellController : MonoBehaviour {
         // Debug.Log("SpellController: Heavy Attack");
         mainhandSpell.OnHeavyAttack(gameObject);
 
-        if (mainhandSpell.HeavyAttack.isHitscan) {
-            HitscanAttack(firingPoint, mainhandSpell.HeavyAttack);
-        }
+        // if (mainhandSpell.HeavyAttack.isHitscan) {
+        //     HitscanAttack(firingPoint, mainhandSpell.HeavyAttack);
+        // }
 
         heavyCooldown = 0f;
         _globalAttackCooldown = 0f;
@@ -178,7 +178,7 @@ public class SpellController : MonoBehaviour {
             if (hit == null) continue;
 
             Debug.Log("SpellController: OnHitscan Inner Loop");
-            hit.OnHit(GetHitEffects(info.attackType), gameObject);
+            hit.OnHit(GetHitEffects(), gameObject);
         }
     }
 
@@ -190,21 +190,21 @@ public class SpellController : MonoBehaviour {
         );
     }
 
-    List<OnHitEffect> GetHitEffects(AttackType attackType) {
+    List<OnHitEffect> GetHitEffects() {
         List<OnHitEffect> hitEffects = new();
 
-        switch (attackType) {
-            case AttackType.Light:
-                hitEffects.AddRange(mainhandSpell.LightAttack.hitEffects);
-                break;
-            case AttackType.Heavy:
-                hitEffects.AddRange(mainhandSpell.HeavyAttack.hitEffects);
-                break;
-            default:
-                break;
-        }   
+        // switch (attackType) {
+        //     case AttackType.Light:
+        //         hitEffects.AddRange(mainhandSpell.LightAttack.hitEffects);
+        //         break;
+        //     case AttackType.Heavy:
+        //         hitEffects.AddRange(mainhandSpell.HeavyAttack.hitEffects);
+        //         break;
+        //     default:
+        //         break;
+        // }   
 
-        hitEffects.AddRange(dynamicHitEffects);
+        // hitEffects.AddRange(dynamicHitEffects);
 
         return hitEffects;
     }
@@ -220,7 +220,7 @@ public class SpellController : MonoBehaviour {
 
         // SwapSpells();
         foreach (SpellBehaviour spell in spells) {
-            Debug.Log("Spell: " + spell.DisplayData.Name);
+            // Debug.Log("Spell: " + spell.DisplayData.Name);
             if (spell != mainhandSpell && spell != offhandSpell && !usedSpells.Contains(spell)) {
                 EquipSpell(true, spell);
                 break;

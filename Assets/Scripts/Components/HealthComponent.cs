@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IDamageable {
     public void TakeDamage(int value);
-    public int CalculateDamage(int value);
+    public int CalculateDamage(int value, IDamageable target);
     public void HealDamage(int value);
 
     public void SetDamageMultiplier(float value);
@@ -47,7 +47,13 @@ public class HealthComponent : MonoBehaviour, IDamageable {
         NoHitDuration?.Invoke(timeNotHit);
     }
 
-    public int CalculateDamage(int value) => Mathf.RoundToInt(value * DamageMultiplier);
+    public int CalculateDamage(int value, IDamageable target)
+    {
+        float _value = DamageCalculator.Calculate(new AttackContext(gameObject, gameObject, 10));
+        // return Mathf.RoundToInt(value * DamageMultiplier);
+        return 0;
+    }
+
     public void SetDamageMultiplier(float value) => DamageMultiplier = value;
     public void ResetDamageMultiplier() => DamageMultiplier = 1f;
 
@@ -58,7 +64,7 @@ public class HealthComponent : MonoBehaviour, IDamageable {
 
         timeNotHit = 0f;
 
-        CurrentHealth = Mathf.Clamp(CurrentHealth - CalculateDamage(value), 0, maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth - CalculateDamage(value, this), 0, maxHealth);
         OnDamaged?.Invoke(CurrentHealth, value);
 
         if (CurrentHealth <= 0) {
