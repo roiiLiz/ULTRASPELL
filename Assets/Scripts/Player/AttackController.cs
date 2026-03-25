@@ -53,6 +53,9 @@ public class AttackController : MonoBehaviour {
     // TODO: In addition, make sure to add HitscanAttacks, ProjectileAttacks, and Ultimate / Buff / Ability Attacks
     // TODO: Don't forget the milinote, breaks down the whole step by step
 
+    // TODO: Don't forget: When possible, code to an interface! Ex. ApplyOnHitEffects(IDamageable target, IDamageable owner) -> cast the interface using the 'as' keyword
+    // TODO: ex. (HealthComponent health = target as HealthComponent)!
+
     void UpdateCooldowns(List<WeaponData> _weapons) {
         foreach (WeaponData weapon in _weapons) {
             foreach (AttackData attack in weapon.attacks.Values) {
