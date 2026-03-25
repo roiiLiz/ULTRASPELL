@@ -29,7 +29,7 @@ public class SpellBehaviour : ScriptableObject {
     }
     public void EquipToOffhand(SpellController controller) {
         foreach (HeldEffect effect in OffhandHeldEffects) {
-            effect.OnEquip(controller);
+            // effect.OnEquip(controller);
         }
     }
     public void UnequipFromMainhand(SpellController controller) {
@@ -39,7 +39,7 @@ public class SpellBehaviour : ScriptableObject {
     }
     public void UnequipFromOffhand(SpellController controller) {
         foreach (HeldEffect effect in OffhandHeldEffects) {
-            effect.OnUnequip(controller);
+            // effect.OnUnequip(controller);
         }
     }
     public void OnLightAttack(GameObject owner) {

@@ -6,39 +6,24 @@ using UnityEngine;
 public class HitboxComponent : MonoBehaviour {
     [Header("Settings")]
     public LayerMask collisionLayers;
-
+    public AttackData Attack { get; private set; }
     public GameObject Owner { get; private set; }
-    public readonly List<HitEffect> OnHitEffects = new();
 
-    public event Action OnHitboxTriggered;
-
-    public void AddEffect(HitEffect action) => OnHitEffects.Add(action);
-    public void RemoveEffect(HitEffect action) {
-        if (OnHitEffects == null || OnHitEffects.Count <= 0 || !OnHitEffects.Contains(action)) {
-            return;
-        }
-
-        OnHitEffects.Remove(action);
-    }
-
-    public void ResetEffects() => OnHitEffects.Clear();
+    public event Action<AttackData, IDamageable> OnHitboxTriggered;
 
     public void SetOwner(GameObject owner) => Owner = owner;
+    public void SetAttack(AttackData attack) => Attack = attack;
 
     private void OnTriggerEnter(Collider other) {
         Debug.Log("HitboxComponent: Hello");
         if (collisionLayers == (collisionLayers | (1 << other.transform.gameObject.layer))) {
-            if (other.TryGetComponent<HurtboxComponent>(out HurtboxComponent hurtbox)) {
-                hurtbox.OnHurtboxHit(OnHitEffects, Owner);
-                OnHitboxTriggered?.Invoke();
+            // if (other.TryGetComponent<HurtboxComponent>(out HurtboxComponent hurtbox)) {
+            //     hurtbox.OnHurtboxHit(OnHitEffects, Owner);
+            //     OnHitboxTriggered?.Invoke();
+            // }
+            if (other.TryGetComponent<IDamageable>(out var damageable)) {
+                OnHitboxTriggered?.Invoke(Attack, damageable);
             }
         }
     }
 }
-
-/// <summary>
-/// Describes an arbitrary hit effect done to a target by an owner.
-/// </summary>
-/// <param name="target"></param>
-/// <param name="owner"></param>
-public delegate void HitEffect(Collider target, GameObject owner);

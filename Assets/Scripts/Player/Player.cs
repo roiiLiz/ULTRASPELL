@@ -32,6 +32,7 @@ public class Player : MonoBehaviour {
     CameraController camComponent;
     HurtboxComponent hurtbox;
     SpellController spellController;
+    AttackController attackController;
     HealthComponent health;
 
     Camera cam;
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour {
         hurtbox = GetComponent<HurtboxComponent>();
         spellController = GetComponent<SpellController>();
         health = GetComponent<HealthComponent>();
+        attackController = GetComponent<AttackController>();
 
         cam = Camera.main;
     }
@@ -113,17 +115,23 @@ public class Player : MonoBehaviour {
     }
 
     private void UpdateWeapon() {
-        if (lightAttackInput.action.ReadValue<float>() > 0f && spellController.CanLightAttack()) {
-            // Debug.Log("Light attack");
-            spellController.LightAttack(cam.transform);
-        } else if (heavyAttackInput.action.ReadValue<float>() > 0f && spellController.CanHeavyAttack()) {
-            // Debug.Log("Heavy attack");
-            spellController.HeavyAttack(cam.transform);
-        }
+        // if (lightAttackInput.action.ReadValue<float>() > 0f && spellController.CanLightAttack()) {
+        //     // Debug.Log("Light attack");
+        //     spellController.LightAttack(cam.transform);
+        // } else if (heavyAttackInput.action.ReadValue<float>() > 0f && spellController.CanHeavyAttack()) {
+        //     // Debug.Log("Heavy attack");
+        //     spellController.HeavyAttack(cam.transform);
+        // }
 
-        if (weaponSwapInput.action.WasPressedThisFrame() && spellController.CanSwap()) {
-            // Debug.Log("Swap weapon");
-            spellController.SwapSpells();
+        // if (weaponSwapInput.action.WasPressedThisFrame() && spellController.CanSwap()) {
+        //     // Debug.Log("Swap weapon");
+        //     spellController.SwapSpells();
+        // }
+
+        if (lightAttackInput.action.ReadValue<float>() > 0f) {
+            attackController.AttemptAttack(cam.transform, AttackLevel.Light);
+        } else if (heavyAttackInput.action.ReadValue<float>() > 0f) {
+            attackController.AttemptAttack(cam.transform, AttackLevel.Heavy);
         }
     }
 

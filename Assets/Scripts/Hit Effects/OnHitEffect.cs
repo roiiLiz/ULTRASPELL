@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class OnHitEffect : ScriptableObject {
     public Targeting Targeting;
-    public abstract void Execute(GameObject target);
+    public abstract void Execute(IDamageable target);
 }
 
 public enum Targeting {

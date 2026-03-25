@@ -3,6 +3,11 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon Data", menuName = "Combat System / Create New Weapon", order = 0)]
 public class WeaponData : ScriptableObject {
+    public int ammoCount = 10;
+    public List<HeldEffect> offhandEffects = new();
+
+    [Space(5)]
+
     public AttackData lightAttack;
     public AttackData heavyAttack;
     public AttackData ultimateAttack;

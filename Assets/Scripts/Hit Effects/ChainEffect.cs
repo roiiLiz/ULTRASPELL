@@ -7,14 +7,16 @@ public class ChainEffect : OnHitEffect {
     public float ChainRadius = 7.5f;
     public float TimeBeforeChain = 2f;
 
-    public override void Execute(GameObject target) {
-        if (target.GetComponent<ChainOrigin>() == null) {
-            ChainOrigin chain = target.AddComponent<ChainOrigin>();
+    public override void Execute(IDamageable target) {
+        GameObject go = (target as HealthComponent).gameObject;
+        if (go.GetComponent<ChainOrigin>() == null)
+        {
+            ChainOrigin chain = go.AddComponent<ChainOrigin>();
             chain.Initialize(
                 ChainCount,
                 ChainRadius,
                 TimeBeforeChain,
-                target.transform.position
+                go.transform.position
             );
         }
     }

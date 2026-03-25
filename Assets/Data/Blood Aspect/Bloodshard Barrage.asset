@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 784c9db07ce4be746a752d172e8e704a, type: 3}
-  m_Name: New Attack Data 1
+  m_Name: Bloodshard Barrage
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
-  attackType: 1
+  attackType: 0
   baseDamage: 0
-  shotCount: 1
-  spread: {x: 0, y: 0, z: 0}
+  shotCount: 8
+  spread: {x: 0.1, y: 0.1, z: 0.1}
   cooldown: 1
   usesAmmo: 1
-  ammoCount: 10
+  ammoCost: 1
   reloadTime: 0.25
   projectilePrefab: {fileID: 0}
-  trailConfig: {fileID: 0}
-  offhandEffects: []
+  trailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   onCastEffects: []
   onHitEffects: []
   unlockConditions: []

@@ -14,14 +14,15 @@ public class AttackData : ScriptableObject {
     public Vector3 spread = Vector3.zero;
     public float cooldown = 1f;
     public bool usesAmmo = true;
-    public int ammoCount = 10;
+    public int ammoCost = 1;
     public float reloadTime = 0.25f;
     public GameObject projectilePrefab;
     public TrailConfig trailConfig;
+    public IAttack attackBehaviour;
 
     [Space(5)]
 
-    public List<HeldEffect> offhandEffects = new ();
+    // public List<HeldEffect> offhandEffects = new ();
     public List<OnCastEffect> onCastEffects = new();
     public List<OnHitEffect> onHitEffects = new();
     public List<UnlockCondition> unlockConditions = new();
@@ -39,5 +40,21 @@ public class AttackData : ScriptableObject {
         }
 
         return true;
+    }
+
+    void OnValidate() {
+        switch (attackType) {
+            case AttackType.Hitscan:
+                attackBehaviour = new HitscanAttack();
+                break;
+            case AttackType.Projectile:
+                attackBehaviour = new ProjectileAttack();
+                break;
+            case AttackType.Ability:
+                attackBehaviour = new AbilityAttack();
+                break;
+            default:
+                break;
+        }
     }
 }
