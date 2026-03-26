@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Bloodshard Barrage
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   attackType: 0
-  baseDamage: 0
-  shotCount: 8
-  spread: {x: 0.1, y: 0.1, z: 0.1}
-  cooldown: 1
+  baseDamage: 20
+  shotCount: 10
+  spread: {x: 0.15, y: 0.15, z: 0.15}
+  cooldown: 0.25
   usesAmmo: 1
   ammoCost: 1
-  reloadTime: 0.25
+  reloadTime: 0.1
   projectilePrefab: {fileID: 0}
   trailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
   onCastEffects: []

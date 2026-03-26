@@ -9,7 +9,7 @@ public class HitboxComponent : MonoBehaviour {
     public AttackData Attack { get; private set; }
     public GameObject Owner { get; private set; }
 
-    public event Action<AttackData, IDamageable> OnHitboxTriggered;
+    public event Action<AttackData, IDamageable, Vector3> OnHitboxTriggered;
 
     public void SetOwner(GameObject owner) => Owner = owner;
     public void SetAttack(AttackData attack) => Attack = attack;
@@ -21,8 +21,8 @@ public class HitboxComponent : MonoBehaviour {
             //     hurtbox.OnHurtboxHit(OnHitEffects, Owner);
             //     OnHitboxTriggered?.Invoke();
             // }
-            if (other.TryGetComponent<IDamageable>(out var damageable)) {
-                OnHitboxTriggered?.Invoke(Attack, damageable);
+            if (other.TryGetComponent<IHittable>(out var damageable)) {
+                OnHitboxTriggered?.Invoke(Attack, other.GetComponent<IDamageable>(), other.gameObject.transform.position);
             }
         }
     }

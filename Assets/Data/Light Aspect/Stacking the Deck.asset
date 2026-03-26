@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Stacking the Deck
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   attackType: 0
-  baseDamage: 0
+  baseDamage: 10
   shotCount: 1
   spread: {x: 0, y: 0, z: 0}
-  cooldown: 1
+  cooldown: 0.66
   usesAmmo: 1
   ammoCost: 1
   reloadTime: 0.25

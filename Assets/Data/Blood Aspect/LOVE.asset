@@ -13,16 +13,15 @@ MonoBehaviour:
   m_Name: LOVE
   m_EditorClassIdentifier: Assembly-CSharp::AttackData
   attackType: 1
-  baseDamage: 0
+  baseDamage: 10
   shotCount: 1
   spread: {x: 0, y: 0, z: 0}
   cooldown: 1
   usesAmmo: 1
   ammoCost: 1
   reloadTime: 0.25
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 5524196209866774506, guid: 742235c36fc67934db7cfd6e6f656475, type: 3}
   trailConfig: {fileID: 11400000, guid: 2c34ff355a784f6468b6451245c244f3, type: 2}
-  offhandEffects: []
   onCastEffects: []
   onHitEffects: []
   unlockConditions: []

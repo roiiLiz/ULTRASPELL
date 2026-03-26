@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
     [SerializeField] InputActionReference heavyAttackInput;
     [SerializeField] InputActionReference weaponSwapInput;
 
-    [Space(10)]
+    [Space(5)]
 
     [Header("Debug Settings")]
     [SerializeField] InputActionReference slowTimeInput;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
     GravityComponent gravity;
     CameraController camComponent;
     HurtboxComponent hurtbox;
-    SpellController spellController;
+    // SpellController spellController;
     AttackController attackController;
     HealthComponent health;
 
@@ -50,7 +50,7 @@ public class Player : MonoBehaviour {
         gravity = GetComponent<GravityComponent>();
         camComponent = GetComponent<CameraController>();
         hurtbox = GetComponent<HurtboxComponent>();
-        spellController = GetComponent<SpellController>();
+        // spellController = GetComponent<SpellController>();
         health = GetComponent<HealthComponent>();
         attackController = GetComponent<AttackController>();
 
@@ -115,23 +115,14 @@ public class Player : MonoBehaviour {
     }
 
     private void UpdateWeapon() {
-        // if (lightAttackInput.action.ReadValue<float>() > 0f && spellController.CanLightAttack()) {
-        //     // Debug.Log("Light attack");
-        //     spellController.LightAttack(cam.transform);
-        // } else if (heavyAttackInput.action.ReadValue<float>() > 0f && spellController.CanHeavyAttack()) {
-        //     // Debug.Log("Heavy attack");
-        //     spellController.HeavyAttack(cam.transform);
-        // }
-
-        // if (weaponSwapInput.action.WasPressedThisFrame() && spellController.CanSwap()) {
-        //     // Debug.Log("Swap weapon");
-        //     spellController.SwapSpells();
-        // }
-
         if (lightAttackInput.action.ReadValue<float>() > 0f) {
             attackController.AttemptAttack(cam.transform, AttackLevel.Light);
         } else if (heavyAttackInput.action.ReadValue<float>() > 0f) {
             attackController.AttemptAttack(cam.transform, AttackLevel.Heavy);
+        }
+
+        if (weaponSwapInput.action.WasPressedThisFrame()) {
+            attackController.SwapWeapons();
         }
     }
 

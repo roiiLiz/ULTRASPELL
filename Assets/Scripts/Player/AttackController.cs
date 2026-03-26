@@ -16,6 +16,8 @@ public class AttackController : MonoBehaviour {
 
     [Header("References")]
     [SerializeField] TrailController trailController;
+    [field: SerializeField] public Transform displayFiringPoint { get; private set; }
+    [SerializeField] ParticleSystem muzzleFlash;
 
     // Converts serialized SO data into runtime safe-to-manipulate values
     Dictionary<AttackData, AttackInfo> attacksDictionary = new();
@@ -25,7 +27,11 @@ public class AttackController : MonoBehaviour {
     WeaponData offhandWeapon;
 
     float _globalCooldown = 0f;
+    float _weaponCooldown = 0f;
     float _swapCooldown = 0f;
+
+    public static event Action<WeaponData, WeaponData> CurrentWeapons;
+    public static event Action<float, Vector3> DamageDealt;
 
     class AttackInfo {
         public bool usesAmmo;
@@ -60,10 +66,11 @@ public class AttackController : MonoBehaviour {
         currentWeapon = weapons[0];
         offhandWeapon = weapons[1];
 
-        foreach (HeldEffect effect in currentWeapon.offhandEffects) {
-            // effect.OnEquip();
-
+        foreach (HeldEffect effect in offhandWeapon.offhandEffects) {
+            effect.OnEquip(this);
         }
+
+        CurrentWeapons?.Invoke(currentWeapon, offhandWeapon);
     }
 
     void Update() {
@@ -71,7 +78,24 @@ public class AttackController : MonoBehaviour {
     }
 
     public void SwapWeapons() {
+        if (_swapCooldown > swapCooldown) {
+            return;
+        }
 
+        foreach (HeldEffect effect in offhandWeapon.offhandEffects) {
+            effect.OnUnequip(this);
+        }
+
+        (currentWeapon, offhandWeapon) = (offhandWeapon, currentWeapon);
+
+
+        foreach (HeldEffect effect in offhandWeapon.offhandEffects) {
+            effect.OnEquip(this);
+        }
+
+        CurrentWeapons?.Invoke(currentWeapon, offhandWeapon);
+
+        _swapCooldown = swapCooldown;
     }
 
     public void AttemptAttack(Transform firingPoint, AttackLevel attackLevel) {
@@ -105,31 +129,18 @@ public class AttackController : MonoBehaviour {
             castEffect.Execute(gameObject);
         }
 
-        Debug.Log($"{attack.name} ATK Behaviour: {attack.attackBehaviour.GetType().Name}");
+        // Debug.Log($"{attack.name} ATK Behaviour: {attack.attackBehaviour.GetType().Name}");
+        muzzleFlash.Play();
 
         attack.attackBehaviour.Perform(firingPoint, attack, this);
 
         AttackInfo info = attacksDictionary[attack];
         info.currentCooldown = info.cooldown;
-        // if (info.usesAmmo) {
-        //     weaponAmmoDictionary[info.owner] -= info.ammoCost;
-
-        //     if (weaponAmmoDictionary[info.owner] <= 0) {
-
-        //     }
-        // }
 
         _globalCooldown = globalAttackCooldown;
     }
 
     public void CreateTrail(Vector3 start, Vector3 end, TrailConfig config) => trailController.StartCoroutine(trailController.StartTrail(start, end, config));
-
-    // TODO: Implement light attack, heavy attack, and ultimate attack
-    // TODO: In addition, make sure to add HitscanAttacks, ProjectileAttacks, and Ultimate / Buff / Ability Attacks
-    // TODO: Don't forget the milinote, breaks down the whole step by step
-
-    // TODO: Don't forget: When possible, code to an interface! Ex. ApplyOnHitEffects(IDamageable target, IDamageable owner) -> cast the interface using the 'as' keyword
-    // TODO: ex. (HealthComponent health = target as HealthComponent)!
 
     void UpdateCooldowns(List<WeaponData> _weapons) {
         foreach (WeaponData weapon in _weapons) {
@@ -157,10 +168,14 @@ public class AttackController : MonoBehaviour {
         return hitEffects;
     }
 
-    public void OnHit(AttackData data, IDamageable target) {
+    public void OnHit(AttackData data, IDamageable target, Vector3 damagePoint) {
         foreach (OnHitEffect effect in GetOnHitEffects(data)) {
             effect.Execute(target);
         }
+
+        AttackContext context = new(gameObject, (target as HealthComponent).gameObject, Mathf.RoundToInt(data.baseDamage));
+        float dmg = DamageCalculator.Calculate(context);
+        DamageDealt?.Invoke(dmg, damagePoint);
     }
 
     public void AddDynamicHitEffect(OnHitEffect hitEffect) {

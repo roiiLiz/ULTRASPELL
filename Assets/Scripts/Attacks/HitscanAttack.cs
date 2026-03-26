@@ -9,12 +9,14 @@ public class HitscanAttack : IAttack {
 
             if (Physics.Raycast(firingPoint.position, dir, out RaycastHit hit, float.MaxValue)) {
                 if (hit.transform.TryGetComponent<IDamageable>(out var damageable)) {
-                    controller.OnHit(data, damageable);
+                    controller.OnHit(data, damageable, hit.point);
                 }
 
-                controller.CreateTrail(firingPoint.position, hit.point, data.trailConfig);
+                controller.CreateTrail(controller.displayFiringPoint.position, hit.point, data.trailConfig);
             } else {
-                controller.CreateTrail(firingPoint.position, firingPoint.position + (dir * data.trailConfig.MissFadeDistance), data.trailConfig);
+                controller.CreateTrail(
+                    controller.displayFiringPoint.position, controller.displayFiringPoint.position + (dir * data.trailConfig.MissFadeDistance), data.trailConfig
+                );
             }
         }        
     }

@@ -12,37 +12,10 @@ public class ProjectileAttack : IAttack {
             Vector3 dir = WeaponSpread.GetSpread(firingPoint.forward, data.spread);
 
 
-            Projectile projectile = GameObject.Instantiate(data.projectilePrefab).GetComponent<Projectile>();
+            Projectile projectile = GameObject.Instantiate(data.projectilePrefab, firingPoint.position, Quaternion.identity).GetComponent<Projectile>();
 
             projectile.direction = dir;
             projectile.Initialize(data, controller);
         }        
-    }
-}
-
-public class Projectile : MonoBehaviour {
-    public Vector3 direction;
-    MovementComponent movement;
-    HitboxComponent hitbox;
-    AttackController controller;
-
-    public void Initialize(AttackData atk, AttackController atkController) {
-        hitbox.SetAttack(atk);
-        controller = atkController;
-
-        hitbox.OnHitboxTriggered += controller.OnHit;
-    }
-
-    void Awake() {
-        movement = GetComponent<MovementComponent>();
-        hitbox = GetComponent<HitboxComponent>();
-    }
-
-    void Update() {
-        movement.MoveTransformInDirection(transform, direction);
-    }
-
-    void OnDestroy() {
-        hitbox.OnHitboxTriggered -= controller.OnHit;
     }
 }

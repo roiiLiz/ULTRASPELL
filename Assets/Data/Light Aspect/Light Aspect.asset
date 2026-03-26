@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f942d6fc357f9f47a65eb7542bb0ece, type: 3}
   m_Name: Light Aspect
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  ammoCount: 10
+  offhandEffects:
+  - {fileID: 11400000, guid: 047b5c9efaa32b24a8028eb648039da1, type: 2}
   lightAttack: {fileID: 11400000, guid: cbced3ef6e84ac04eac07ec44bcadd03, type: 2}
   heavyAttack: {fileID: 11400000, guid: 5bccad998d36bf54195e1c6121a4dfb4, type: 2}
   ultimateAttack: {fileID: 11400000, guid: dcd17c269170981419cc2971da6b2a86, type: 2}
