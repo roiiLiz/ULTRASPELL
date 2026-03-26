@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
   m_Name: Pistol Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
-  trainingData: []
+  trainingData:
+  - {fileID: 11400000, guid: 1d89a04a45b7416498a9f7722632926a, type: 2}
+  - {fileID: 11400000, guid: c2cb33a1da9238349b6e9b3fd79cb952, type: 2}
+  - {fileID: 11400000, guid: 905ffc5868157c649b361005fa691670, type: 2}
+  - {fileID: 11400000, guid: 85dd218ee390cab4faabd93d5f28c4ae, type: 2}

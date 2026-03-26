@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
   m_Name: Shotgun Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
-  trainingData:
-  - {fileID: 11400000, guid: a92422f5cee614c40b3020d5cf1ab70c, type: 2}
+  trainingData: []

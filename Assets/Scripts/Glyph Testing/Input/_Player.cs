@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
@@ -15,8 +16,10 @@ public class _Player : MonoBehaviour {
     [Space(5)]
 
     [Header("Settings")]
+    [SerializeField] List<GlyphCombination> combinations = new();
     [SerializeField] Transform weaponMuzzle;
 
+    Dictionary<Glyph, WeaponConfig> weaponDictionary = new();
     GlyphController glyphController; 
     WeaponController weaponController;
     Camera cam;
@@ -25,6 +28,14 @@ public class _Player : MonoBehaviour {
         glyphController = GetComponent<GlyphController>();
         weaponController = GetComponent<WeaponController>();
         cam = Camera.main;
+    }
+
+    void Start() {
+        if (combinations == null || combinations.Count <= 0) return;
+
+        foreach (GlyphCombination combo in combinations) {
+            weaponDictionary[combo.glyph] = combo.weapon;
+        }
     }
     void Update() {
         if (rightClick.action.WasPressedThisFrame()) {
@@ -51,4 +62,10 @@ public class _Player : MonoBehaviour {
             glyphController.ClearGlyph();
         }
     }
+}
+
+[Serializable]
+public class GlyphCombination {
+    public WeaponConfig weapon;
+    public Glyph glyph;
 }
