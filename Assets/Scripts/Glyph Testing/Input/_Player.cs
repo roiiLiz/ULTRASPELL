@@ -45,7 +45,10 @@ public class _Player : MonoBehaviour {
         }
 
         if (leftClick.action.WasReleasedThisFrame() && glyphController.IsDrawing()) {
-            // glyphController.ToggleGlyphDrawing();
+            glyphController.ToggleGlyphDrawing();
+
+            // TODO: Ensure that ClearGlyph triggers the glyph for potential weapon swapping!
+            glyphController.ClearGlyph();
         }
     }
 }

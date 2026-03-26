@@ -20,9 +20,9 @@ public class GlyphController : MonoBehaviour {
         lineRenderer.points.Clear();
     }
 
-    void Update() {
-        lineRenderer.SetAllDirty();
-    }
+    // void Update() {
+    //     lineRenderer.SetAllDirty();
+    // }
 
     public bool IsDrawing() => isDrawing;
     public void ToggleGlyphDrawing() {
@@ -40,8 +40,17 @@ public class GlyphController : MonoBehaviour {
 
         if (CanCreatePoint(input)) {
             lineRenderer.points.Add(input);
-            // lineRenderer.points.Append(input);
+            lineRenderer.SetAllDirty();
         }
+    }
+
+    // TODO: Ensure that ClearGlyph triggers the glyph for potential weapon swapping!
+    public void ClearGlyph() {
+        if (lineRenderer.points.Count <= 0) return;
+
+        lineRenderer.points.Clear();
+
+        lineRenderer.SetAllDirty();
     }
 
     bool CanCreatePoint(Vector2 position) {
