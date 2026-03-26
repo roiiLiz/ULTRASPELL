@@ -28,7 +28,10 @@ public class _Player : MonoBehaviour {
     }
     void Update() {
         if (rightClick.action.WasPressedThisFrame()) {
-            OnRightClick?.Invoke(glyphController.ToggleGlyphDrawing());
+            Debug.Log("Right click pressed");
+            glyphController.ToggleGlyphDrawing();
+
+            OnRightClick?.Invoke(glyphController.IsDrawing());
         }
 
         if (leftClick.action.ReadValue<float>() > 0f) {
@@ -39,6 +42,10 @@ public class _Player : MonoBehaviour {
                 // Weapon firing
                 weaponController.FireWeapon(cam.transform, weaponMuzzle);
             }
+        }
+
+        if (leftClick.action.WasReleasedThisFrame() && glyphController.IsDrawing()) {
+            // glyphController.ToggleGlyphDrawing();
         }
     }
 }
