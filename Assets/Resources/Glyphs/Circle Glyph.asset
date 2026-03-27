@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
+  m_Name: Circle Glyph
+  m_EditorClassIdentifier: Assembly-CSharp::Glyph
+  trainingData:
+  - {fileID: 11400000, guid: f7926033f7e90bb418665506aa84ffb0, type: 2}
+  - {fileID: 11400000, guid: d7ca50a1e083b484fb931b8af36bb9fc, type: 2}
+  - {fileID: 11400000, guid: 554e8ebaca8310d41ba6fd37b720e32e, type: 2}
+  - {fileID: 11400000, guid: 3b1042aa78042ec449edc10ebf311ab6, type: 2}
+  - {fileID: 11400000, guid: e53e93ff987eb35418ee16182fcf8429, type: 2}
+  - {fileID: 11400000, guid: 4f4d302f166d30a4f930d46773f71374, type: 2}
+  - {fileID: 11400000, guid: 9e23ad2a78e8a1840bc62098ebfb4380, type: 2}
+  - {fileID: 11400000, guid: c27e4ee0992422643a461cbe12b5d519, type: 2}
+  - {fileID: 11400000, guid: 000e48c097eb6a4409e0b73422ad5d04, type: 2}
+  - {fileID: 11400000, guid: 8347bd26a26650442987a833ef704be7, type: 2}

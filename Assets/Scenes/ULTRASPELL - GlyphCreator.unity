@@ -1259,6 +1259,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GlyphController
   drawingSlowdownFactor: 0.5
   distanceThreshold: 2
+  templates:
+  - {fileID: 11400000, guid: e849812061495f747bcfeb7a388abc7b, type: 2}
+  - {fileID: 11400000, guid: 022fcdf37eddd934bbc95d91dbbee359, type: 2}
+  - {fileID: 11400000, guid: fcf5af1814f96f64689f5b8f4b679afc, type: 2}
   canvasScaler: {fileID: 212842369}
   lineRenderer: {fileID: 1922160309}
   glyphDropdown: {fileID: 1007069053}

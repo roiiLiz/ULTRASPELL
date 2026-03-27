@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: Pistol Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
   trainingData:
-  - {fileID: 11400000, guid: 1d89a04a45b7416498a9f7722632926a, type: 2}
-  - {fileID: 11400000, guid: c2cb33a1da9238349b6e9b3fd79cb952, type: 2}
-  - {fileID: 11400000, guid: 905ffc5868157c649b361005fa691670, type: 2}
-  - {fileID: 11400000, guid: 85dd218ee390cab4faabd93d5f28c4ae, type: 2}
+  - {fileID: 11400000, guid: fcfa20bc63ed2d94db746be5908ba306, type: 2}
+  - {fileID: 11400000, guid: 42ffd2ca0177042438769fcacab1b51a, type: 2}
+  - {fileID: 11400000, guid: 1e14d5246b5c5414e96778dcae0ac887, type: 2}
+  - {fileID: 11400000, guid: 90b59ba1afd38a14aa1022d110607693, type: 2}
+  - {fileID: 11400000, guid: ab979bc2cbdc20242af02f4437cca4cd, type: 2}
+  - {fileID: 11400000, guid: 39fd38761e8ca0f4b94fd47d96e957b9, type: 2}
+  - {fileID: 11400000, guid: c5989f7255b81354681681fbc2356289, type: 2}
+  - {fileID: 11400000, guid: 8c69d066159f2774aac5ce387660b4a0, type: 2}
+  - {fileID: 11400000, guid: b075c70ecf37abd4a9b3cf98cfabf363, type: 2}
+  - {fileID: 11400000, guid: c88bb2aa4bd3a214fb828990423cf463, type: 2}

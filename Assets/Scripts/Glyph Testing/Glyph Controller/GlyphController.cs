@@ -10,6 +10,7 @@ public class GlyphController : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] float drawingSlowdownFactor = 0.5f;
     [SerializeField] float distanceThreshold = 2f;
+    [SerializeField] List<Glyph> templates;
 
     [Space(5)]
 
@@ -25,6 +26,7 @@ public class GlyphController : MonoBehaviour {
     [SerializeField] GlyphTrainingData displayTwo;
 
     GlyphSaver saver = new();
+    GlyphMatcher matcher = new();
     bool isDrawing = false;
 
     void Start() {
@@ -68,6 +70,13 @@ public class GlyphController : MonoBehaviour {
         lineRenderer.SetAllDirty();
     }
 
+    public Glyph MatchGlyph() {
+        if (lineRenderer.points == null || lineRenderer.points.Count <= 0) return null;
+
+        Glyph match = matcher.MatchGlyph(lineRenderer.points, templates, 64);
+        return match;
+    }
+
     bool CanCreatePoint(Vector2 position) {
         if (lineRenderer.points.Count <= 0) return true;
 
@@ -92,47 +101,6 @@ public class GlyphController : MonoBehaviour {
         saver.SaveGlyphTrainingData(glyph, lineRenderer.points);
 
         ClearGlyph();
-    }
-
-    void OnDrawGizmos()
-    {
-        if (displayOne != null) {
-            Gizmos.color = Color.blue;
-            List<Vector2> _new = GlyphMatcher.Scale(displayOne.points);
-            _new = GlyphMatcher.TranslateToOrigin(_new);
-
-            for (int i = 1; i < _new.Count; i++) {
-                Gizmos.DrawLine(_new[i - 1], _new[i]);
-            }
-
-            // for (int i = 1; i < displayOne.points.Count; i++) {
-            //     Vector3 pointOne = displayOne.points[i - 1];
-            //     Vector3 pointTwo = displayOne.points[i];
-            //     Gizmos.DrawLine(pointOne, pointTwo);
-            // }
-        }
-
-        if (displayTwo != null) {
-            Gizmos.color = Color.green;
-
-            List<Vector2> _new = GlyphMatcher.Scale(displayTwo.points);
-            _new = GlyphMatcher.TranslateToOrigin(_new);
-
-            for (int i = 1; i < _new.Count; i++) {
-                Gizmos.DrawLine(_new[i - 1], _new[i]);
-            }
-
-            // for (int i = 1; i < displayTwo.points.Count; i++) {
-            //     Vector3 pointOne = displayTwo.points[i - 1];
-            //     Vector3 pointTwo = displayTwo.points[i];
-            //     Gizmos.DrawLine(pointOne, pointTwo);
-            // }
-        }
-
-        // if (displayOne != null && displayTwo != null) {
-        //     Gizmos.color = Color.red;
-
-        // }
     }
 }
 

@@ -18,6 +18,11 @@ public class GlyphCreatorInput : MonoBehaviour
             controller.DrawGlyph(mousePosition.action.ReadValue<Vector2>());
         }
 
+        if (leftClick.action.WasReleasedThisFrame()) {
+            Glyph glyph = controller.MatchGlyph();
+            Debug.Log($"Matched glyph: {(glyph == null ? "None" : glyph.name)}.");
+        }
+
         if (rightClick.action.WasReleasedThisFrame()) {
             controller.ClearGlyph();
         }
