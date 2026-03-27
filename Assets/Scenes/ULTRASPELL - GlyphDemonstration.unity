@@ -5997,6 +5997,7 @@ MonoBehaviour:
   gravityComponent: {fileID: 997404031}
   velocityComponent: {fileID: 997404030}
   glyphController: {fileID: 997404026}
+  delayBeforeCameraControl: 0.15
 --- !u!114 &997404029
 MonoBehaviour:
   m_ObjectHideFlags: 0
