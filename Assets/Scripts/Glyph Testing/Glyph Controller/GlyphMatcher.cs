@@ -84,32 +84,13 @@ public class GlyphMatcher {
             i = (i + 1) % pointCount;
         } while (i != startIndex);
 
-        // while (i != startIndex) {
-        //     float min = float.MaxValue;
-        //     int index = 0;
-
-        //     for (int j = 0; j < matchedPoints.Length; j++) {
-        //         if (!matchedPoints[j]) {
-        //             float dist = Vector2.Distance(points[i], templatePoints[j]);
-        //             if (dist < min) {
-        //                 min = dist;
-        //                 index = j;
-        //             }
-        //         }
-        //     }
-
-        //     matchedPoints[index] = true;
-        //     float weight = 1.0f - ((i - startIndex + pointCount) % pointCount / (1.0f * pointCount));
-        //     sum += weight * min;
-        //     i = (i + 1) % pointCount;
-        // }
-
         return sum;
     }
 
     public List<Vector2> Normalize(List<Vector2> points) {
         List<Vector2> _points = new(points);
 
+        _points = Resample(_points, 64);
         _points = Scale(_points);
         _points = TranslateToOrigin(_points);
 
@@ -155,5 +136,64 @@ public class GlyphMatcher {
         }
 
         return _points;
+    }
+
+    List<Vector2> Resample(List<Vector2> points, int size) {
+        List<Vector2> _points = new();
+        _points.Add(points[0]);
+
+        float requiredDistBetweenPoints = PathLength(points) / (size - 1);
+        float proceedDist = 0f;
+
+        for (int i = 1; i < points.Count; i++) {
+            Vector2 prev = points[i - 1];
+            Vector2 curr = points[i];
+
+            float dist = Vector2.Distance(prev, curr);
+
+            if (proceedDist + dist >= requiredDistBetweenPoints) {
+                while (proceedDist + dist >= requiredDistBetweenPoints) {
+                    float t = Math.Min(Math.Max((requiredDistBetweenPoints - proceedDist) / dist, 0.0f), 1.0f);
+                    if (float.IsNaN(t)) t = 0.5f;
+
+                    float xApprox = prev.x + t * (curr.x - prev.x);
+                    float yApprox = prev.y + t * (curr.y - prev.y);
+
+                    Vector2 newPoint = new Vector2(xApprox, yApprox);
+
+                    _points.Add(newPoint);
+
+                    dist = proceedDist + dist - requiredDistBetweenPoints;
+                    proceedDist = 0f;
+                    prev = _points[_points.Count - 1];
+                }
+
+                proceedDist = dist;
+            } else {
+                proceedDist += dist;
+            }
+        }
+
+        if (proceedDist > 0) {
+            _points.Add(points[points.Count - 1]);
+        }
+
+        return _points;
+    }
+
+    float PathLength(List<Vector2> points) {
+        float length = 0f;
+
+        for (int i = 1; i < points.Count; i++) {
+            Vector2 prev = points[i - 1];
+            Vector2 curr = points[i];
+
+            float dist = Vector2.Distance(prev, curr);
+            if (!float.IsNaN(dist)) {
+                length += dist;
+            }
+        }
+
+        return length;
     }
 }
