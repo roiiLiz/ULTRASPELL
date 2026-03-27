@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,8 +24,15 @@ public class NewPlayer : MonoBehaviour {
     [SerializeField] VelocityComponent velocityComponent;
     [SerializeField] GlyphController glyphController;
 
+    [Space(5)]
+
+    [Header("Settings")]
+    [SerializeField] float delayBeforeCameraControl = 0.2f;
+
+    bool allowCameraControl = true;
     Vector3 finalMovementDirection;
     Camera cam;
+
 
     void Awake() {
         cam = Camera.main;
@@ -60,7 +68,7 @@ public class NewPlayer : MonoBehaviour {
     }
 
     void UpdateCamera() {
-        if (!glyphController.IsDrawing()) {
+        if (!glyphController.IsDrawing() && allowCameraControl) {
             cameraController.RotateCamera(transform, cam, cameraMovement.action.ReadValue<Vector2>());
         }
     }
@@ -82,6 +90,7 @@ public class NewPlayer : MonoBehaviour {
                 }
 
                 glyphController.ClearGlyph();
+                StartCoroutine(PauseCameraControl());
                 ToggleDrawing();
 
                 Debug.Log($"Glyph matched: {(glyph == null ? "None" : glyph.name)}.");
@@ -96,5 +105,13 @@ public class NewPlayer : MonoBehaviour {
     void ToggleDrawing() {
         glyphController.ToggleGlyphDrawing();
         cameraController.ToggleMouse();
+    }
+
+    IEnumerator PauseCameraControl() {
+        allowCameraControl = false;
+
+        yield return new WaitForSeconds(delayBeforeCameraControl);
+
+        allowCameraControl = true;
     }
 }
