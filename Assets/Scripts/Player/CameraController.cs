@@ -10,6 +10,17 @@ public class CameraController : MonoBehaviour {
 
     public void CaptureMouse() => Cursor.lockState = CursorLockMode.Locked;
 
+    public void ToggleMouse() {
+        switch (Cursor.lockState) {
+            case CursorLockMode.None:
+                Cursor.lockState = CursorLockMode.Locked;
+                break;
+            default:
+                Cursor.lockState = CursorLockMode.None;
+                break;
+        }
+    }
+
     public void RotateCamera(Transform transform, Camera camera, Vector2 lookDir) {
         Vector2 mouse = new Vector2(lookDir.x * cameraSens * Time.deltaTime, lookDir.y * cameraSens * Time.deltaTime);
 

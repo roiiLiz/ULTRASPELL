@@ -9,8 +9,10 @@ using UnityEngine.UIElements;
 public class GlyphController : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] float drawingSlowdownFactor = 0.5f;
-    [SerializeField] float distanceThreshold = 2f;
-    [SerializeField] List<Glyph> templates;
+    [SerializeField] float pointDistanceThreshold = 2f;
+    [SerializeField] float matchingDistanceThreshold = 0.1f;
+    // [SerializeField] List<Glyph> templates;
+    [SerializeField] GlyphTemplates templateCollection;
 
     [Space(5)]
 
@@ -18,12 +20,6 @@ public class GlyphController : MonoBehaviour {
     [SerializeField] CanvasScaler canvasScaler;
     [SerializeField] UILineRenderer lineRenderer;
     [SerializeField] GlyphDropdown glyphDropdown;
-
-    [Space(5)]
-
-    [Header("Debug")]
-    [SerializeField] GlyphTrainingData displayOne;
-    [SerializeField] GlyphTrainingData displayTwo;
 
     GlyphSaver saver = new();
     GlyphMatcher matcher = new();
@@ -37,10 +33,6 @@ public class GlyphController : MonoBehaviour {
         }
     }
 
-    // void Update() {
-    //     lineRenderer.SetAllDirty();
-    // }
-
     public bool IsDrawing() => isDrawing;
     public void ToggleGlyphDrawing() {
         isDrawing = !isDrawing;
@@ -52,7 +44,6 @@ public class GlyphController : MonoBehaviour {
 
 
     public void DrawGlyph(Vector2 mousePosition) {
-        Debug.Log($"Mouse position: {ScaleInput(mousePosition)}");
         Vector2 input = ScaleInput(mousePosition);
 
         if (CanCreatePoint(input)) {
@@ -61,26 +52,25 @@ public class GlyphController : MonoBehaviour {
         }
     }
 
-    // TODO: Ensure that ClearGlyph triggers the glyph for potential weapon swapping!
     public void ClearGlyph() {
         if (lineRenderer.points.Count <= 0) return;
 
         lineRenderer.points.Clear();
-
         lineRenderer.SetAllDirty();
     }
 
     public Glyph MatchGlyph() {
         if (lineRenderer.points == null || lineRenderer.points.Count <= 0) return null;
 
-        Glyph match = matcher.MatchGlyph(lineRenderer.points, templates, 64);
+        Glyph match = matcher.MatchGlyph(lineRenderer.points, templateCollection.templates, 64);
+
         return match;
     }
 
     bool CanCreatePoint(Vector2 position) {
         if (lineRenderer.points.Count <= 0) return true;
 
-        return Vector2.Distance(lineRenderer.points[lineRenderer.points.Count - 1], position) > distanceThreshold;
+        return Vector2.Distance(lineRenderer.points[lineRenderer.points.Count - 1], position) > pointDistanceThreshold;
     }
 
     Vector2 ScaleInput(Vector2 mouseInput) {
@@ -101,6 +91,10 @@ public class GlyphController : MonoBehaviour {
         saver.SaveGlyphTrainingData(glyph, lineRenderer.points);
 
         ClearGlyph();
+    }
+
+    Vector2 MapMouseToScreenPoint(Vector2 mouse) {
+        return new Vector2(mouse.x - (canvasScaler.referenceResolution.x / 2), mouse.y - (canvasScaler.referenceResolution.y / 2));
     }
 }
 

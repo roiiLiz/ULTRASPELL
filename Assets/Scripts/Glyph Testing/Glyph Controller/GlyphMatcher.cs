@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class GlyphMatcher {
+    float glyphMinMatchDistance = 0.05f;
+
     public Glyph MatchGlyph(List<Vector2> points, List<Glyph> templates, int pointCount) {
         List<Vector2> normalizedPoints = Normalize(points);
         Glyph matchedGlyph = null;
@@ -19,7 +21,7 @@ public class GlyphMatcher {
 
                 dist = GreedyCloudMatch(normalizedPoints, normalizedTemplatePoints, pointCount);
 
-                if (dist <= 0) {
+                if (dist <= glyphMinMatchDistance) {
                     return null;
                 }
 
@@ -42,7 +44,7 @@ public class GlyphMatcher {
             float firstDist = CloudDistance(points, templatePoints, pointCount, i);
             float secondDist = CloudDistance(templatePoints, points, pointCount, i);
 
-            Debug.Log($"First Cloud Distance: {firstDist}\nSecond Cloud Distance: {secondDist}\nMin: {min}");
+            // Debug.Log($"First Cloud Distance: {firstDist}\nSecond Cloud Distance: {secondDist}\nMin: {min}");
 
             min = Mathf.Min(min, firstDist, secondDist);
         }
