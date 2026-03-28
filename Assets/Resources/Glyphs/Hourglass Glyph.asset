@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
   m_Name: Hourglass Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
+  icon: {fileID: 21300000, guid: 52677bdc4938bfa4782b92253325bd58, type: 3}
   trainingData:
   - {fileID: 11400000, guid: ce5ab3da214980541ae2e32773a36e6c, type: 2}
   - {fileID: 11400000, guid: b2fba8a7d9777a54786ebb45f7b35953, type: 2}
@@ -23,3 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ddadca99fe7a6c442a3cd894f36b8763, type: 2}
   - {fileID: 11400000, guid: dc868043c79de1442bcb2d21338fc096, type: 2}
   - {fileID: 11400000, guid: 39d994c2e26f7984ab8559baf73316d9, type: 2}
+  glyphType: 0

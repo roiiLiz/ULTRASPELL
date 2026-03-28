@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GlyphDoor : MonoBehaviour, IGlyphInteractable {
@@ -10,17 +8,9 @@ public class GlyphDoor : MonoBehaviour, IGlyphInteractable {
     Vector3 closedPosition;
     bool closed = true;
 
-    NewPlayer player;
-
     void Start() {
         closedPosition = transform.position;
-
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<NewPlayer>();
-
-        player.OnGlyphMatched += Interact;
     }
-
-    void OnDestroy() => player.OnGlyphMatched -= Interact;
 
     public Glyph GetGlyph => unlockGlyph;
 
@@ -39,11 +29,12 @@ public class GlyphDoor : MonoBehaviour, IGlyphInteractable {
         while (t < timeToOpen) {
             t += Time.deltaTime;
 
-            transform.position = Vector3.Lerp(a, b, t * (1f / timeToOpen));
+            transform.position = Vector3.Lerp(a, b, t / timeToOpen);
 
             yield return null;
         }
 
+        Debug.Log("Hello!");
         closed = !closed;
     }
 }
