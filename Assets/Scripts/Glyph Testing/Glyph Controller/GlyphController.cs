@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class GlyphController : MonoBehaviour {
     [Header("Settings")]
     [SerializeField] float drawingSlowdownFactor = 0.5f;
     [SerializeField] float pointDistanceThreshold = 2f;
     [SerializeField] float matchingDistanceThreshold = 0.1f;
-    // [SerializeField] List<Glyph> templates;
     [SerializeField] GlyphTemplates templateCollection;
 
     [Space(5)]
@@ -41,7 +35,6 @@ public class GlyphController : MonoBehaviour {
 
         Debug.Log($"Toggling drawing: {isDrawing}");
     }
-
 
     public void DrawGlyph(Vector2 mousePosition) {
         Vector2 input = ScaleInput(mousePosition);

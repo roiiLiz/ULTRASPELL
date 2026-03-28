@@ -28,12 +28,15 @@ public class GlyphSaver {
         int num = 1;
 
         foreach (string str in System.IO.Directory.GetFiles(filePath)) {
-            string s = str.Trim(filePath.ToCharArray());
+            string s = str.Substring(filePath.Length);
+            Debug.Log($"First substring: {s}");
 
-            Debug.Log("Evaluating substring: " + s);
+            s = s.Substring(0, glyph.name.Length);
+
+            Debug.Log($"Second substring: {s}");
 
             // * The string evaluates whether it ends with a '.' char because we trimmed away the string 'Assets' which means checking for the substring '.asset' will never succeed.
-            if (s.StartsWith(glyph.name) && s.EndsWith(".")) {
+            if (s == glyph.name) {
                 num++;
                 Debug.Log("Increased num!");
             }

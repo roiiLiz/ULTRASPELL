@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
+  m_Name: Hourglass Glyph
+  m_EditorClassIdentifier: Assembly-CSharp::Glyph
+  trainingData:
+  - {fileID: 11400000, guid: ce5ab3da214980541ae2e32773a36e6c, type: 2}
+  - {fileID: 11400000, guid: b2fba8a7d9777a54786ebb45f7b35953, type: 2}
+  - {fileID: 11400000, guid: 4d88b94a89ed5d9409c24a977c8a4c7e, type: 2}
+  - {fileID: 11400000, guid: 1b78c3b319757ac40be47cd5bf8188ce, type: 2}
+  - {fileID: 11400000, guid: 754069438aa945847b95a399215385d8, type: 2}
+  - {fileID: 11400000, guid: 8cb094285d36ec14fbc19e3e9060a5ea, type: 2}
+  - {fileID: 11400000, guid: 287731d3e947f104b92dbc21afdd13f4, type: 2}
+  - {fileID: 11400000, guid: ddadca99fe7a6c442a3cd894f36b8763, type: 2}
+  - {fileID: 11400000, guid: dc868043c79de1442bcb2d21338fc096, type: 2}
+  - {fileID: 11400000, guid: 39d994c2e26f7984ab8559baf73316d9, type: 2}
