@@ -1,8 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GlyphDoor : MonoBehaviour, IGlyphInteracable {
+public class GlyphDoor : MonoBehaviour, IGlyphInteractable {
     [SerializeField] Glyph unlockGlyph;
     [SerializeField] Vector3 openedPosition;
     [SerializeField] float timeToOpen = 0.5f;
@@ -23,8 +24,8 @@ public class GlyphDoor : MonoBehaviour, IGlyphInteracable {
 
     public Glyph GetGlyph => unlockGlyph;
 
-    public void Interact(Glyph glyph) {
-        if (glyph == unlockGlyph) {
+    public void Interact(GlyphData glyphData) {
+        if (glyphData.glyph == unlockGlyph) {
             // unlock logic
             StartCoroutine(ToggleDoor(closed));
         }

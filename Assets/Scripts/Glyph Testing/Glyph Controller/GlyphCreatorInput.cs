@@ -19,8 +19,8 @@ public class GlyphCreatorInput : MonoBehaviour
         }
 
         if (leftClick.action.WasReleasedThisFrame()) {
-            Glyph glyph = controller.MatchGlyph();
-            Debug.Log($"Matched glyph: {(glyph == null ? "None" : glyph.name)}.");
+            GlyphData glyphData = controller.MatchGlyph();
+            Debug.Log($"Matched glyph: {(glyphData.glyph == null ? "None" : glyphData.glyph.name)}.");
         }
 
         if (rightClick.action.WasReleasedThisFrame()) {

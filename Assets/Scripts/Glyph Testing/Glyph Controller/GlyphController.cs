@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,12 +53,12 @@ public class GlyphController : MonoBehaviour {
         lineRenderer.SetAllDirty();
     }
 
-    public Glyph MatchGlyph() {
-        if (lineRenderer.points == null || lineRenderer.points.Count <= 0) return null;
+    public GlyphData MatchGlyph() {
+        if (lineRenderer.points == null || lineRenderer.points.Count <= 0) return new GlyphData(null, null);
 
         Glyph match = matcher.MatchGlyph(lineRenderer.points, templateCollection.templates, 64);
 
-        return match;
+        return new GlyphData(match, lineRenderer.points);
     }
 
     bool CanCreatePoint(Vector2 position) {

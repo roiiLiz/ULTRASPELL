@@ -97,7 +97,7 @@ public class GlyphMatcher {
         return _points;
     }
 
-    List<Vector2> TranslateToOrigin(List<Vector2> points) {
+    public List<Vector2> TranslateToOrigin(List<Vector2> points) {
         List<Vector2> _points = new();
         Vector2 center = GetCenter(points);
 
@@ -111,14 +111,14 @@ public class GlyphMatcher {
         return _points;
     }
 
-    Vector2 GetCenter(List<Vector2> points) {
+    public static Vector2 GetCenter(List<Vector2> points) {
         float x = points.Sum(p => p.x) / points.Count;
         float y = points.Sum(p => p.y) / points.Count;
 
         return new Vector2(x, y);
     }
 
-    List<Vector2> Scale(List<Vector2> points) {
+    public List<Vector2> Scale(List<Vector2> points) {
         List<Vector2> _points = new();
 
         float minX = points.Select(point => point.x).Min();
@@ -138,7 +138,7 @@ public class GlyphMatcher {
         return _points;
     }
 
-    List<Vector2> Resample(List<Vector2> points, int size) {
+    public List<Vector2> Resample(List<Vector2> points, int size) {
         List<Vector2> _points = new();
         _points.Add(points[0]);
 

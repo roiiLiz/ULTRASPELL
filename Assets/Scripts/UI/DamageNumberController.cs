@@ -6,8 +6,8 @@ public class DamageNumberController : MonoBehaviour {
     [SerializeField] float timeToDestroyText = 1f;
     [SerializeField] Vector3 spread = Vector3.zero;
 
-    void OnEnable() => AttackController.DamageDealt += CreateDamageNumber;
-    void OnDisable() => AttackController.DamageDealt -= CreateDamageNumber;
+    void OnEnable() => GlyphHittable.OnHit += CreateDamageNumber;
+    void OnDisable() => GlyphHittable.OnHit -= CreateDamageNumber;
 
     void CreateDamageNumber(float value, Vector3 pos) {
         GameObject text = Instantiate(damageNumberPrefab, pos + new Vector3(
