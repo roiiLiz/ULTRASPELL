@@ -24,4 +24,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ddadca99fe7a6c442a3cd894f36b8763, type: 2}
   - {fileID: 11400000, guid: dc868043c79de1442bcb2d21338fc096, type: 2}
   - {fileID: 11400000, guid: 39d994c2e26f7984ab8559baf73316d9, type: 2}
-  glyphType: 0
+  glyphType: 3
+  behaviourConfig: {fileID: 0}

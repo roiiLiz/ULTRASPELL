@@ -7,33 +7,7 @@ public class Glyph : ScriptableObject {
     public Sprite icon;
     public List<GlyphTrainingData> trainingData = new();
     public GlyphType glyphType;
-    public IGlyph glyphEffect;
-
-    void OnValidate() {
-        switch (glyphType) {
-            case GlyphType.Line:
-                glyphEffect = new LineGlyph();
-                break;
-            case GlyphType.Square:
-                glyphEffect = new LineGlyph();
-                break;
-            case GlyphType.Circle:
-                glyphEffect = new LineGlyph();
-                break;
-            case GlyphType.Hourglass:
-                glyphEffect = new LineGlyph();
-                break;
-            case GlyphType.Pistol:
-                glyphEffect = new LineGlyph();
-                break;
-            case GlyphType.Shotgun:
-                glyphEffect = new LineGlyph();
-                break;
-            case GlyphType.Star:
-                glyphEffect = new LineGlyph();
-                break;
-        }
-    }
+    public GlyphConfig behaviourConfig;
 }
 
 public enum GlyphType {
@@ -47,11 +21,5 @@ public enum GlyphType {
 }
 
 public interface IGlyph {
-    public void Use();
-}
-
-public class LineGlyph : IGlyph {
-    public void Use() {
-        return;
-    }
+    public void Use(GlyphData glyphData);
 }

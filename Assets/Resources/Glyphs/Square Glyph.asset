@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
   m_Name: Square Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
+  icon: {fileID: 0}
   trainingData:
   - {fileID: 11400000, guid: 3fc273067dba33c41b72822744a94d88, type: 2}
   - {fileID: 11400000, guid: 059a595c4528a414a93872d91330a76d, type: 2}
@@ -25,3 +26,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf68c1118b496c24bb403aa9ffa4f36d, type: 2}
   - {fileID: 11400000, guid: 762dc8d0bcf788849a2f983545b0314b, type: 2}
   - {fileID: 11400000, guid: c8031af4fb220de48932506622737c76, type: 2}
+  glyphType: 1
+  behaviourConfig: {fileID: 0}

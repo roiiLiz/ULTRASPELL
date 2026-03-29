@@ -1,0 +1,31 @@
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "New Line Config", menuName = "ULTRASPELL / Glyph Config / Line Config", order = 0)]
+public class LineConfig : GlyphConfig {
+    [SerializeField] GameObject slashPrefab;
+    Camera cam;
+
+    public override void Use(GlyphData glyphData) {
+        // Vector2 center = GlyphMatcher.GetCenter(glyphData.points);
+        // center.Scale(new Vector2(Screen.width / 1920f, Screen.height / 1080f));
+        // Vector3 viewport = Camera.main.ScreenToViewportPoint(center);
+        // Ray ray = Camera.main.ViewportPointToRay(viewport);
+
+        cam = Camera.main;
+
+        // Debug.DrawLine(Camera.main.transform.position, Camera.main.transform.position + Camera.main.transform.forward * 10f, Color.green, 10f);
+        float y = glyphData.points[glyphData.points.Count - 1].y - glyphData.points[0].y;
+        float x = glyphData.points[glyphData.points.Count - 1].x - glyphData.points[0].x;
+
+        // Quaternion rot = Quaternion.Euler(0f, 0f, Mathf.Atan2(y, x) * Mathf.Rad2Deg);
+        // Quaternion newRot = rot * Quaternion.Euler(cam.transform.position + cam.transform.forward);
+
+        GameObject go = GameObject.Instantiate(
+            slashPrefab,
+            cam.transform.position,
+            cam.transform.rotation
+        );
+
+        go.transform.Rotate(new Vector3(0f, 0f, Mathf.Atan2(y, x) * Mathf.Rad2Deg));
+    }
+}

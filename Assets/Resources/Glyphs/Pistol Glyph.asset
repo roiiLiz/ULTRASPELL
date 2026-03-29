@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
   m_Name: Pistol Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
+  icon: {fileID: 0}
   trainingData:
   - {fileID: 11400000, guid: fcfa20bc63ed2d94db746be5908ba306, type: 2}
   - {fileID: 11400000, guid: 42ffd2ca0177042438769fcacab1b51a, type: 2}
@@ -23,3 +24,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8c69d066159f2774aac5ce387660b4a0, type: 2}
   - {fileID: 11400000, guid: b075c70ecf37abd4a9b3cf98cfabf363, type: 2}
   - {fileID: 11400000, guid: c88bb2aa4bd3a214fb828990423cf463, type: 2}
+  glyphType: 4
+  behaviourConfig: {fileID: 0}

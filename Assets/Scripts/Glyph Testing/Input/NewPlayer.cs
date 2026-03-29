@@ -91,23 +91,25 @@ public class NewPlayer : MonoBehaviour {
                 if (glyphData.glyph != null) {
                     OnGlyphMatched?.Invoke(glyphData);
 
-                    Vector2 center = GlyphMatcher.GetCenter(glyphData.points);
-                    center.Scale(new Vector2(Screen.width / 1920f, Screen.height / 1080f));
-                    Vector3 viewport = cam.ScreenToViewportPoint(center);
-                    Ray ray = cam.ViewportPointToRay(viewport);
+                    glyphData.glyph.behaviourConfig?.Use(glyphData);
 
-                    if (Physics.SphereCast(ray, 5f, out RaycastHit hit, float.MaxValue)) {
-                        foreach (Collider collider in Physics.OverlapSphere(hit.point, 5f)) {
-                            if (collider.TryGetComponent<IGlyphInteractable>(out var interactable)) {
-                                interactable.Interact(glyphData);
-                            }
-                        }
-                    }
+                    // Vector2 center = GlyphMatcher.GetCenter(glyphData.points);
+                    // center.Scale(new Vector2(Screen.width / 1920f, Screen.height / 1080f));
+                    // Vector3 viewport = cam.ScreenToViewportPoint(center);
+                    // Ray ray = cam.ViewportPointToRay(viewport);
+
+                    // if (Physics.SphereCast(ray, 5f, out RaycastHit hit, float.MaxValue)) {
+                    //     foreach (Collider collider in Physics.OverlapSphere(hit.point, 5f)) {
+                    //         if (collider.TryGetComponent<IGlyphInteractable>(out var interactable)) {
+                    //             interactable.Interact(glyphData);
+                    //         }
+                    //     }
+                    // }
                 }
 
                 glyphController.ClearGlyph();
-                StartCoroutine(PauseCameraControl());
-                ToggleDrawing();
+                // StartCoroutine(PauseCameraControl());
+                // ToggleDrawing();
 
                 Debug.Log($"Glyph matched: {(glyphData.glyph == null ? "None" : glyphData.glyph.name)}."); }
         } else {
