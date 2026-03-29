@@ -41,7 +41,7 @@ public class GlyphImageController : MonoBehaviour {
 
         image.sprite = data.glyph.icon;
 
-        if (data.glyph.glyphType == GlyphType.Line) {
+        if (data.glyph.rotateIcon) {
             float y = data.points[data.points.Count - 1].y - data.points[0].y;
             float x = data.points[data.points.Count - 1].x - data.points[0].x;
 

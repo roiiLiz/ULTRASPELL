@@ -82,7 +82,7 @@ public class NewPlayer : MonoBehaviour {
         if (glyphController.IsDrawing()) {
             if (leftClick.action.ReadValue<float>() > 0f) {
                 glyphController.DrawGlyph(mousePosition.action.ReadValue<Vector2>());
-                Debug.DrawLine(cam.transform.position, cam.transform.position + cam.transform.forward, Color.green, 10f);
+                // Debug.DrawLine(cam.transform.position, cam.transform.position + cam.transform.forward, Color.green, 10f);
                 // Debug.DrawLine(cam.transform.position, cam.transform.position + cam.ScreenToViewportPoint(mousePosition.action.ReadValue<Vector2>()), Color.green, 5f);
             }
 
@@ -108,8 +108,11 @@ public class NewPlayer : MonoBehaviour {
                 }
 
                 glyphController.ClearGlyph();
-                // StartCoroutine(PauseCameraControl());
-                // ToggleDrawing();
+
+                if (glyphData.glyph.toggleDrawingOnMatch) {
+                    StartCoroutine(PauseCameraControl());
+                    ToggleDrawing();
+                }
 
                 Debug.Log($"Glyph matched: {(glyphData.glyph == null ? "None" : glyphData.glyph.name)}."); }
         } else {

@@ -6,18 +6,9 @@ using UnityEngine;
 public class Glyph : ScriptableObject {
     public Sprite icon;
     public List<GlyphTrainingData> trainingData = new();
-    public GlyphType glyphType;
+    public bool toggleDrawingOnMatch = true;
+    public bool rotateIcon = false;
     public GlyphConfig behaviourConfig;
-}
-
-public enum GlyphType {
-    Line,
-    Square,
-    Circle,
-    Hourglass,
-    Pistol,
-    Shotgun,
-    Star
 }
 
 public interface IGlyph {

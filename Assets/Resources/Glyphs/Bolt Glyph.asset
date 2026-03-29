@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
+  m_Name: Bolt Glyph
+  m_EditorClassIdentifier: Assembly-CSharp::Glyph
+  icon: {fileID: 0}
+  trainingData:
+  - {fileID: 11400000, guid: ef9369bbda346e540af426fef6912fa6, type: 2}
+  - {fileID: 11400000, guid: 988aa2d937e934449b2721e2f1db6832, type: 2}
+  - {fileID: 11400000, guid: 4d93b987aaf16314da2056cbef667549, type: 2}
+  - {fileID: 11400000, guid: 2004bca006daf40438a8f5846a9437cf, type: 2}
+  - {fileID: 11400000, guid: 1d1df95da9854534590a58b3a56e2075, type: 2}
+  - {fileID: 11400000, guid: 8aefe63709bbc494da89944e1c33f21d, type: 2}
+  - {fileID: 11400000, guid: d12014e536b18274392f9354f85ccafa, type: 2}
+  - {fileID: 11400000, guid: f7972f79b917ec84597d530bae01aa86, type: 2}
+  - {fileID: 11400000, guid: 0f1405f7b9c660d47baa45645b54c346, type: 2}
+  - {fileID: 11400000, guid: db8ee3986a554fd43b5483325175c119, type: 2}
+  - {fileID: 11400000, guid: 972853e948a07c8498ac96933c640b22, type: 2}
+  - {fileID: 11400000, guid: ff2886ef26f0e3f44a24b1871ff32d0a, type: 2}
+  - {fileID: 11400000, guid: 9db41ade2933fed4f947791772ce596b, type: 2}
+  - {fileID: 11400000, guid: 8a3c6552016b7104791095d7195d4b8f, type: 2}
+  - {fileID: 11400000, guid: 522f234ff4022304b924c930c0441052, type: 2}
+  toggleDrawingOnMatch: 1
+  rotateIcon: 0
+  behaviourConfig: {fileID: 11400000, guid: d35549a32f4d7c14b910c1376fa4ff53, type: 2}
