@@ -6275,7 +6275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UILineRenderer
   m_Material: {fileID: 0}
-  m_Color: {r: 0.68664956, g: 0.373042, b: 0.9528302, a: 1}
+  m_Color: {r: 0.3537736, g: 0.84023464, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
