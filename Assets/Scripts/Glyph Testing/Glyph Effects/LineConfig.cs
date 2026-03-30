@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Line Config", menuName = "ULTRASPELL / Glyph Config / Line Config", order = 0)]
 public class LineConfig : GlyphConfig {
     [SerializeField] GameObject slashPrefab;
+    [SerializeField] int damageAmount;
     Camera cam;
 
     public override void Use(GlyphData glyphData) {
@@ -23,11 +24,13 @@ public class LineConfig : GlyphConfig {
         GameObject go = GameObject.Instantiate(
             slashPrefab,
             cam.transform.position,
-            // cam.transform.rotation
             cam.transform.rotation * Quaternion.Euler(ray.origin + ray.direction)
         );
 
         go.transform.LookAt(ray.origin + ray.direction);
         go.transform.Rotate(new Vector3(0f, 0f, Mathf.Atan2(y, x) * Mathf.Rad2Deg));
+
+        Slash slash = go.GetComponent<Slash>();
+        slash.damageAmount = damageAmount;
     }
 }

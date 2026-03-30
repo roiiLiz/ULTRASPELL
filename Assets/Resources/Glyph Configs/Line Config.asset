@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Line Config
   m_EditorClassIdentifier: Assembly-CSharp::LineConfig
   slashPrefab: {fileID: 8212841515352740628, guid: b180ea59cd241344d8014247c9bbb1c2, type: 3}
+  damageAmount: 10

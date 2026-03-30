@@ -36,6 +36,8 @@ public class HealthComponent : MonoBehaviour, IDamageable {
     public event Action<float> NoHitDuration;
     public event Action OnDied;
 
+    public static event Action<Vector3, int> DisplayDamage;
+
     void Start() {
         CurrentHealth = maxHealth;
         ResetDamageMultiplier();
@@ -64,8 +66,9 @@ public class HealthComponent : MonoBehaviour, IDamageable {
 
         timeNotHit = 0f;
 
-        CurrentHealth = Mathf.Clamp(CurrentHealth - CalculateDamage(value, this), 0, maxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth - value, 0, maxHealth);
         OnDamaged?.Invoke(CurrentHealth, value);
+        DisplayDamage?.Invoke(transform.position, value);
 
         if (CurrentHealth <= 0) {
             OnDied?.Invoke();
