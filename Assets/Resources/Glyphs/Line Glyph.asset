@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
   m_Name: Line Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
-  icon: {fileID: 21300000, guid: 5c041958f7f043f49b8acb19b8e01ac3, type: 3}
+  icon: {fileID: 21300000, guid: 79128cb5d18aaae4fad065ab45e29614, type: 3}
   trainingData:
   - {fileID: 11400000, guid: f6e3411ec5201804f8fb61d265ccfd84, type: 2}
   - {fileID: 11400000, guid: 74f756cb4831f7847ad355800b892a61, type: 2}

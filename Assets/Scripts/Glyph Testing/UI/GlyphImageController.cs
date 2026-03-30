@@ -46,6 +46,8 @@ public class GlyphImageController : MonoBehaviour {
             float x = data.points[data.points.Count - 1].x - data.points[0].x;
 
             rect.localRotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(y, x) * Mathf.Rad2Deg);
+        } else {
+            rect.localRotation = Quaternion.identity;
         }
 
         if (coroutine != null) {
