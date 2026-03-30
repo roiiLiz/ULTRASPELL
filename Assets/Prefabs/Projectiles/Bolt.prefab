@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6494894658124468998}
   - component: {fileID: 2310140435058187783}
   m_Layer: 0
-  m_Name: Inner_Circle
+  m_Name: OuterCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeToFull: 0.5
-  rotationRate: -60
+  rotationRate: -90
 --- !u!1 &4498234101747066585
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 6147018891448849047}
   - component: {fileID: 2805356473941242811}
   m_Layer: 0
-  m_Name: Outer_Circle
+  m_Name: InnerCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +247,7 @@ Transform:
   m_GameObject: {fileID: 7353262669314566877}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -336,7 +336,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.75
+      value: 0.65
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -347,7 +347,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeToFull: 0.5
-  rotationRate: 60
+  rotationRate: 30
 --- !u!1 &9054746133763530070
 GameObject:
   m_ObjectHideFlags: 0
