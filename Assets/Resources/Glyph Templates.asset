@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GlyphTemplates
   templates:
   - {fileID: 11400000, guid: e849812061495f747bcfeb7a388abc7b, type: 2}
-  - {fileID: 11400000, guid: 022fcdf37eddd934bbc95d91dbbee359, type: 2}
-  - {fileID: 11400000, guid: fcf5af1814f96f64689f5b8f4b679afc, type: 2}
-  - {fileID: 11400000, guid: abf6fe291527f1741981cc9aff1cc25d, type: 2}
   - {fileID: 11400000, guid: 3c1eba4557d179f4fa765c17c14a4ddc, type: 2}
   - {fileID: 11400000, guid: 10308567ee3fffc4d809b321dba3271b, type: 2}
   - {fileID: 11400000, guid: 0e4715999314f4640af6bf8ffce58759, type: 2}
