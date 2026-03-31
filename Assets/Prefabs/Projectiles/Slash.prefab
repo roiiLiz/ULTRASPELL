@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.014391776, g: 0.01223745, b: 0.103773594, a: 1}
+      maxColor: {r: 0, g: 0, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.021493418, g: 0.031542245, b: 0.1981132, a: 1}
@@ -9953,7 +9953,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.16990031, g: 0.23120044, b: 0.4339623, a: 1}
+      maxColor: {r: 0.990566, g: 0.6817874, b: 0.6681648, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14690,6 +14690,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slash
   damageAmount: 0
+  rotationRateMin: 0
+  rotationRateMax: 0
 --- !u!65 &726528041894448281
 BoxCollider:
   m_ObjectHideFlags: 0

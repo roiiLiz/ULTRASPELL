@@ -32,5 +32,8 @@ public class LineConfig : GlyphConfig {
 
         Slash slash = go.GetComponent<Slash>();
         slash.damageAmount = damageAmount;
+
+        float distance = GlyphMatcher.PathLength(glyphData.points);
+        Debug.Log($"Distance: {distance}");
     }
 }

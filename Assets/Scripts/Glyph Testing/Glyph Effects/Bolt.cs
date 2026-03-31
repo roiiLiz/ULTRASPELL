@@ -6,10 +6,12 @@ using UnityEngine.VFX;
 public class Bolt : MonoBehaviour {
     [SerializeField] float beamDuration = 3f;
     [SerializeField] VisualEffect beamParticle;
+    [SerializeField] MagicCircle innerestCircle;
     [SerializeField] MagicCircle innerCircle;
     [SerializeField] MagicCircle outerCircle;
 
     void Start() {
+        innerestCircle.StartCircle();
         innerCircle.StartCircle();
         outerCircle.StartCircle(SpawnBeam);
     }

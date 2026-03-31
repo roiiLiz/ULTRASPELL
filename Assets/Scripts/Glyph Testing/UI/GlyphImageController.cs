@@ -4,10 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GlyphImageController : MonoBehaviour {
+    [Header("Settings")]
     [SerializeField] AnimationCurve alphaCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+    [SerializeField] AnimationCurve backgroundAlphaCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
     [SerializeField] AnimationCurve sizeCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
     [SerializeField] float imageDuration = 0.5f;
     [SerializeField] bool unscaledTime = true;
+
+    [Space(5)]
+
+    [Header("References")]
+    [SerializeField] CanvasGroup background;
 
     RectTransform rect;
     Image image;
@@ -26,6 +33,8 @@ public class GlyphImageController : MonoBehaviour {
             image.color.b,
             0f
         );
+
+        background.alpha = 0f;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<NewPlayer>();
 
@@ -65,6 +74,8 @@ public class GlyphImageController : MonoBehaviour {
         while (t < imageDuration) {
             t += unscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
             color.a = alphaCurve.Evaluate(t / imageDuration);
+            background.alpha = backgroundAlphaCurve.Evaluate(t / imageDuration);
+
             image.color = color;
 
             scale.x = sizeCurve.Evaluate(t / imageDuration);

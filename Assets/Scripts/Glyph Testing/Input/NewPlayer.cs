@@ -82,8 +82,6 @@ public class NewPlayer : MonoBehaviour {
         if (glyphController.IsDrawing()) {
             if (leftClick.action.ReadValue<float>() > 0f) {
                 glyphController.DrawGlyph(mousePosition.action.ReadValue<Vector2>());
-                // Debug.DrawLine(cam.transform.position, cam.transform.position + cam.transform.forward, Color.green, 10f);
-                // Debug.DrawLine(cam.transform.position, cam.transform.position + cam.ScreenToViewportPoint(mousePosition.action.ReadValue<Vector2>()), Color.green, 5f);
             }
 
             if (leftClick.action.WasReleasedThisFrame()) {
@@ -92,32 +90,21 @@ public class NewPlayer : MonoBehaviour {
                     OnGlyphMatched?.Invoke(glyphData);
 
                     glyphData.glyph.behaviourConfig?.Use(glyphData);
-
-                    // Vector2 center = GlyphMatcher.GetCenter(glyphData.points);
-                    // center.Scale(new Vector2(Screen.width / 1920f, Screen.height / 1080f));
-                    // Vector3 viewport = cam.ScreenToViewportPoint(center);
-                    // Ray ray = cam.ViewportPointToRay(viewport);
-
-                    // if (Physics.SphereCast(ray, 5f, out RaycastHit hit, float.MaxValue)) {
-                    //     foreach (Collider collider in Physics.OverlapSphere(hit.point, 5f)) {
-                    //         if (collider.TryGetComponent<IGlyphInteractable>(out var interactable)) {
-                    //             interactable.Interact(glyphData);
-                    //         }
-                    //     }
-                    // }
                 }
 
                 glyphController.ClearGlyph();
 
-                if (glyphData.glyph.toggleDrawingOnMatch) {
-                    StartCoroutine(PauseCameraControl());
-                    ToggleDrawing();
+                if (glyphData.glyph != null) {
+                    if (glyphData.glyph.toggleDrawingOnMatch) {
+                        StartCoroutine(PauseCameraControl());
+                        ToggleDrawing();
+                    }
                 }
 
                 Debug.Log($"Glyph matched: {(glyphData.glyph == null ? "None" : glyphData.glyph.name)}."); }
         } else {
             if (leftClick.action.ReadValue<float>() > 0f) {
-                Debug.Log("firing wepaon");
+                return;
             }
         }
     }

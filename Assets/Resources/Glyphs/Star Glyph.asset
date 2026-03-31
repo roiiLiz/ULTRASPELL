@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37eb626b0ebb33e4db13a16045523ccd, type: 3}
   m_Name: Star Glyph
   m_EditorClassIdentifier: Assembly-CSharp::Glyph
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1523a32a281043446a63253f5a62c723, type: 3}
   trainingData:
   - {fileID: 11400000, guid: f2c4b1a83b86ff147bce40a0af32bf92, type: 2}
   - {fileID: 11400000, guid: 359af0228c89ff04491e724abdb9be92, type: 2}
@@ -27,5 +27,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a65cbd2186c089544b25cd869bd1cf51, type: 2}
   - {fileID: 11400000, guid: c5890053bb6c9274e9059432c313b126, type: 2}
   - {fileID: 11400000, guid: d0f699e16fd59b84d9637397be942569, type: 2}
-  glyphType: 6
-  behaviourConfig: {fileID: 0}
+  toggleDrawingOnMatch: 1
+  rotateIcon: 0
+  behaviourConfig: {fileID: 11400000, guid: 22f23e9b79a9b50408a6f371702c481c, type: 2}

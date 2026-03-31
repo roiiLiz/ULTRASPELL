@@ -181,7 +181,7 @@ public class GlyphMatcher {
         return _points;
     }
 
-    float PathLength(List<Vector2> points) {
+    public static float PathLength(List<Vector2> points) {
         float length = 0f;
 
         for (int i = 1; i < points.Count; i++) {

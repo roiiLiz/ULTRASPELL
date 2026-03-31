@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class GlyphDoor : MonoBehaviour, IGlyphInteractable {
     [SerializeField] Glyph unlockGlyph;
+    [SerializeField] GameObject door;
     [SerializeField] Vector3 openedPosition;
     [SerializeField] float timeToOpen = 0.5f;
     Vector3 closedPosition;
     bool closed = true;
 
     void Start() {
-        closedPosition = transform.position;
+        closedPosition = door.transform.position;
     }
 
     public Glyph GetGlyph => unlockGlyph;
@@ -29,7 +30,7 @@ public class GlyphDoor : MonoBehaviour, IGlyphInteractable {
         while (t < timeToOpen) {
             t += Time.deltaTime;
 
-            transform.position = Vector3.Lerp(a, b, t / timeToOpen);
+            door.transform.position = Vector3.Lerp(a, b, t / timeToOpen);
 
             yield return null;
         }

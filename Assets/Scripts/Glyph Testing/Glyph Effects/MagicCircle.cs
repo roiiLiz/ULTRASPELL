@@ -16,11 +16,12 @@ public class MagicCircle : MonoBehaviour {
 
     IEnumerator AnimateCircle(Action onCircleFinish) {
         float t = 0f;
+        Vector3 startingScale = transform.localScale;
 
         while (t < animationDuration) {
             t += Time.deltaTime;
 
-            transform.localScale = Vector3.one * circleSizeCurve.Evaluate(t / animationDuration);
+            transform.localScale = startingScale * circleSizeCurve.Evaluate(t / animationDuration);
 
             yield return null;
         }
